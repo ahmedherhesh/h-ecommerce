@@ -15,9 +15,8 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->user()){
-            return response()->json('Not Authorized',401);
-        }
+        if(!auth('sanctum')->user())
+            return response()->json('Unauthorized',401);
         return $next($request);
     }
 }
