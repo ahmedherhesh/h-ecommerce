@@ -12,14 +12,17 @@ code {
 }
 #root{
   background-color: #efefef;
+  min-height: 100vh;
 }
 .login-form,.register-form{
+  position: relative;
+  top:300px;
   width:300px;
   height: 150px;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  margin: calc(50vh - 200px) auto;
+  margin: auto;
 }
 .register-form{
   height: 300px;
