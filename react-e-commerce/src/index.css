@@ -13,6 +13,7 @@ code {
 #root{
   background-color: #efefef;
   min-height: 100vh;
+  padding-top:76px
 }
 .login-form,.register-form{
   position: relative;
