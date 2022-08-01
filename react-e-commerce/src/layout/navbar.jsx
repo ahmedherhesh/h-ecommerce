@@ -4,8 +4,8 @@ class NavBar extends Component {
     state = {}
     render() {
         return (
-            <div className="header">
-                <nav className="navbar navbar-expand-lg bg-light">
+            <div className="header" >
+                <nav className="navbar navbar-expand-lg bg-light" style={{position:'fixed',top:0,left:0,width:'100%',zIndex:1000}}>
                     <div className="container">
                         <Link className="navbar-brand" to="/">E-Commerce</Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
