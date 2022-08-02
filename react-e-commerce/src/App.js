@@ -3,7 +3,7 @@ import Home from './views/home';
 import Login from './views/auth/login';
 import Register from './views/auth/register';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from './layout/navbar';
+import NavBar from "./components/layout/navbar"
 import React from 'react';
 
 function App() {

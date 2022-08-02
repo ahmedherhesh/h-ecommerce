@@ -11,7 +11,7 @@ code {
     monospace;
 }
 #root{
-  background-color: #efefef;
+  /* background-color: #efefef; */
   min-height: 100vh;
   padding-top:76px
 }

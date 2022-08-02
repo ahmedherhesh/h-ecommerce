@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// header('Access-Control-Allow-Origin', 'http://localhost:8000/');
+// header('Access-Control-Allow-Credentials', true);
+// header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+// header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserResource(auth('sanctum')->user());
 });
