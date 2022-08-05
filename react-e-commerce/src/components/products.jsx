@@ -24,9 +24,7 @@ class Products extends Component {
                     )
                 })}
             </div>
-
-
-        );;
+        );
     }
 }
 

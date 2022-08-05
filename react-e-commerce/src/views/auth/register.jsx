@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import http from '../../axios';
-import {Redirect, useParams} from 'react-router-dom';
+import validator from '../../validator';
 class Register extends Component {
     state = {}
     vars = ['name', 'username', 'email', 'phone', 'password', 'repeatPassword'];
@@ -15,7 +15,19 @@ class Register extends Component {
         e.preventDefault();
         let data = {};
         this.vars.map(v => data[v] = this[v].current.value);
-        http.post('register', data).then(r => r.status == 200 ? window.location.href = '/' : 0).catch(r => console.log(r));
+        http.post('register', data).then(r => r.status === 200 ? window.location.href = '/' : 0).catch(r => {
+            let res = r.response;
+            if (res.status === 422 ){
+                validator(res.data,{
+                    name : this.name.current,
+                    username : this.username.current,
+                    email : this.email.current,
+                    phone : this.phone.current,
+                    password : this.password.current,
+                    repeatPassword : this.repeatPassword.current,
+                });
+            }
+        });
     }
 
     render() {

@@ -17,12 +17,11 @@ code {
 }
 .login-form,.register-form{
   width:300px;
-  height: 150px;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
   margin: 200px auto;
 }
-.register-form{
-  height: 300px;
+.login-form input,.register-form input{
+  margin: 5px 0;
 }
