@@ -14,18 +14,15 @@ class Register extends Component {
     handelSubmit = e => {
         e.preventDefault();
         let data = {};
-        this.vars.map(v => data[v] = this[v].current.value);
+        let validator_fields = {};
+        this.vars.map(v => {
+            data[v] = this[v].current.value;
+            validator_fields[v] = this[v].current
+        });
         http.post('register', data).then(r => r.status === 200 ? window.location.href = '/' : 0).catch(r => {
             let res = r.response;
             if (res.status === 422 ){
-                validator(res.data,{
-                    name : this.name.current,
-                    username : this.username.current,
-                    email : this.email.current,
-                    phone : this.phone.current,
-                    password : this.password.current,
-                    repeatPassword : this.repeatPassword.current,
-                });
+                validator(res.data,validator_fields);
             }
         });
     }
