@@ -6,12 +6,29 @@ body{
   padding-top:76px
 }
 .login-form,.register-form{
-  width:300px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  flex-direction: column;
   margin: 200px auto;
+  gap:15px;
+}
+.login-form{
+  width:300px;
+  flex-direction: column;
+}
+.register-form{
+  width:600px
 }
 .login-form input,.register-form input{
-  margin: 5px 0;
+  border:none;
+  outline: none;
+  padding: 15px;
+  border-bottom: 1px solid rgb(105, 101, 101);
+}
+.login-form input:focus::placeholder,
+.register-form input:focus::placeholder{
+  opacity: .5;
+}
+.register-form input{
+  width:calc(50% - 15px);
 }

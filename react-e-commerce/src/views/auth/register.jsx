@@ -31,13 +31,14 @@ class Register extends Component {
         // let {id} = useParams();
         return (
             <form onSubmit={this.handelSubmit} className="register-form">
-                <input ref={this.name} id='name' type="text" className='form-control' placeholder='Full Name' />
-                <input ref={this.username} id='username' type="text" className='form-control' placeholder='Username' />
-                <input ref={this.email} type="email" className='form-control' placeholder='Email' />
-                <input ref={this.phone} type="tel" className='form-control' placeholder='Phone Number' />
-                <input ref={this.password} type="password" className='form-control' placeholder='Password' />
-                <input ref={this.repeatPassword} type="password" className='form-control' placeholder='Repeat Password' />
-                <button className="btn btn-secondary">Register</button>
+                <h1 className='w-100 fs-3' style={{color:'rgb(105, 101, 101)'}}>Create Account :</h1>
+                <input ref={this.name} id='name' type="text" className='input-style' placeholder='Full Name' />
+                <input ref={this.username} id='username' type="text" className='input-style' placeholder='Username' />
+                <input ref={this.email} type="email" className='input-style' placeholder='Email' />
+                <input ref={this.phone} type="tel" className='input-style' placeholder='Phone Number' />
+                <input ref={this.password} type="password" className='input-style' placeholder='Password' />
+                <input ref={this.repeatPassword} type="password" className='input-style' placeholder='Repeat Password' />
+                <button className="btn btn-secondary w-50 p-3">Register</button>
             </form>
         );
     }

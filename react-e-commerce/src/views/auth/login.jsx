@@ -29,9 +29,9 @@ class Login extends Component {
     render() {
         return (
             <form onSubmit={this.handelSubmit} className="login-form">
-                <input ref={this.email} type="text" className='form-control' placeholder='Username' />
-                <input ref={this.password} type="password" className='form-control' placeholder='Password' />
-                <button className="btn btn-secondary">Login</button>
+                <input ref={this.email} type="text" className='input-style' placeholder='Username' />
+                <input ref={this.password} type="password" className='input-style' placeholder='Password' />
+                <button className="btn btn-secondary p-2 w-50">Login</button>
             </form>
         );
     }
