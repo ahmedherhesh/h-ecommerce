@@ -10,18 +10,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-#root{
-  /* background-color: #efefef; */
-  min-height: 100vh;
-  padding-top:76px
-}
-.login-form,.register-form{
-  width:300px;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  margin: 200px auto;
-}
-.login-form input,.register-form input{
-  margin: 5px 0;
-}

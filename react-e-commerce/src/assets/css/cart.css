@@ -1,0 +1,26 @@
+/* .row{
+    flex-wrap: nowrap !important;
+} */
+.product .img{
+    width:100px !important;
+    height: 100px;
+}
+/* .product .title{
+    font-size: 1.25rem;
+    padding-top:10px;
+}
+.old-price{
+    display: inline-block;
+    text-decoration: line-through;
+}
+.left-col{
+    flex:3;
+}
+.right-col{
+    flex:1
+}
+.left-col,.right-col{
+    background-color: #fff;
+    padding:10px;
+    border-radius: 10px;
+} */

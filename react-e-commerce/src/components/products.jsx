@@ -6,7 +6,7 @@ class Products extends Component {
     styles = {
         productsContainer: {marginTop:20,justifyContent: 'space-between' },
         product: { width: '15rem', marginBottom: 10, borderRadius: 0, color: '#000', textDecoration: 'none'},
-        productImg: { width: '100%' },
+        productImg: { width: '100%',objectFit:'cover' },
         productBody: { marginTop: 5 }
     }
     render() {
@@ -14,7 +14,7 @@ class Products extends Component {
             <div className='row' style={this.styles.productsContainer}>
                 {data.map(product => {
                     return (
-                        <Link to={product.url} key={product.id} className='product' style={this.styles.product}>
+                        <Link to={'/' + product.title.replaceAll(' ','-')} key={product.id} className='product' style={this.styles.product}>
                             <img src={product.image} className='product-img' style={this.styles.productImg} alt='...' />
                             <div className='product-body'>
                                 <h5 className='product-title' style={this.styles.productBody}>{product.title}</h5>

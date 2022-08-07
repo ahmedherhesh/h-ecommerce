@@ -1,10 +1,12 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import NavBar from "./components/layout/navbar"
 import Home from './views/home';
+import Cart from './views/cart';
+import Product from './components/Product';
 import Login from './views/auth/login';
 import Register from './views/auth/register';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/layout/navbar"
-import React from 'react';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/:title' element={<Product />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
