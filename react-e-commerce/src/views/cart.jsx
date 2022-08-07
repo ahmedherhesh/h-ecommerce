@@ -16,18 +16,18 @@ class Cart extends Component {
                             return (
                                 <React.Fragment>
 
-                                    <div className="product row col-9 rounded bg-white justify-content-around p-0 m-1">
+                                    <div className="product row col-9 rounded bg-white justify-content-around align-items-center p-0 m-1">
                                         <div className='row col-9'>
-                                            <img className='img col-1' src={moto} alt="" />
-                                            <h3 className="title col">
+                                            <img className='img col-2' src={moto} alt="" />
+                                            <h3 className="title col fs-5 fw-normal pt-3">
                                                 Samsung Galaxy A52 - 6.5 256GB/8GB Dual Sim Mobile Phone - Awesome White
                                             </h3>
                                         </div>
                                         <div className="price-section col-3 text-end">
-                                            <p className="price">EGP 8,490.00</p>
-                                            <p className="old-price">EGP 8,990.00</p><span className='discount'> -6%</span>
+                                            <p className="price mb-0">EGP 8,490.00</p>
+                                            <p className="old-price d-inline-block mb-0">EGP 8,990.00</p><span className='discount'> -6%</span>
                                         </div>
-                                        <div className="row justify-content-between p-2 p-r-0">
+                                        <div className="row justify-content-between p-2 pt-0 m-0">
                                             <span className="trash-btn btn col-2 text-start"> <FaTrashAlt /> Remove</span>
                                             <div className="counter col-2 text-end">
                                                 <span className="decrement"><FaMinus /></span>

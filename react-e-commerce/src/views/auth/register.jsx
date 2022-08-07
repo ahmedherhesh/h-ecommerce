@@ -37,7 +37,7 @@ class Register extends Component {
                 <input ref={this.phone} type="tel" className='form-control' placeholder='Phone Number' />
                 <input ref={this.password} type="password" className='form-control' placeholder='Password' />
                 <input ref={this.repeatPassword} type="password" className='form-control' placeholder='Repeat Password' />
-                <button className="btn btn-primary">Register</button>
+                <button className="btn btn-secondary">Register</button>
             </form>
         );
     }

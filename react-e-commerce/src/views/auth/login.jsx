@@ -31,7 +31,7 @@ class Login extends Component {
             <form onSubmit={this.handelSubmit} className="login-form">
                 <input ref={this.email} type="text" className='form-control' placeholder='Username' />
                 <input ref={this.password} type="password" className='form-control' placeholder='Password' />
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-secondary">Login</button>
             </form>
         );
     }
