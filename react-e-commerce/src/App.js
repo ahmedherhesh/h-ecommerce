@@ -7,6 +7,7 @@ import Cart from './views/cart';
 import Product from './components/Product';
 import Login from './views/auth/login';
 import Register from './views/auth/register';
+import Favorite from './views/auth/favorite';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/:title' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/favorite' element={<Favorite />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>

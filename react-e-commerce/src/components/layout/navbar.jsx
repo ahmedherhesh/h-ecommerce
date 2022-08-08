@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { FaSearch, FaHome} from 'react-icons/fa';
+import { FaSearch, FaRegUser } from 'react-icons/fa';
+import { BsCart3 } from "react-icons/bs";
+import { AiOutlineHome } from "react-icons/ai";
+import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { Link } from 'react-router-dom';
 class NavBar extends Component {
     state = {}
@@ -10,10 +13,10 @@ class NavBar extends Component {
     }
     componentDidMount() {
         let navItem = document.querySelectorAll('.nav-item');
-        navItem.forEach((item, i) => {
-            item.onclick = () => {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.onclick = () => {
                 this.removeActiveClass();
-                item.querySelector('.nav-link').classList.add('active')
+                link.classList.add('active');
             }
         });
         document.querySelector('.navbar-brand').onclick = () => {
@@ -30,13 +33,16 @@ class NavBar extends Component {
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div className="collapse navbar-collapse d-flex justify-content-around" id="navbarNav">
+                        <div className="collapse navbar-collapse d-flex justify-content-around align-items-center" id="navbarNav">
                             <ul className="navbar-nav">
-                                <li className="nav-item">
-                                    <Link className="nav-link active" aria-current="page" to="/"><FaHome /></Link>
+                                <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+                                    <Link className="nav-link active" aria-current="page" to="/"><AiOutlineHome /></Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/cart">Cart</Link>
+                                <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+                                    <Link className="nav-link" to="/cart"><BsCart3 /></Link>
+                                </li>
+                                <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+                                    <Link className="nav-link" to="/favorite"><MdOutlineFavoriteBorder /></Link>
                                 </li>
                             </ul>
                             <form action="">
@@ -44,13 +50,17 @@ class NavBar extends Component {
                                 <button type="submit" className='btn-style'><FaSearch /></button>
                             </form>
                             <ul className="navbar-nav">
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/login">Login</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/register">Register</Link>
+                                <li className="nav-item dropdown">
+                                    <span className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <FaRegUser />
+                                    </span>
+                                    <ul className="dropdown-menu dropdown-menu-white" aria-labelledby="navbarDarkDropdownMenuLink">
+                                        <li><Link className="dropdown-item" to="/login">Login</Link></li>
+                                        <li><Link className="dropdown-item" to="/register">Register</Link></li>
+                                    </ul>
                                 </li>
                             </ul>
+
                         </div>
                     </div>
                 </nav>

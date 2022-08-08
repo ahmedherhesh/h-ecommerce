@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import http from '../../axios';
 import validator from '../../validator';
+import { Link } from 'react-router-dom';
 class Register extends Component {
     state = {}
     vars = ['name', 'username', 'email', 'phone', 'password', 'repeatPassword'];
@@ -29,7 +30,7 @@ class Register extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handelSubmit} className="register-form">
+            <form onSubmit={this.handelSubmit} className="register-form align-items-end">
                 <h1 className='w-100 fs-5 text-center p-3 mb-3' style={{color:'var(--main-color)',borderRadius:20,borderBottom:'1px solid var(--main-color)'}}>Create account</h1>
                 <div class='form-group'><input ref={this.name} id='name' type="text" className='input-style' placeholder='Full Name' /></div>
                 <div class='form-group'><input ref={this.username} id='username' type="text" className='input-style' placeholder='Username' /></div>
@@ -37,7 +38,8 @@ class Register extends Component {
                 <div class='form-group'><input ref={this.phone} type="tel" className='input-style' placeholder='Phone Number' /></div>
                 <div class='form-group'><input ref={this.password} type="password" className='input-style' placeholder='Password' /></div>
                 <div class='form-group'><input ref={this.repeatPassword} type="password" className='input-style' placeholder='Repeat Password' /></div>
-                <button className="btn-style w-25">Register</button>
+                <button className="btn-style" style={{width:'35%'}}>Register</button>
+                <Link to='/login' className='d-block' style={{ color: 'var(--main-color)' }}>Do you have an account? Login</Link>
             </form>
         );
     }

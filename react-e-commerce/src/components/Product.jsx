@@ -12,13 +12,13 @@ let changeMainImg = e => document.querySelector('.main-image').src = e.target.sr
 let Product = () => {
     const { title } = useParams();
     return (
-        <div className="container">
+        <div className="container mt-4">
             <div className="row product">
                 <div className='row bg-white col-9'>
                     <div className="gallery col-4 text-center overflow-hidden">
                         <img src={moto} className="main-image mt-3" style={{width:300,height:300}} alt='' />
                         <div className="sub-images mt-3">
-                            <OwlCarousel className="owl-theme" loop navElement items={5}>
+                            <OwlCarousel className="owl-theme" navElement items={5}>
                                 <img onClick={changeMainImg}src={moto} className="sub-image" alt='' style={{width:50,height:50}}/>
                                 <img onClick={changeMainImg}src={white_car} className="sub-image" alt='' style={{width:50,height:50}}/>
                                 <img onClick={changeMainImg}src={moto} className="sub-image" alt='' style={{width:50,height:50}}/>
