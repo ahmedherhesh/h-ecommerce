@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import NavBar from "./components/layout/navbar"
-import Home from './views/home';
-import Cart from './views/cart';
+import Home from './views/user/home';
+import Cart from './views/user/cart';
 import Product from './components/Product';
 import Login from './views/auth/login';
 import Register from './views/auth/register';
-import Favorite from './views/auth/favorite';
+import Favorite from './views/user/favorite';
 
 function App() {
   return (
