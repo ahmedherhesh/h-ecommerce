@@ -41,7 +41,7 @@ class Cart extends Component {
                                             <h4>Cost</h4>
                                             <hr />
                                             <span> Total : EGP 8,490.00 </span>
-                                            <Link to="/register" className="btn btn-secondary d-block m-0">Checkout</Link>
+                                            <Link to="/register" className="btn-style d-block m-0">Checkout</Link>
                                         </div>
                                     : ''}
 

@@ -29,9 +29,10 @@ class Login extends Component {
     render() {
         return (
             <form onSubmit={this.handelSubmit} className="login-form">
+                <h1 className='w-100 fs-5 text-center p-3 mb-3' style={{color:'var(--main-color)',borderRadius:20,borderBottom:'1px solid var(--main-color)'}}>Login</h1>
                 <input ref={this.email} type="text" className='input-style' placeholder='Username' />
                 <input ref={this.password} type="password" className='input-style' placeholder='Password' />
-                <button className="btn btn-secondary p-2 w-50">Login</button>
+                <button className="w-50 btn-style">Login</button>
             </form>
         );
     }

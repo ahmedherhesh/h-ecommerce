@@ -1,34 +1,144 @@
-body{
+@import url(assets/css/cairo_font.css);
+* {
+  font-family: "Cairo", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+:root {
+  --main-color: #66cccc;
+  --btn-bg: var(--main-color);
+  --btn-color: #fff;
+  --border-color: var(--main-color);
+  --shadow-color: var(--main-color);
+}
+#root {
+  min-height: 100vh;
+  padding-top: 76px;
+}
+body {
   background-color: #efefef !important;
 }
-#root{
-  min-height: 100vh;
-  padding-top:76px
+.btn-style {
+  border: none;
+  outline: none;
+  color: var(--btn-color);
+  background-color: var(--main-color);
+  padding: 12px;
+  text-decoration: none;
 }
-.login-form,.register-form{
+.btn-style:hover {
+  color: var(--btn-color);
+}
+.input-style {
+  border: none;
+  outline: none;
+  padding: 13px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: transparent;
+}
+.login-form,
+.register-form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 200px auto;
-  gap:15px;
+  gap: 15px;
+  box-shadow: 1px 1px 2px var(--shadow-color);
+  padding: 20px;
+  background-color: #fff;
 }
-.login-form{
-  width:300px;
+.login-form {
+  width: 400px;
   flex-direction: column;
 }
-.register-form{
-  width:600px
-}
-.login-form input,.register-form input{
-  border:none;
-  outline: none;
-  padding: 15px;
-  border-bottom: 1px solid rgb(105, 101, 101);
+.register-form {
+  width: 600px;
 }
 .login-form input:focus::placeholder,
-.register-form input:focus::placeholder{
-  opacity: .5;
+.register-form input:focus::placeholder {
+  opacity: 0.5;
 }
-.register-form input{
-  width:calc(50% - 15px);
+.register-form .form-group {
+  width: calc(50% - 15px);
+}
+.register-form .form-group input {
+  width: 100%;
+}
+.owl-carousel {
+  position: relative;
+}
+.owl-prev,
+.owl-next {
+  position: absolute;
+  top: calc(50% - 25px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000094 !important;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #fff !important;
+  font-size: 40px !important;
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+.owl-carousel .owl-prev {
+  left: 10px;
+}
+.owl-carousel .owl-next {
+  right: 10px;
+}
+.owl-carousel:hover .owl-prev,
+.owl-carousel:hover .owl-next {
+  opacity: 1;
+}
+.owl-carousel .owl-item:hover {
+  box-shadow: 2px 2px 4px #ccc;
+}
+.navbar .active {
+  color: var(--main-color) !important;
+  text-transform: scale(1.1);
+  border-bottom: 1px solid var(--main-color);
+  border-radius: 10px;
+}
+.navbar .nav-item{
+  transition: .2s;
+}
+.navbar.bg-dark .nav-item a{
+  color: #fff;
+}
+.navbar .nav-item:hover{
+  transform: scale(1.1);
+}
+.navbar .navbar-brand {
+  color: var(--main-color) !important;
+  border-top: 1px solid var(--main-color);
+  border-left: 1px solid var(--main-color);
+  padding: 10px;
+  border-radius: 10px;
+}
+.navbar .navbar-brand:hover {
+  color: var(--main-color);
+}
+.navbar .input-style{
+  width:400px;
+  border-left:1px solid var(--main-color);
+  border-radius: 10px;
+}
+.navbar.bg-dark .input-style{
+  color:#fff;
+}
+.navbar .btn-style{
+  padding:5px;
+  background-color: transparent;
+  border-top: 1px solid var(--main-color);
+  border-radius: 20px;
+  font-size: 18px;
+}
+.navbar.bg-white .btn-style{
+  color:rgba(0, 0, 0, 0.55);
+}
+.navbar.bg-dark .input-style::placeholder{
+  color: #fff;
 }

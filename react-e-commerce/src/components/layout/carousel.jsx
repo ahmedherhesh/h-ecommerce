@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import moto from 'D:/Mix/backgrounds/moto.jpg';
+import white_car from 'D:/Mix/backgrounds/white-car.jpg';
+import orange_car from 'D:/Mix/backgrounds/orange-car.jpg';
 class Carousel extends Component {
     state = {}
 
     render() {
         return (
-            <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel" >
+            <div id="carouselExampleIndicators" className="carousel slide overflow-hidden" data-bs-ride="carousel" style={{ height: 500 }}>
                 <div className="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -12,16 +15,13 @@ class Carousel extends Component {
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <svg className="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#555" dy=".3em">First slide</text></svg>
-
+                        <img className='w-100' src={white_car} alt="" style={{height:500,objectFit:'cover'}}/>
                     </div>
                     <div className="carousel-item">
-                        <svg className="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text></svg>
-
+                        <img className='w-100' src={moto} alt="" style={{height:500,objectFit:'cover'}}/>
                     </div>
                     <div className="carousel-item">
-                        <svg className="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#555"></rect><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text></svg>
-
+                        <img className='w-100' src={orange_car} alt="" style={{height:500,objectFit:'cover'}}/>
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
