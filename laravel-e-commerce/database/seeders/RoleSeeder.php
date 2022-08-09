@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class RolesSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,11 +16,11 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'writer']);
-        $permission = Permission::create(['name' => 'edit article']);
+        $role = Role::create(['name' => 'admin']);
+        $permission = Permission::create(['name' => 'all']);
         $role->givePermissionTo($permission);
         $permission->assignRole($role);
-        // $user = User::find(1);
-        // $user->assignRole('admin');
+        $user = User::find(1);
+        $user->assignRole('admin');
     }
 }
