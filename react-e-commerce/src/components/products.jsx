@@ -22,7 +22,7 @@ class Products extends Component {
                             <h3 key={i} style={{textTransform:'capitalize'}}>{category}</h3>
                             <OwlCarousel dots={false} margin={10} nav responsive={{
                                 0  :  {items : 1, nav:false},
-                                400:  {items : 2, nav:false},
+                                300:  {items : 2, nav:false},
                                 750:  {items : 3, nav:false},
                                 950: {items : 4},
                                 1200: {items : 5},

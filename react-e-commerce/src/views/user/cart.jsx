@@ -8,56 +8,37 @@ class Cart extends Component {
         return (
             <div className='container mt-5'>
                 <div className="row">
-                    <React.Fragment>
                         <div className="row">
-                            <div className="col-9 bg-white p-3 cart-left-col" style={{height:591,overflowY:'auto'}}>
-                                <section className='d-flex justify-content-between'>
+                            <div className="col-lg-9 col-sm-12 bg-white p-3 cart-left-col" style={{ height: 591, overflowY: 'auto' }}>
+                                <div className='cart-header d-flex justify-content-between'>
                                     <h3>Shopping Cart</h3>
-                                    <h4>3 Items</h4>
-                                </section>
-                                <hr />
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Product details</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            [0, 1, 2, 3, 4].map((item, i) => {
-                                                return (
-                                                    <tr>
-                                                        <td className="row">
-                                                            <img className='img col-4' src={moto} alt="" />
-                                                            <section className='col-8'>
-                                                                <h3 className="title fs-5 fw-normal pt-3">
-                                                                    {"Samsung Galaxy A52 - 6.5 256GB/8GB Dual Sim Mobile Phone - Awesome White".slice(0, 30)}
-                                                                </h3>
-                                                                <span className="trash-btn col-2 text-start" style={{ cursor: 'pointer' }}> <FaTrashAlt /></span>
-                                                            </section>
-                                                        </td>
-                                                        <td className="counter col-2">
-                                                            <span className="decrement"><FaMinus /></span>
-                                                            <span className="qty m-2">1</span>
-                                                            <span className="increment m-1"><FaPlus /></span>
-                                                        </td>
-                                                        <td className='col-2'>
-                                                            <p className="price mb-0">EGP 8,490.00</p>
-                                                        </td>
-                                                        <td className='col-2'>
-                                                            <p className="total mb-0">EGP 8,490.00</p>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
+                                    <h4>5 Items</h4>
+                                </div>
+                                {
+                                    [1, 2, 3, 4, 5].map((item, i) => {
+                                        return(
+                                        <div className="row cart-product p-2">
+                                            <div className="product-img col-2">
+                                                <img className='w-100' src={moto} alt="" />
+                                            </div>
+                                            <div className="product-details col-10 row">
+                                                <p className="title col-5">
+                                                    {"Samsung Galaxy A52 - 6.5 256GB/8GB Dual Sim Mobile Phone - Awesome White".slice(0, 50)}
+                                                </p>
+                                                <div className="qty col-3">
+                                                    <span className="decrement"><FaMinus /></span>
+                                                    <span className="qty m-2">1</span>
+                                                    <span className="increment m-1"><FaPlus /></span>
+                                                </div>
+                                                <p className='price m-0 col-2'>EGP 8,490.00</p>
+                                                <p className='total-price m-0 col-2'>EGP 8,490.00</p>
+                                            </div>
+                                        </div>
+                                        )
+                                    })
+                                }
                             </div>
-                            <div className="col-3 bg-light p-3 cart-right-col" style={{height:'fit-content'}}>
+                            <div className="col-lg-3 col-sm-12 bg-light p-3 cart-right-col" style={{ height: 'fit-content' }}>
                                 <h3>Order Summary</h3>
                                 <hr />
                                 <div className="details row">
@@ -66,8 +47,8 @@ class Cart extends Component {
                                 </div>
                                 <div className="shipping mt-4">
                                     <p>Shipping</p>
-                                    <select className='w-100 p-2' style={{border: 'none', outline: 'none'}}>
-                                        <option selected>Standard Delivery</option>
+                                    <select className='w-100 p-2' style={{ border: 'none', outline: 'none' }}>
+                                        <option value='0' defaultValue>Standard Delivery</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
@@ -90,7 +71,6 @@ class Cart extends Component {
                                 </div>
                             </div>
                         </div>
-                    </React.Fragment>
                 </div>
             </div>
         )

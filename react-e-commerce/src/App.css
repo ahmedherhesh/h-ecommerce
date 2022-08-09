@@ -99,11 +99,14 @@ a{
 .owl-carousel .owl-item:hover {
   box-shadow: 1px 1px 2px 2px #ddd !important;
 }
+@media (max-width:500px){
+  .owl-item img{
+    object-fit: contain !important;
+  }
+}
 .navbar .active {
   color: var(--main-color) !important;
   text-transform: scale(1.1);
-  /* border-bottom: 1px solid var(--main-color); */
-  /* border-radius: 10px; */
 }
 .navbar .nav-item{
   transition: .2s;
@@ -149,4 +152,21 @@ a{
 }
 .sub-images img{
   cursor: pointer;
+}
+.navbar .navbar-collapse{
+  display: flex;
+}
+@media (max-width:300px) {
+  .navbar .navbar-collapse{
+    display: none;
+  }
+}
+@media(max-width:991px){
+  .cart-left-col{
+    overflow-y: unset !important;
+    height: fit-content !important;
+  }
+}
+.cart-product:not(:last-child),.cart-header{
+  border-bottom: 1px solid #ccc;
 }
