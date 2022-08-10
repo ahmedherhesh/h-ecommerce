@@ -18,9 +18,9 @@ class Products extends Component {
                 {Object.values(data).map((cat, i) => {
                     let category = Object.keys(data)[i];
                     return (
-                        <div class='bg-white p-2 mb-4'>
+                        <div key={++i} className='bg-white p-2 mb-4'>
                             <h3 key={i} style={{textTransform:'capitalize'}}>{category}</h3>
-                            <OwlCarousel dots={false} margin={10} nav responsive={{
+                            <OwlCarousel className='home-products' dots={false} margin={10} nav responsive={{
                                 0  :  {items : 1, nav:false},
                                 300:  {items : 2, nav:false},
                                 750:  {items : 3, nav:false},
@@ -28,13 +28,13 @@ class Products extends Component {
                                 1200: {items : 5},
                                 1400: {items : 6},
                             }}>
-                                {cat.map(product => {
+                                {cat.map((product) => {
                                     return (
                                         <Link to={'/' + product.title.replaceAll(' ', '-')} key={product.id} className='product' style={this.styles.product}>
                                             <img src={product.image} className='product-img' style={this.styles.productImg} alt='...' />
                                             <div className='product-body'>
                                                 <h5 className='product-title' style={this.styles.productBody}>{product.title}</h5>
-                                                <p className='product-text'>{product.description}</p>
+                                                <p className='product-price'>{product.price}</p>
                                             </div>
                                         </Link>
                                     )

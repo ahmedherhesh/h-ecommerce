@@ -33,8 +33,8 @@ class NavBar extends Component {
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div className="collapse navbar-collapse justify-content-around align-items-center" id="navbarNav">
-                            <ul className="navbar-nav">
+                        <div className="collapse navbar-collapse  justify-content-around align-items-center" id="navbarNav">
+                            <ul className="navbar-nav d-flex flex-row gap-3">
                                 <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
                                     <Link className="nav-link active" aria-current="page" to="/"><AiOutlineHome /></Link>
                                 </li>
@@ -44,23 +44,20 @@ class NavBar extends Component {
                                 <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
                                     <Link className="nav-link" to="/favorite"><MdOutlineFavoriteBorder /></Link>
                                 </li>
-                            </ul>
-                            <form action="">
-                                <input type="text" className='input-style' placeholder='Search' />
-                                <button type="submit" className='btn-style'><FaSearch /></button>
-                            </form>
-                            <ul className="navbar-nav">
-                                <li className="nav-item dropdown">
+                                <li className="nav-item dropdown position-relative">
                                     <span className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <FaRegUser />
                                     </span>
-                                    <ul className="dropdown-menu dropdown-menu-white" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <ul className="dropdown-menu dropdown-menu-white position-absolute top-100" aria-labelledby="navbarDarkDropdownMenuLink">
                                         <li><Link className="dropdown-item" to="/login">Login</Link></li>
                                         <li><Link className="dropdown-item" to="/register">Register</Link></li>
                                     </ul>
                                 </li>
                             </ul>
-
+                            <form action="">
+                                <input type="text" className='input-style' placeholder='Search' />
+                                <button type="submit" className='btn-style'><FaSearch /></button>
+                            </form>
                         </div>
                     </div>
                 </nav>

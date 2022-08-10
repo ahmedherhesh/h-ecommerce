@@ -17,7 +17,7 @@ class Cart extends Component {
                                 {
                                     [1, 2, 3, 4, 5].map((item, i) => {
                                         return(
-                                        <div className="row cart-product p-2">
+                                        <div key={++i} className="row cart-product p-2">
                                             <div className="product-img col-2">
                                                 <img className='w-100' src={moto} alt="" />
                                             </div>
