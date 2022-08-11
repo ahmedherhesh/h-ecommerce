@@ -69,7 +69,11 @@ a{
   width: 100%;
 }
 .owl-carousel {
-  position: relative;
+  height: 255px;
+}
+.owl-carousel .owl-stage-outer{
+  overflow-y: visible !important;
+  height: 100%;
 }
 .owl-prev,
 .owl-next {
