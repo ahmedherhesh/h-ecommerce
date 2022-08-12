@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'email' => 'ahmedherhesh3@gmail.com',
             'phone' => '01152958015',
-            'password' => 'Ahmed Herhesh',
+            'password' => '123123123',
         ]);
     }
 }
