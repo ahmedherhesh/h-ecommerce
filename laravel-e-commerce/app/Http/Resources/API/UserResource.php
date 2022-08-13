@@ -15,9 +15,12 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         $data = [
-            'id'    => $this->id ?? null,
-            'name'  => $this->name ?? null,
+            'id'    => $this->id    ?? null,
+            'name'  => $this->name  ?? null,
             'email' => $this->email ?? null,
+            'phone' => $this->phone ?? null,
+            'roles' => $this->getRoleNames(),
+            'permissions' => $this->getAllPermissions()->pluck('name')
         ];
         auth('sanctum')->user() ? null : $data['token'] =  $this->createToken('token')->plainTextToken;
         return $data;

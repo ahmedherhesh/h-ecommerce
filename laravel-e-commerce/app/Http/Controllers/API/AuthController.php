@@ -17,6 +17,7 @@ class AuthController extends MasterAPIController
     
     function register(UserRegisterRequest $request){
         $user = User::create($request->all());
+        $user->assignRole('user');
         return $this->response($user,new UserResource($user));
     }
 }

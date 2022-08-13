@@ -11,24 +11,17 @@ use Spatie\Permission\Models\Role;
 
 class RolesController extends MasterAPIController
 {
-    function spatie($class, $request_key, $msg_if_used, $msg_if_success)
+    function spatie($class, $request_key)
     {
-        $data = $class::all()->pluck('name')->toArray();
-        if (in_array($request_key, $data))
-            return response()->json($msg_if_used, 400);
-        $create = $class::create(['name' => $request_key]);
-        return $this->response($create, $msg_if_success);
+        $create = $class::create($request_key);
+        return $this->response($create, 'success');
     }
 
     function createRole(Request $request)
     {
-        return $this->spatie(
-            Role::class,
-            $request->name,
-            "Role's name already used",
-            'Role has been created successfully'
-        );
+        return $this->spatie(Role::class,$request->name);
     }
+
     function getRoles()
     {
         $roles = Role::all(['id','name']);
@@ -37,18 +30,15 @@ class RolesController extends MasterAPIController
 
     function createPermission(Request $request)
     {
-        return $this->spatie(
-            Permission::class,
-            $request->name,
-            "Permission's name already used",
-            'Permission has been created successfully'
-        );
+        return $this->spatie(Permission::class,$request->name);
     }
+
     function getPermissions()
     {
         $permissions = Permission::all()->pluck('name');
         return $this->response($permissions, $permissions);
     }
+
     function givePermissionsToRole(Request $request)
     {
         $role = Role::findByName($request->role_name);
