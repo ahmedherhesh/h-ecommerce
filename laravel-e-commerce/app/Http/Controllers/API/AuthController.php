@@ -10,14 +10,20 @@ use Illuminate\Http\Request;
 
 class AuthController extends MasterAPIController
 {
-    function login(UserLoginRequest $request){
-        $user = auth()->attempt($request->only('email','password'));
-        return $this->response($user,new UserResource(auth()->user()));
+
+    function login(UserLoginRequest $request)
+    {
+        $user = auth()->attempt($request->only('email', 'password'));
+        $user = auth()->user(); 
+        $user->token = true;
+        return $this->response($user, new UserResource($user));
     }
-    
-    function register(UserRegisterRequest $request){
+
+    function register(UserRegisterRequest $request)
+    {
         $user = User::create($request->all());
         $user->assignRole('customer');
-        return $this->response($user,new UserResource($user));
+        $user->token = true; 
+        return $this->response($user, new UserResource($user));
     }
 }

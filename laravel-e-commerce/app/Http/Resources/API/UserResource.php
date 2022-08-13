@@ -19,10 +19,10 @@ class UserResource extends JsonResource
             'name'          => $this->name  ?? null,
             'email'         => $this->email ?? null,
             'phone'         => $this->phone ?? null,
-            'roles'         => $this->getRoleNames(),
-            'permissions'   => $this->getAllPermissions()->pluck('name')
+            'roles'         => $this->getRoleNames() ?? null,
+            'permissions'   => $this->getAllPermissions()->pluck('name') ?? null,
         ];
-        auth('sanctum')->user() ? null : $data['token'] =  $this->createToken('token')->plainTextToken;
+        $this->token ? $data['token'] = $this->createToken('token')->plainTextToken : '';
         return $data;
     }
 }
