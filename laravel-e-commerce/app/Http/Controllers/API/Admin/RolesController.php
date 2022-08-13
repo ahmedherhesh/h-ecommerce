@@ -13,7 +13,7 @@ class RolesController extends MasterAPIController
 {
     function spatie($class, $request_key)
     {
-        $create = $class::create($request_key);
+        $create = $class::findOrCreate($request_key);
         return $this->response($create, 'success');
     }
 
