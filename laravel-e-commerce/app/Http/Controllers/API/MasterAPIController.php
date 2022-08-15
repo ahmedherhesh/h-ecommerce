@@ -10,7 +10,7 @@ class MasterAPIController extends Controller
 
     public function __construct()
     {
-        $this->user = auth()->user();
+        $this->user = auth('sanctum')->user();
     }
 
     public function response($condition = null, $data = null, $error_message = 'Failed Request',$failed_status = 403)
