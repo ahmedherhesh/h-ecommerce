@@ -27,7 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'],function(){
     Route::post('login',[AuthController::class,'login']);
     Route::post('register',[AuthController::class,'register']);
-    Route::group(['prefix' => 'admin','middleware' => ['role:super-admin','auth:sanctum']],function (){
+    //super-admin
+    Route::group(['middleware' => ['role:super-admin','auth:sanctum']],function (){
         // Roles Controller
         Route::post('role',[RolesController::class,'createRole'])->name('create-role');
         Route::get('roles',[RolesController::class,'getRoles']);
