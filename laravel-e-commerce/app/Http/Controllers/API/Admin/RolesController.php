@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\API\MasterAPIController;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\API\RolesResource;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;

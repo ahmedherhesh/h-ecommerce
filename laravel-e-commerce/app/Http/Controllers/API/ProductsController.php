@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\API\CategoryResource;
 use App\Http\Resources\API\ProductResource;
 use App\Models\Category;
@@ -12,7 +11,6 @@ use Illuminate\Http\Request;
 
 class ProductsController extends MasterAPIController
 {
-
     function productsByCategory($category)
     {
         $category = Category::whereName($category)->first();
@@ -60,17 +58,38 @@ class ProductsController extends MasterAPIController
         return $this->response($product, new ProductResource($product));
     }
 
-    function update()
+    function update(Request $request)
     {
+        $data = $request->except('images');
+        $product = Product::whereTitle($request->title);
+        if (!$this->user->hasAnyRole(['super-admin', 'admin']))
+            $product = $product->whereUserId($this->user->id);
+        $product = $product->first();
+        if ($product) {
+            $image_data = [
+                'type' => 'product',
+                'model_id' => $product->id,
+                'images' => $request->images
+            ];
+            $images = Image::whereType('product')->whereModelId($product->id)->first();
+            if($images) {
+                $images->update($image_data);
+            }else{
+                $images = Image::create($image_data);
+            }
+            $update_product = $product->update($data);
+        }
+        return $this->response($update_product, "product was updated");
     }
 
     function delete($title)
     {
         $product = Product::whereTitle($title);
         if (!$this->user->hasAnyRole(['super-admin', 'admin']))
-            $product->whereUserId($this->user->id);
-        $product->first();
-        if ($product) $delete_product =  $product->delete();
+            $product = $product->whereUserId($this->user->id);
+        $product = $product->first();
+        if ($product)
+            $delete_product =  $product->delete();
         return $this->response($delete_product, "product was deleted");
     }
 }

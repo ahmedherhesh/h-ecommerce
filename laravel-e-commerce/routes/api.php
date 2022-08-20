@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['middleware' => ['role:super-admin|admin|seller']], function () {
             //Products Controller
             Route::post('create-product', [ProductsController::class, 'create']);
+            Route::post('update-product', [ProductsController::class, 'update']);
             Route::delete('delete-product/{title}', [ProductsController::class, 'delete']);
         });
     });
