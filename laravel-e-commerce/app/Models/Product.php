@@ -19,7 +19,10 @@ class Product extends Model
         'status'
     ];
 
-    function image(){
-        return $this->hasMany(Image::class);
+    function images(){
+        return $this->hasMany(Image::class,'model_id');
+    }
+    function category(){
+        return $this->belongsTo(Category::class);
     }
 }
