@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Admin\CategoriesController;
 use App\Http\Controllers\API\Admin\RolesController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Resources\API\UserResource;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
     Route::group(['middleware' => ['auth:sanctum']], function () {
-        Route::get('/user', function () {
+        Route::get('user', function () {
             return new UserResource(auth('sanctum')->user());
         });
         //super-admin
@@ -34,6 +35,13 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('create-product', [ProductsController::class, 'create']);
             Route::post('update-product', [ProductsController::class, 'update']);
             Route::delete('delete-product/{title}', [ProductsController::class, 'delete']);
+        });
+        //Customer
+        Route::group(['middleware' => ['role:customer'],'prefix' => 'cart'], function () {
+            //Cart Controller
+            Route::get('/', [CartController::class, 'index']);
+            Route::post('create-or-update', [CartController::class, 'createOrUpdate']);
+            Route::delete('delete/{id}', [CartController::class, 'delete']);
         });
     });
     Route::get('products', [ProductsController::class, 'products']);
