@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "411262859788",
+    "project_id": "h-ecommerce-c742d",
+    "storage_bucket": "h-ecommerce-c742d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411262859788:android:878a7f428848462b964c29",
+        "android_client_info": {
+          "package_name": "com.herhesh.hecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411262859788-pk0nagg2ndd7l1d76rck053p88n7bibn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiRfm3yjYEkG_QhVdL18aSUxcqWZsT7XU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411262859788-pk0nagg2ndd7l1d76rck053p88n7bibn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

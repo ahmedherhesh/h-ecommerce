@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Widgets {
   static textInput({val = '', hintText = '', icon = '', obscure = false}) {
@@ -29,7 +30,7 @@ class Widgets {
     );
   }
 
-  static oAuth(oAuth) {
+  static oAuth({oAuth, oAuthClass, onTap}) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -43,7 +44,7 @@ class Widgets {
         ],
       ),
       child: ListTile(
-        onTap: () {},
+        onTap: onTap,
         leading: CircleAvatar(
           backgroundImage:
               AssetImage('assets/images/${oAuth.toLowerCase()}.png'),
@@ -90,6 +91,66 @@ class Widgets {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  static authPageHeader({title, subtitle}) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerRight,
+          end: Alignment.centerLeft,
+          colors: [
+            primaryColor,
+            Color.fromARGB(255, 24, 160, 153),
+          ],
+        ),
+      ),
+      width: double.infinity,
+      height: 180,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Text(
+                  '$title',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Text(
+                  '$subtitle',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            child: Opacity(
+              opacity: .3,
+              child: Icon(
+                Icons.waving_hand,
+                color: Colors.white,
+                size: 120,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
