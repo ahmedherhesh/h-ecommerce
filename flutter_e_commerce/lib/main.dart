@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
+import 'package:flutter_e_commerce/views/auth/register.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,10 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: Login(),
+      routes: {
+        'login': (context) => Login(),
+        'register': (context) => Register(),
+      },
     );
   }
 }

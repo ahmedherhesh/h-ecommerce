@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
+import 'package:flutter_e_commerce/views/auth/register.dart';
+import 'package:flutter_e_commerce/views/components/widgets.dart';
+import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -27,15 +30,20 @@ class _LoginState extends State<Login> {
         ),
         title: Container(
           alignment: Alignment.topRight,
-          child: Text(
-            'Register',
-            style: TextStyle(
-              color: Color(0xffefefef),
-              fontSize: 20,
+          child: MaterialButton(
+            padding: EdgeInsets.all(0),
+            onPressed: () {
+              Navigator.of(context).pushNamed('register');
+            },
+            child: Text(
+              'Register',
+              style: TextStyle(
+                color: Color(0xffefefef),
+                fontSize: 20,
+              ),
             ),
           ),
         ),
-        leading: Icon(Icons.arrow_back),
         backgroundColor: primaryColor,
         elevation: 0,
       ),
@@ -94,56 +102,17 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 1,
-                          color: Color(0xffdddddd),
-                        ),
-                      ),
-                    ),
-                    //Email Field
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Email , Phone Number',
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.blueGrey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      cursorColor: Colors.blueGrey,
-                    ),
+                  //Email Field
+                  Widgets.textInput(
+                    icon: Icons.person,
+                    hintText: 'Email, Phone Number',
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   //Password Field
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 1,
-                          color: Color(0xffdddddd),
-                        ),
-                      ),
-                    ),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.blueGrey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      cursorColor: Colors.blueGrey,
-                    ),
+                  Widgets.textInput(
+                    icon: Icons.lock,
+                    hintText: 'Password',
+                    obscure: true,
                   ),
                   Container(
                     child: Column(
@@ -162,88 +131,12 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         // Login Button
-                        Container(
-                          margin: EdgeInsets.only(top: 20, left: 25, right: 25),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerRight,
-                              end: Alignment.centerLeft,
-                              colors: [
-                                primaryColor,
-                                Color.fromARGB(255, 19, 184, 175),
-                              ],
-                            ),
-                          ),
-                          child: MaterialButton(
-                            minWidth: 200,
-                            onPressed: () {},
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Color(0xffefefef),
-                                    fontSize: 25,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.login,
-                                  color: Colors.white,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        Widgets.submitButton(text: 'Login'),
+                        SizedBox(height: 30),
                         //Continue with google button
-                        Container(
-                          margin: EdgeInsets.only(top: 40, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 4,
-                                color: Color(0xffdddddd),
-                              ),
-                            ],
-                          ),
-                          child: ListTile(
-                            onTap: () {},
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/google.png'),
-                            ),
-                            title: Text('Continue With Google'),
-                            trailing: Icon(Icons.arrow_right),
-                          ),
-                        ),
+                        Widgets.oAuth('Google'),
                         //Continue with facebook button
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 4,
-                                color: Color(0xffdddddd),
-                              ),
-                            ],
-                          ),
-                          child: ListTile(
-                            onTap: () {},
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/facebook.png'),
-                            ),
-                            title: Text('Continue With Facebook'),
-                            trailing: Icon(Icons.arrow_right),
-                          ),
-                        ),
+                        Widgets.oAuth('Facebook'),
                       ],
                     ),
                   ),
