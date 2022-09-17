@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
-import 'package:flutter_e_commerce/views/components/widgets.dart';
+import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -59,7 +59,7 @@ class _RegisterState extends State<Register> {
         elevation: 0,
       ),
       body: Stack(alignment: Alignment.topLeft, children: [
-        Widgets.authPageHeader(
+        Functions.authPageHeader(
           title: 'Register',
           subtitle: 'Welcome To Ecommerce',
         ),
@@ -79,30 +79,30 @@ class _RegisterState extends State<Register> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //Email Field
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.person,
                       hintText: 'Full Name',
                     ),
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.person,
                       hintText: 'Username',
                     ),
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.email,
                       hintText: 'Email',
                     ),
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.phone,
                       hintText: 'Phone',
                     ),
                     SizedBox(height: 10),
                     //Password Field
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.lock,
                       hintText: 'Password',
                       obscure: true,
                     ),
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.lock,
                       hintText: 'Repeat Password',
                       obscure: true,
@@ -112,16 +112,16 @@ class _RegisterState extends State<Register> {
                         children: [
                           SizedBox(height: 10),
                           // Login Button
-                          Widgets.submitButton(text: 'Register'),
+                          Functions.submitButton(text: 'Register'),
                           SizedBox(height: 30),
                           //Continue with google button
-                          Widgets.oAuth(
+                          Functions.oAuth(
                             oAuth: 'Google',
                             oAuthClass: googleSignIn,
                             onTap: googleLogin,
                           ),
                           //Continue with facebook button
-                          Widgets.oAuth(oAuth: 'Facebook'),
+                          Functions.oAuth(oAuth: 'Facebook'),
                         ],
                       ),
                     ),

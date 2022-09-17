@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
-import 'package:flutter_e_commerce/views/components/widgets.dart';
+import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -59,7 +60,7 @@ class _LoginState extends State<Login> {
         elevation: 0,
       ),
       body: Stack(alignment: Alignment.topLeft, children: [
-        Widgets.authPageHeader(
+        Functions.authPageHeader(
           title: 'Login',
           subtitle: 'Welcome Back',
         ),
@@ -79,13 +80,13 @@ class _LoginState extends State<Login> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //Email Field
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.person,
                       hintText: 'Email, Phone Number',
                     ),
                     SizedBox(height: 10),
                     //Password Field
-                    Widgets.textInput(
+                    Functions.textInput(
                       icon: Icons.lock,
                       hintText: 'Password',
                       obscure: true,
@@ -107,16 +108,16 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           // Login Button
-                          Widgets.submitButton(text: 'Login'),
+                          Functions.submitButton(text: 'Login'),
                           SizedBox(height: 30),
                           //Continue with google button
-                          Widgets.oAuth(
+                          Functions.oAuth(
                             oAuth: 'Google',
                             oAuthClass: googleSignIn,
                             onTap: googleLogin,
                           ),
                           //Continue with facebook button
-                          Widgets.oAuth(oAuth: 'Facebook'),
+                          Functions.oAuth(oAuth: 'Facebook'),
                         ],
                       ),
                     ),

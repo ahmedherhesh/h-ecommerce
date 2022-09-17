@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/components/search.dart';
+import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/components/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Home extends StatefulWidget {
@@ -9,64 +11,101 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List buttons = [];
+  setIcon(index, currentIndex, icon, icon_outlined) {
+    return index == currentIndex ? icon : icon_outlined;
+  }
+
+  int currentIndex = 0;
+  GlobalKey<ScaffoldState> key = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'E-Commerce',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        // leading: Image.asset('assets/images/h.gif'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: Search());
-            },
-            icon: Icon(Icons.search),
-          ),
-        ],
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft,
-              colors: [
-                primaryColor,
-                Color.fromARGB(255, 24, 160, 153),
-              ],
-            ),
-          ),
-        ),
-      ),
+      key: key,
+      appBar: Functions.appBar(context: context),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: Color(0xffdddddd), blurRadius: 6),
+          ],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.widgets_outlined, size: 30),
+              onPressed: () {
+                setState(() {
+                  currentIndex = 0;
+                });
+              },
+              icon: setIcon(
+                0,
+                currentIndex,
+                Icon(Icons.widgets, size: 27),
+                Icon(Icons.widgets_outlined, size: 27),
+              ),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.shopping_bag_outlined, size: 30),
+              onPressed: () {
+                setState(() {
+                  currentIndex = 1;
+                });
+              },
+              icon: setIcon(
+                1,
+                currentIndex,
+                Icon(Icons.shopping_bag, size: 27),
+                Icon(Icons.shopping_bag_outlined, size: 27),
+              ),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.local_grocery_store_outlined, size: 30),
+              onPressed: () {
+                setState(() {
+                  currentIndex = 2;
+                });
+              },
+              icon: setIcon(
+                2,
+                currentIndex,
+                Icon(Icons.local_grocery_store, size: 27),
+                Icon(Icons.local_grocery_store_outlined, size: 27),
+              ),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.favorite_outline, size: 30),
+              onPressed: () {
+                setState(() {
+                  currentIndex = 3;
+                });
+              },
+              icon: setIcon(
+                3,
+                currentIndex,
+                Icon(Icons.favorite, size: 27),
+                Icon(Icons.favorite_outline, size: 27),
+              ),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.person_outline, size: 30),
+              onPressed: () {
+                setState(() {
+                  currentIndex = 4;
+                });
+                if (key.currentState!.hasEndDrawer) {
+                  key.currentState!.openEndDrawer();
+                }
+              },
+              icon: setIcon(
+                4,
+                currentIndex,
+                Icon(Icons.person, size: 27),
+                Icon(Icons.person_outline, size: 27),
+              ),
             ),
           ],
         ),
       ),
+      endDrawer: Drawer(),
       body: ListView(
         children: [
           Container(
