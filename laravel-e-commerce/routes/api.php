@@ -3,10 +3,10 @@
 use App\Http\Controllers\API\Admin\CategoriesController;
 use App\Http\Controllers\API\Admin\RolesController;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\CartController;
+use App\Http\Controllers\API\Customer\CartController;
+use App\Http\Controllers\API\Customer\FavouritesController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Resources\API\UserResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
@@ -37,11 +37,19 @@ Route::group(['prefix' => 'v1'], function () {
             Route::delete('delete-product/{title}', [ProductsController::class, 'delete']);
         });
         //Customer
-        Route::group(['middleware' => ['role:customer'],'prefix' => 'cart'], function () {
+        Route::group(['middleware' => ['role:customer']], function () {
             //Cart Controller
-            Route::get('/', [CartController::class, 'index']);
-            Route::post('create-or-update', [CartController::class, 'createOrUpdate']);
-            Route::delete('delete/{id}', [CartController::class, 'delete']);
+            Route::group(['prefix' => 'cart'],function(){
+                Route::get('/', [CartController::class, 'index']);
+                Route::post('create-or-update', [CartController::class, 'createOrUpdate']);
+                Route::delete('delete/{id}', [CartController::class, 'delete']);
+            });
+            //Favourites Controller
+            Route::group(['prefix' => 'favourites'],function(){
+                Route::get('/', [FavouritesController::class, 'index']);
+                Route::post('create', [FavouritesController::class, 'create']);
+                Route::delete('delete/{id}', [FavouritesController::class, 'delete']);
+            });
         });
     });
     Route::get('products', [ProductsController::class, 'products']);
