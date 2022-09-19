@@ -5,6 +5,7 @@ use App\Http\Controllers\API\Admin\RolesController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Customer\CartController;
 use App\Http\Controllers\API\Customer\FavouritesController;
+use App\Http\Controllers\API\OrdersController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Resources\API\UserResource;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,12 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::get('/', [FavouritesController::class, 'index']);
                 Route::post('create', [FavouritesController::class, 'create']);
                 Route::delete('delete/{id}', [FavouritesController::class, 'delete']);
+            });
+            //Orders Controller
+            Route::group(['prefix' => 'orders'],function(){
+                Route::get('/', [OrdersController::class, 'index']);
+                Route::post('create', [OrdersController::class, 'create']);
+                Route::delete('delete/{id}', [OrdersController::class, 'delete']);
             });
         });
     });
