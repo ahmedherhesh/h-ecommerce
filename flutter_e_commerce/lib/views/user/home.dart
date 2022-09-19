@@ -43,8 +43,8 @@ class _HomeState extends State<Home> {
               icon: setIcon(
                 0,
                 currentIndex,
-                Icon(Icons.widgets, size: 27),
-                Icon(Icons.widgets_outlined, size: 27),
+                Icon(Icons.widgets, size: 27, color: primaryColor),
+                Icon(Icons.widgets_outlined, size: 27, color: primaryColor),
               ),
             ),
             IconButton(
@@ -56,8 +56,9 @@ class _HomeState extends State<Home> {
               icon: setIcon(
                 1,
                 currentIndex,
-                Icon(Icons.shopping_bag, size: 27),
-                Icon(Icons.shopping_bag_outlined, size: 27),
+                Icon(Icons.shopping_bag, size: 27, color: primaryColor),
+                Icon(Icons.shopping_bag_outlined,
+                    size: 27, color: primaryColor),
               ),
             ),
             IconButton(
@@ -69,8 +70,9 @@ class _HomeState extends State<Home> {
               icon: setIcon(
                 2,
                 currentIndex,
-                Icon(Icons.local_grocery_store, size: 27),
-                Icon(Icons.local_grocery_store_outlined, size: 27),
+                Icon(Icons.local_grocery_store, size: 27, color: primaryColor),
+                Icon(Icons.local_grocery_store_outlined,
+                    size: 27, color: primaryColor),
               ),
             ),
             IconButton(
@@ -82,8 +84,8 @@ class _HomeState extends State<Home> {
               icon: setIcon(
                 3,
                 currentIndex,
-                Icon(Icons.favorite, size: 27),
-                Icon(Icons.favorite_outline, size: 27),
+                Icon(Icons.favorite, size: 27, color: primaryColor),
+                Icon(Icons.favorite_outline, size: 27, color: primaryColor),
               ),
             ),
             IconButton(
@@ -98,8 +100,8 @@ class _HomeState extends State<Home> {
               icon: setIcon(
                 4,
                 currentIndex,
-                Icon(Icons.person, size: 27),
-                Icon(Icons.person_outline, size: 27),
+                Icon(Icons.person, size: 27, color: primaryColor),
+                Icon(Icons.person_outline, size: 27, color: primaryColor),
               ),
             ),
           ],
@@ -108,86 +110,75 @@ class _HomeState extends State<Home> {
       endDrawer: Drawer(),
       body: ListView(
         children: [
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xFFdddddd),
-                    blurRadius: 6,
-                    spreadRadius: 2,
-                  ),
-                ]),
-            margin: EdgeInsets.all(10),
-            child: PageView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          //Home Page Slider
+          Column(
+            children: [
+              Container(
+                clipBehavior: Clip.hardEdge,
+                height: 160,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xFFdddddd),
+                        blurRadius: 6,
+                        spreadRadius: 2,
+                      ),
+                    ]),
+                margin: EdgeInsets.all(10),
+                child: PageView(
                   children: [
-                    const Text(
-                      'test',
-                      style: TextStyle(color: Colors.black),
+                    Image.network(
+                      fit: BoxFit.cover,
+                      'https://img.freepik.com/free-vector/gradient-sale-background_23-2148945310.jpg?w=2000',
                     ),
-                    const Text(
-                      'test',
-                      style: TextStyle(color: Colors.black),
+                    Image.network(
+                      fit: BoxFit.cover,
+                      'https://img.freepik.com/free-vector/big-sale-background-with-offer_23-2148902856.jpg?w=2000',
                     ),
-                    const Text(
-                      'test',
-                      style: TextStyle(color: Colors.black),
+                    Image.network(
+                      fit: BoxFit.cover,
+                      'https://img.freepik.com/free-vector/gradient-sale-background_52683-62896.jpg?w=2000',
+                    ),
+                    Image.network(
+                      fit: BoxFit.cover,
+                      'https://img.freepik.com/free-vector/creative-sales-banner-with-abstract-details_52683-67038.jpg?w=2000',
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: StaggeredGrid.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              children: List.generate(
-                20,
-                (index) => Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFFdddddd),
-                          blurRadius: 6,
-                          spreadRadius: 2,
-                        ),
-                      ]),
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'test',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      const Text(
-                        'test',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      const Text(
-                        'test',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  ),
+              //Slider Indicators
+              Container(
+                width: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: primaryColor,
+                      radius: 4,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.blueGrey,
+                      radius: 4,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.blueGrey,
+                      radius: 4,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.blueGrey,
+                      radius: 4,
+                    ),
+                  ],
                 ),
-              ),
-            ),
+              )
+            ],
           ),
+          //Categories
+          Functions.categories(),
+          Functions.categoryWithProducts(),
+          Functions.categoryWithProducts(),
         ],
       ),
     );

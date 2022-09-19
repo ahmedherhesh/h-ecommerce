@@ -63,9 +63,7 @@ class Functions {
             icon: const Icon(Icons.favorite_outline, size: 30),
           ),
           IconButton(
-            onPressed: () {
-              
-            },
+            onPressed: () {},
             icon: const Icon(Icons.person_outline, size: 30),
           ),
         ],
@@ -217,6 +215,152 @@ class Functions {
                 Icons.waving_hand,
                 color: Colors.white,
                 size: 120,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static categories() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
+          'Categories',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      Container(
+        height: 70,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: GridView(
+          scrollDirection: Axis.horizontal,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            mainAxisSpacing: 5,
+          ),
+          children: List.generate(
+            20,
+            (index) => Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerRight,
+                  end: Alignment.centerLeft,
+                  colors: [
+                    primaryColor,
+                    Color.fromARGB(255, 24, 160, 153),
+                  ],
+                ),
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.laptop_chromebook,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  static categoryWithProducts() {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 5, top: 10),
+            child: Text(
+              'Category Name',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Container(
+            height: 200,
+            margin: EdgeInsets.only(left: 5),
+            child: GridView.builder(
+              scrollDirection: Axis.horizontal,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1, childAspectRatio: 1.3),
+              itemCount: 20,
+              itemBuilder: (context, index) => Container(
+                clipBehavior: Clip.hardEdge,
+                margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xFFdddddd),
+                        blurRadius: 2,
+                        spreadRadius: 2,
+                      ),
+                    ]),
+                child: Column(
+                  children: [
+                    Image.network(
+                      fit: BoxFit.cover,
+                      'https://img.freepik.com/free-vector/gradient-sale-background_23-2148945310.jpg?w=2000',
+                      height: 135,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: const Text(
+                              'Title',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 25,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '\$12.99',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                  padding: EdgeInsets.all(0),
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite_outline,
+                                    color: primaryColor,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
