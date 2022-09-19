@@ -108,7 +108,13 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           // Login Button
-                          Functions.submitButton(text: 'Login'),
+                          Functions.submitButton(
+                            text: 'Login',
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('home');
+                            },
+                          ),
                           SizedBox(height: 30),
                           //Continue with google button
                           Functions.oAuth(

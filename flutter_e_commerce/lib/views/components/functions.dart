@@ -230,6 +230,7 @@ class Functions {
         child: Text(
           'Categories',
           style: TextStyle(
+            color: Colors.blueGrey,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -283,6 +284,7 @@ class Functions {
             child: Text(
               'Category Name',
               style: TextStyle(
+                color: Colors.blueGrey,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -328,7 +330,7 @@ class Functions {
                             child: const Text(
                               'Title',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.blueGrey,
                                 fontSize: 16,
                               ),
                             ),
@@ -341,6 +343,7 @@ class Functions {
                                 Text(
                                   '\$12.99',
                                   style: TextStyle(
+                                    color: Colors.blueGrey,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
