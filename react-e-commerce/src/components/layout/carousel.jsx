@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import moto from 'D:/Mix/backgrounds/moto.jpg';
-import white_car from 'D:/Mix/backgrounds/white-car.jpg';
-import orange_car from 'D:/Mix/backgrounds/orange-car.jpg';
+import sale from '../../assets/images/sale.jpg';
+
 class Carousel extends Component {
     state = {}
-
+    style = {
+        carouselImgStyle:{
+            height:400,
+            objectFit:'cover',
+        }
+    }
     render() {
         return (
             <div id="carouselExampleIndicators" className="carousel slide overflow-hidden" data-bs-ride="carousel" style={{ maxHeight: 500 }}>
@@ -15,13 +19,13 @@ class Carousel extends Component {
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img className='w-100' src={white_car} alt="" style={{height:500,objectFit:'cover'}}/>
+                        <img className='w-100' src={sale} alt="" style={this.style.carouselImgStyle}/>
                     </div>
                     <div className="carousel-item">
-                        <img className='w-100' src={moto} alt="" style={{height:500,objectFit:'cover'}}/>
+                        <img className='w-100' src={sale} alt="" style={this.style.carouselImgStyle}/>
                     </div>
                     <div className="carousel-item">
-                        <img className='w-100' src={orange_car} alt="" style={{height:500,objectFit:'cover'}}/>
+                        <img className='w-100' src={sale} alt="" style={this.style.carouselImgStyle}/>
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

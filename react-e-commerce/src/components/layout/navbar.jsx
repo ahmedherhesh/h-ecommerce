@@ -12,7 +12,6 @@ class NavBar extends Component {
         });
     }
     componentDidMount() {
-        let navItem = document.querySelectorAll('.nav-item');
         document.querySelectorAll('.nav-link').forEach(link => {
             link.onclick = () => {
                 this.removeActiveClass();
@@ -21,20 +20,18 @@ class NavBar extends Component {
         });
         document.querySelector('.navbar-brand').onclick = () => {
             this.removeActiveClass();
-            navItem[0].querySelector('.nav-link').classList.add('active');
+            document.querySelector('.nav-link').classList.add('active');
         }
+
     }
     render() {
         return (
-            <div className="header" >
-                <nav className="navbar navbar-expand-lg bg-white" style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }}>
-                    <div className="container">
-                        <Link className="navbar-brand" to="/">E-Commerce</Link>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse  justify-content-around align-items-center" id="navbarNav">
-                            <ul className="navbar-nav d-flex flex-row gap-3">
+            <React.Fragment>
+                <div className="header">
+                    <nav className="navbar navbar-expand-lg bg-white" style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }}>
+                        <div className="container">
+                            <Link className="navbar-brand" to="/">E-Commerce</Link>
+                            <ul className="bottom-navbar d-flex justify-content-around bg-white m-0 p-2">
                                 <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
                                     <Link className="nav-link active" aria-current="page" to="/"><AiOutlineHome /></Link>
                                 </li>
@@ -44,24 +41,21 @@ class NavBar extends Component {
                                 <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
                                     <Link className="nav-link" to="/favorite"><MdOutlineFavoriteBorder /></Link>
                                 </li>
-                                <li className="nav-item dropdown position-relative">
-                                    <span className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <FaRegUser />
-                                    </span>
-                                    <ul className="dropdown-menu dropdown-menu-white position-absolute top-100" aria-labelledby="navbarDarkDropdownMenuLink">
-                                        <li><Link className="dropdown-item" to="/login">Login</Link></li>
-                                        <li><Link className="dropdown-item" to="/register">Register</Link></li>
-                                    </ul>
+                                <li className="nav-item" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+                                    <Link className="nav-link" to="/login"><FaRegUser /></Link>
                                 </li>
                             </ul>
-                            <form action="">
-                                <input type="text" className='input-style' placeholder='Search' />
-                                <button type="submit" className='btn-style'><FaSearch /></button>
-                            </form>
+                         
+                                <form action="">
+                                    <input type="text" className='input-style' placeholder='Search' />
+                                    <button type="submit" className='btn-style'><FaSearch /></button>
+                                </form>
+
                         </div>
-                    </div>
-                </nav>
-            </div>
+                    </nav>
+                </div>
+
+            </React.Fragment>
         );
     }
 }

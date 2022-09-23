@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/components/search.dart';
+import 'package:flutter_e_commerce/views/user/orders.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Functions {
+  static checkAuth() async {
+    SharedPreferences sharedRef = await SharedPreferences.getInstance();
+    if (sharedRef.getString('token') != null) return true;
+    return false;
+  }
+
   static appBar({context}) {
     return AppBar(
       title: Text(
@@ -34,7 +43,7 @@ class Functions {
     );
   }
 
-  static bottomNavBar() {
+  static bottomNavBar({setState, setIcon, currentIndex, context}) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 2),
       decoration: const BoxDecoration(
@@ -47,24 +56,75 @@ class Functions {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.widgets_outlined, size: 30),
+            onPressed: () {
+              setState(() {
+                currentIndex = 0;
+              });
+              Navigator.of(context).pushNamed('home');
+            },
+            icon: setIcon(
+              0,
+              currentIndex,
+              Icon(Icons.widgets, size: 27, color: primaryColor),
+              Icon(Icons.widgets_outlined, size: 27, color: primaryColor),
+            ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_bag_outlined, size: 30),
+            onPressed: () {
+              setState(() {
+                currentIndex = 1;
+              });
+              Get.to(Orders);
+            },
+            icon: setIcon(
+              1,
+              currentIndex,
+              Icon(Icons.shopping_bag, size: 27, color: primaryColor),
+              Icon(Icons.shopping_bag_outlined, size: 27, color: primaryColor),
+            ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.local_grocery_store_outlined, size: 30),
+            onPressed: () {
+              setState(() {
+                currentIndex = 2;
+              });
+              Navigator.of(context).pushNamed('cart');
+            },
+            icon: setIcon(
+              2,
+              currentIndex,
+              Icon(Icons.local_grocery_store, size: 27, color: primaryColor),
+              Icon(Icons.local_grocery_store_outlined,
+                  size: 27, color: primaryColor),
+            ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_outline, size: 30),
+            onPressed: () {
+              setState(() {
+                currentIndex = 3;
+              });
+              Navigator.of(context).pushNamed('favourites');
+            },
+            icon: setIcon(
+              3,
+              currentIndex,
+              Icon(Icons.favorite, size: 27, color: primaryColor),
+              Icon(Icons.favorite_outline, size: 27, color: primaryColor),
+            ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person_outline, size: 30),
+            onPressed: () {
+              setState(() {
+                currentIndex = 4;
+              });
+              Navigator.of(context).pushNamed('settings');
+            },
+            icon: setIcon(
+              4,
+              currentIndex,
+              Icon(Icons.person, size: 27, color: primaryColor),
+              Icon(Icons.person_outline, size: 27, color: primaryColor),
+            ),
           ),
         ],
       ),
@@ -313,9 +373,9 @@ class Functions {
                     ]),
                 child: Column(
                   children: [
-                    Image.network(
+                    Image.asset(
                       fit: BoxFit.cover,
-                      'https://img.freepik.com/free-vector/gradient-sale-background_23-2148945310.jpg?w=2000',
+                      'assets/images/sale.jpg',
                       height: 135,
                     ),
                     Container(
