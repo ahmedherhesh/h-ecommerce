@@ -181,11 +181,22 @@ img{
 .navbar .navbar-brand:hover {
   color: var(--main-color);
 }
+@media(max-width:500px){
+  .navbar form{
+    justify-content: space-around;
+  }
+  .navbar form .input-style{
+    width: 0;
+    border:none;
+  }
+}
+
 .navbar .input-style{
-  max-width:400px;
-  min-width: 250px;
+  transition: all .3s;
+  max-width: 400px;
   border-left:1px solid var(--main-color);
   border-radius: 10px;
+  margin: auto;
 }
 .navbar.bg-dark .input-style{
   color:#fff;
