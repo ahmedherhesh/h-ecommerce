@@ -64,74 +64,76 @@ class _LoginState extends State<Login> {
           title: 'Login',
           subtitle: 'Welcome Back',
         ),
-        ListView(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 130),
-              padding:
-                  EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: Colors.white,
-              ),
-              //Login Form
-              child: Form(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    //Email Field
-                    Functions.textInput(
-                      icon: Icons.person,
-                      hintText: 'Email, Phone Number',
-                    ),
-                    SizedBox(height: 10),
-                    //Password Field
-                    Functions.textInput(
-                      icon: Icons.lock,
-                      hintText: 'Password',
-                      obscure: true,
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          //Forget Password
-                          Container(
-                            alignment: Alignment.topRight,
-                            margin: EdgeInsets.only(top: 10),
-                            child: Text(
-                              'Forget Password ?',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff555555),
+        Expanded(
+          child: ListView(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 120),
+                padding:
+                    EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  color: Colors.white,
+                ),
+                //Login Form
+                child: Form(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      //Email Field
+                      Functions.textInput(
+                        icon: Icons.person,
+                        hintText: 'Email, Phone Number',
+                      ),
+                      SizedBox(height: 10),
+                      //Password Field
+                      Functions.textInput(
+                        icon: Icons.lock,
+                        hintText: 'Password',
+                        obscure: true,
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            //Forget Password
+                            Container(
+                              alignment: Alignment.topRight,
+                              margin: EdgeInsets.only(top: 10),
+                              child: Text(
+                                'Forget Password ?',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff555555),
+                                ),
                               ),
                             ),
-                          ),
-                          // Login Button
-                          Functions.submitButton(
-                            text: 'Login',
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('home');
-                            },
-                          ),
-                          SizedBox(height: 30),
-                          //Continue with google button
-                          Functions.oAuth(
-                            oAuth: 'Google',
-                            oAuthClass: googleSignIn,
-                            onTap: googleLogin,
-                          ),
-                          //Continue with facebook button
-                          Functions.oAuth(oAuth: 'Facebook'),
-                        ],
+                            // Login Button
+                            Functions.submitButton(
+                              text: 'Login',
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('main');
+                              },
+                            ),
+                            SizedBox(height: 30),
+                            //Continue with google button
+                            Functions.oAuth(
+                              oAuth: 'Google',
+                              oAuthClass: googleSignIn,
+                              onTap: googleLogin,
+                            ),
+                            //Continue with facebook button
+                            Functions.oAuth(oAuth: 'Facebook'),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ]),
     );

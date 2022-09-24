@@ -4,6 +4,7 @@ import 'package:flutter_e_commerce/views/components/search.dart';
 import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:flutter_e_commerce/views/components/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,11 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List buttons = [];
-  setIcon(index, currentIndex, icon, icon_outlined) {
-    return index == currentIndex ? icon : icon_outlined;
-  }
-
   int currentIndex = 0;
   GlobalKey<ScaffoldState> key = new GlobalKey();
   @override
@@ -23,13 +19,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: key,
       appBar: Functions.appBar(context: context),
-      bottomNavigationBar: Functions.bottomNavBar(
-        setIcon: setIcon,
-        setState: setState,
-        currentIndex: currentIndex,
-        context: context
-      ),
-      endDrawer: Drawer(),
       body: ListView(
         children: [
           //Home Page Slider
