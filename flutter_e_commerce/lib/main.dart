@@ -72,7 +72,7 @@ class _MainState extends State<Main> {
         child: CurvedNavigationBar(
           height: 50,
           index: 0,
-          color: primaryColor,
+          color: Color.fromARGB(255, 3, 179, 179),
           buttonBackgroundColor: Colors.blueGrey,
           backgroundColor: Colors.transparent,
           items: [
