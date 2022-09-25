@@ -44,8 +44,7 @@ class AuthBoard extends StatelessWidget {
                   elevation: 10,
                   clipBehavior: Clip.hardEdge,
                   child: MaterialButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('register'),
+                    onPressed: () => Navigator.of(context).pushNamed('login'),
                     child: Text(
                       'Login',
                       style: TextStyle(
