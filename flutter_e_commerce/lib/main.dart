@@ -9,6 +9,7 @@ import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
 import 'package:flutter_e_commerce/views/user/orders.dart';
+import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         'login': (context) => Login(),
         'register': (context) => Register(),
         'main': (context) => Main(),
+        'product': (context) => Product(),
       },
     );
   }
@@ -72,7 +74,7 @@ class _MainState extends State<Main> {
         child: CurvedNavigationBar(
           height: 50,
           index: 0,
-          color: Color.fromARGB(255, 3, 179, 179),
+          color: primaryColor,
           buttonBackgroundColor: Colors.blueGrey,
           backgroundColor: Colors.transparent,
           items: [

@@ -7,6 +7,7 @@ import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
 import 'package:flutter_e_commerce/views/user/orders.dart';
+import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/settings.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,11 +23,11 @@ class Functions {
 
   static appBar({context}) {
     return AppBar(
+      backgroundColor: Colors.transparent,
       title: Text(
         'E-Commerce',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      // leading: Image.asset('assets/images/h.gif'),
       actions: [
         IconButton(
           onPressed: () {
@@ -35,8 +36,12 @@ class Functions {
           icon: Icon(Icons.search),
         ),
       ],
+      excludeHeaderSemantics: true,
       flexibleSpace: Container(
         decoration: BoxDecoration(
+          // borderRadius: BorderRadius.vertical(
+          //   bottom: Radius.circular(20),
+          // ),
           gradient: LinearGradient(
             begin: Alignment.centerRight,
             end: Alignment.centerLeft,
@@ -304,71 +309,79 @@ class Functions {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1, childAspectRatio: 1.3),
               itemCount: 20,
-              itemBuilder: (context, index) => Container(
-                clipBehavior: Clip.hardEdge,
-                margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFFdddddd),
-                        blurRadius: 2,
-                        spreadRadius: 2,
+              itemBuilder: (context, index) => MaterialButton(
+                padding: EdgeInsets.all(0),
+                onPressed: () => Navigator.of(context).pushNamed(
+                  'product',
+                  arguments: Product(title: 'Title test'),
+                ),
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFFdddddd),
+                          blurRadius: 2,
+                          spreadRadius: 2,
+                        ),
+                      ]),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        fit: BoxFit.cover,
+                        'assets/images/sale.jpg',
+                        height: 135,
                       ),
-                    ]),
-                child: Column(
-                  children: [
-                    Image.asset(
-                      fit: BoxFit.cover,
-                      'assets/images/sale.jpg',
-                      height: 135,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: const Text(
-                              'Title',
-                              style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 16,
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: const Text(
+                                'Title',
+                                style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            height: 25,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '\$12.99',
-                                  style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                            Container(
+                              height: 25,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '\$12.99',
+                                    style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.favorite_outline,
-                                    color: primaryColor,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                                  IconButton(
+                                    padding: EdgeInsets.all(0),
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.favorite_outline,
+                                      color: primaryColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
