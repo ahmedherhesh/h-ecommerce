@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 120),
+                margin: EdgeInsets.only(top: 130),
                 padding:
                     EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
                 decoration: BoxDecoration(
