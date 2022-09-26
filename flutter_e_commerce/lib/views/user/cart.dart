@@ -8,6 +8,7 @@ class Cart extends StatelessWidget {
       appBar: Functions.appBar(context: context),
       body: ListView(children: [
         SizedBox(height: 10),
+        //cart products
         ...List.generate(
           3,
           (index) => Container(
@@ -105,6 +106,7 @@ class Cart extends StatelessWidget {
             ),
           ),
         ),
+        //promo code
         Container(
           margin: const EdgeInsets.all(15),
           decoration: BoxDecoration(
@@ -175,6 +177,7 @@ class Cart extends StatelessWidget {
             ],
           )),
         ),
+        //total price
         Container(
           padding: EdgeInsets.all(15),
           child: Column(
@@ -254,7 +257,19 @@ class Cart extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
+        //check out button
+        Container(
+          margin: EdgeInsets.only(top: 15, right: 15, bottom: 30, left: 15),
+          child: MaterialButton(
+            padding: EdgeInsets.all(10),
+            onPressed: () {},
+            textColor: Colors.white,
+            child: Text('Checkout',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            color: primaryColor,
+          ),
+        ),
       ]),
     );
   }
