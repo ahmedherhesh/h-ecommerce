@@ -16,9 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Functions {
   static checkAuth() async {
     SharedPreferences sharedRef = await SharedPreferences.getInstance();
-    if (sharedRef.getString('token') != null) {
+    if (sharedRef.getString('token') != null)
       return sharedRef.getString('token');
-    }
   }
 
   static appBar({context}) {
@@ -39,9 +38,6 @@ class Functions {
       excludeHeaderSemantics: true,
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          // borderRadius: BorderRadius.vertical(
-          //   bottom: Radius.circular(20),
-          // ),
           gradient: LinearGradient(
             begin: Alignment.centerRight,
             end: Alignment.centerLeft,
@@ -53,33 +49,6 @@ class Functions {
         ),
       ),
     );
-  }
-
-  static bottomNavBar({context, index = 0}) {
-    // return Theme(
-    //   data: Theme.of(context).copyWith(
-    //     iconTheme: IconThemeData(
-    //       color: Colors.white,
-    //     ),
-    //   ),
-    //   child: CurvedNavigationBar(
-    //     height: 50,
-    //     index: index,
-    //     color: primaryColor,
-    //     buttonBackgroundColor: Colors.blueGrey,
-    //     backgroundColor: Colors.transparent,
-    //     items: [
-    //       Icon(Icons.home, size: 27),
-    //       Icon(Icons.shopping_bag, size: 27),
-    //       Icon(Icons.local_grocery_store, size: 27),
-    //       Icon(Icons.favorite, size: 27),
-    //       Icon(Icons.person, size: 27),
-    //     ],
-    //     onTap: (index) {
-    //       List pages = [Home(), Orders(), Cart(), Favourites(), Settings()];
-    //     },
-    //   ),
-    // );
   }
 
   static textInput({val = '', hintText = '', icon = '', obscure = false}) {
