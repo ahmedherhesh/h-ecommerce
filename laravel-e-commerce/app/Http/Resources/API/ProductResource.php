@@ -24,7 +24,7 @@ class ProductResource extends JsonResource
             "currency"      => $this->currency,
             "stock"         => $this->stock,
             "status"        => $this->status,
-            'images'        => isset($this->images[0]->images) ? json_decode($this->images[0]->images) : null,
+            'images'        => $this->myImages ? json_decode($this->myImages->images) : null,
         ];
     }
 }

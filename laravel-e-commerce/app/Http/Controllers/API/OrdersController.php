@@ -14,7 +14,7 @@ class OrdersController extends MasterAPIController
     }
     function create(Request $request){
         $data = $request->all();
-        $data['user_id'] = $this->user->id;
+        $data['customer_id'] = $this->user->id;
         $order = Order::create($data);
         return $this->response($order,'Your Order In Processing');
     }

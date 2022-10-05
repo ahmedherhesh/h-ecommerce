@@ -19,8 +19,8 @@ class Product extends Model
         'status'
     ];
 
-    function images(){
-        return $this->hasMany(Image::class,'model_id');
+    function myImages(){
+        return $this->hasOne(Image::class,'model_id');
     }
     function category(){
         return $this->belongsTo(Category::class);

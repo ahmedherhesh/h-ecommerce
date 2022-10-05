@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Admin\CategoriesController;
+use App\Http\Controllers\API\Admin\ExtensionsController;
 use App\Http\Controllers\API\Admin\RolesController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Customer\CartController;
@@ -19,7 +20,7 @@ Route::group(['prefix' => 'v1'], function () {
         });
         //super-admin
         Route::group(['middleware' => ['role:super-admin']], function () {
-            // Roles Controller
+            //Roles Controller
             Route::post('role', [RolesController::class, 'createRole'])->name('create-role');
             Route::get('roles', [RolesController::class, 'getRoles']);
             Route::post('permission', [RolesController::class, 'createPermission'])->name('create-permission');
@@ -29,6 +30,9 @@ Route::group(['prefix' => 'v1'], function () {
             //Categories Controller
             Route::post('create-category', [CategoriesController::class, 'create']);
             Route::delete('delete-category/{name}', [CategoriesController::class, 'delete']);
+            //Extensions
+            //Slider Extension
+            Route::post('add-to-slider',[ExtensionsController::class,'addToSlider']);
         });
         //super-admin, admin, seller
         Route::group(['middleware' => ['role:super-admin|admin|seller']], function () {
@@ -59,8 +63,11 @@ Route::group(['prefix' => 'v1'], function () {
             });
         });
     });
+    Route::get('slider', [ExtensionsController::class, 'slider']);
     Route::get('products', [ProductsController::class, 'products']);
     Route::get('products/{title}', [ProductsController::class, 'product']);
     Route::get('products/categories/{name}', [ProductsController::class, 'productsByCategory']);
     Route::get('category-with-products', [ProductsController::class, 'categoryWithProducts']);
+    Route::get('categories', [CategoriesController::class, 'index']);
+    Route::get('categories/{name}', [CategoriesController::class, 'show']);
 });

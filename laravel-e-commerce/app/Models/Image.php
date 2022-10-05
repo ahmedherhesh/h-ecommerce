@@ -13,8 +13,9 @@ class Image extends Model
     function getImagesAttribute($images)
     {
         $imgs = [];
+        $images = json_decode($images);
         if ($images)
-            foreach (json_decode($images) as $image) {
+            foreach ($images as $image) {
                 $imgs[] = asset("uploads/{$this->type}/{$this->model_id}/$image");
             }
         return $this->attributes['images'] = json_encode($imgs);
