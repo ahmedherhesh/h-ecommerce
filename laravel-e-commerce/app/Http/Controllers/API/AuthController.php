@@ -14,8 +14,9 @@ class AuthController extends MasterAPIController
     function login(UserLoginRequest $request)
     {
         $user = auth()->attempt($request->only('email', 'password'));
-        $user = auth()->user(); 
-        $user->token = true;
+        $user = auth()->user();
+        if ($user)
+            $user->token = true;
         return $this->response($user, new UserResource($user));
     }
 
@@ -23,7 +24,7 @@ class AuthController extends MasterAPIController
     {
         $user = User::create($request->all());
         $user->assignRole('customer');
-        $user->token = true; 
+        $user->token = true;
         return $this->response($user, new UserResource($user));
     }
 }

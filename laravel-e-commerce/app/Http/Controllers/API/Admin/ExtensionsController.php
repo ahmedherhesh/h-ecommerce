@@ -11,11 +11,19 @@ class ExtensionsController extends MasterAPIController
     //Slider
     function addToSlider(Request $request)
     {
-        $slider = Image::create(['type' => 'slider', 'images' => $request->images, 'model_id' => 1]);
+        $data = ['type' => 'slider', 'model_id' => 1, 'images' => $request->images];
+        $slider = Image::whereType('slider')->first();
+        if ($slider) :
+            $slider = $slider->update($data);
+        else :
+            $slider = Image::create($data);
+        endif;
         return $this->response($slider, 'Success');
     }
-    function slider(){
+    function slider()
+    {
         $slider = Image::whereType('slider')->first();
-        return $this->response($slider, json_decode($slider->images));
+        if ($slider)
+            return json_decode($slider->images);
     }
 }

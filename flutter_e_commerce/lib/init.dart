@@ -1,1 +1,1 @@
-String api_url = 'http:127.0.0.1:8000/api/v1';
+String apiUrl = 'http://192.168.1.164/h-ecommerce/laravel-e-commerce/public/api/v1';
