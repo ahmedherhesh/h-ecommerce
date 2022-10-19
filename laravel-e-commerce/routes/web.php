@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('payment', [PaymentController::class, 'payment']);
+Route::get('payment/success/{total}', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('payment/canceled', [PaymentController::class, 'canceled'])->name('payment.cancel');
