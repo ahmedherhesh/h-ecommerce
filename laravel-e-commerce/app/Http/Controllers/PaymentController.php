@@ -18,8 +18,6 @@ class PaymentController extends Controller
         $this->gateway->setUsername(env('PAYPAL_SANDBOX_API_USERNAME'));
         $this->gateway->setPassword(env('PAYPAL_SANDBOX_API_PASSWORD'));
         $this->gateway->setSignature(env('PAYPAL_SANDBOX_API_SECRET'));
-        // $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
-        // $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
         $this->gateway->setTestMode(true); //set it to 'false' when go live
     }
 
@@ -35,7 +33,7 @@ class PaymentController extends Controller
             $response = $this->gateway->purchase([
                 'amount' => $total,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('payment.success',$total),
+                'returnUrl' => route('payment.success','?total=100'),
                 'cancelUrl' => route('payment.cancel'),
             ])->send();
             if ($response->isRedirect()) {
@@ -51,14 +49,14 @@ class PaymentController extends Controller
 
 
     // Charge a payment and store the transaction.
-    public function success(Request $request,$total)
+    public function success(Request $request)
     {
 
         // Once the transaction has been approved, we need to complete it.
         if ($request->input('PayerID')) {
             $transaction = $this->gateway->completePurchase([
                 'payer_id'  => $request->PayerID,
-                'amount'    => $total,
+                'amount'    => $request->total,
             ]);
             $response = $transaction->send();
 
@@ -68,12 +66,13 @@ class PaymentController extends Controller
                 return $data;
                 // Insert transaction data into the database
                 Payment::insert([
-                    'payment_id'     =>  $data['id'],
-                    'payer_id'       =>  $data['payer']['payer_info']['payer_id'],
-                    'payer_email'    =>  $data['payer']['payer_info']['email'],
-                    'amount'         =>  $data['transactions'][0]['amount']['total'],
-                    'currency'       =>  env('PAYPAL_CURRENCY'),
-                    'payment_status' =>  $data['state']
+                    'payment_id'     => $data['PAYMENTINFO_0_TRANSACTIONID'],
+                    'payer_id'       => $request->PayerID,
+                    // 'payer_email'    => $data['payer']['payer_info']['email'],
+                    'amount'         => $data['PAYMENTINFO_0_AMT'],
+                    'fee_amount'     => $data['PAYMENTINFO_0_FEEAMT'],
+                    'currency'       => $data['PAYMENTINFO_0_CURRENCYCODE'],
+                    'payment_status' => $data['PAYMENTINFO_0_PAYMENTSTATUS'],
                 ]);
 
                 return "Payment is successful. Your transaction id is: " . $data['id'];
