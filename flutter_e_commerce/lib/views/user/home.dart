@@ -49,173 +49,192 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: [
           //Home Page Slider
-          sliderImages.isNotEmpty
-              ? Column(
-                  children: [
-                    //Slider Images
-                    Container(
-                        clipBehavior: Clip.hardEdge,
-                        height: 160,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFFdddddd),
-                                blurRadius: 6,
-                                spreadRadius: 2,
-                              ),
-                            ]),
-                        margin: EdgeInsets.all(10),
-                        child: PageView(
-                          onPageChanged: (index) => setState(() {
-                            currentSlide = index;
-                          }),
-                          children: List.generate(
-                            sliderImages.length,
-                            (index) => Image.network(
-                              fit: BoxFit.cover,
-                              '${sliderImages[index]}',
-                            ),
-                          ),
-                        )),
-                    //Slider Indicators
-                    Container(
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
+          Column(
+            children: [
+              //Slider Images
+              Container(
+                clipBehavior: Clip.hardEdge,
+                height: 160,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xFFdddddd),
+                        blurRadius: 6,
+                        spreadRadius: 2,
+                      ),
+                    ]),
+                margin: EdgeInsets.all(10),
+                child: sliderImages.isNotEmpty
+                    ? PageView(
+                        onPageChanged: (index) => setState(() {
+                          currentSlide = index;
+                        }),
                         children: List.generate(
                           sliderImages.length,
-                          (index) => Container(
-                            margin: const EdgeInsets.only(right: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: currentSlide == index
-                                  ? primaryColor
-                                  : textColor,
-                            ),
-                            width: currentSlide == index ? 14 : 6,
-                            height: 6,
+                          (index) => Image.network(
+                            fit: BoxFit.cover,
+                            '${sliderImages[index]}',
                           ),
                         ),
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(color: primaryColor),
                       ),
-                    )
-                  ],
-                )
-              : Text(''),
+              ),
+              //Slider Indicators
+              Container(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(
+                    sliderImages.length,
+                    (index) => AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      margin: const EdgeInsets.only(right: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: currentSlide == index ? primaryColor : textColor,
+                      ),
+                      width: currentSlide == index ? 14 : 6,
+                      height: 6,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
           //Categories
           Functions.categories(),
-          Column(
-            children: List.generate(
-                categoryWithProducts.length,
-                (index) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10, right: 5, top: 10),
-                          child: Text(
-                            '${categoryWithProducts[index].keys.toList().first.toString()}',
-                            style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 200,
-                          margin: EdgeInsets.only(left: 5),
-                          child: GridView.builder(
-                            scrollDirection: Axis.horizontal,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1, childAspectRatio: 1.3),
-                            itemCount: 20,
-                            itemBuilder: (context, index) => MaterialButton(
-                              padding: EdgeInsets.all(0),
-                              onPressed: () => Navigator.of(context).pushNamed(
-                                'product',
-                                arguments: Product(title: 'Title test'),
+          categoryWithProducts.isNotEmpty
+              ? Column(
+                  children: List.generate(
+                      categoryWithProducts.length,
+                      (index) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 10, right: 5, top: 10),
+                                child: Text(
+                                  '${categoryWithProducts[index].keys.toList().first.toString()}',
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                margin: const EdgeInsets.only(
-                                    left: 5, right: 5, bottom: 5),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xFFdddddd),
-                                        blurRadius: 2,
-                                        spreadRadius: 2,
-                                      ),
-                                    ]),
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      fit: BoxFit.cover,
-                                      'assets/images/sale.jpg',
-                                      height: 135,
+                              Container(
+                                height: 200,
+                                margin: EdgeInsets.only(left: 5),
+                                child: GridView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 1,
+                                          childAspectRatio: 1.3),
+                                  itemCount: 20,
+                                  itemBuilder: (context, index) =>
+                                      MaterialButton(
+                                    padding: EdgeInsets.all(0),
+                                    onPressed: () =>
+                                        Navigator.of(context).pushNamed(
+                                      'product',
+                                      arguments: Product(title: 'Title test'),
                                     ),
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      alignment: Alignment.topLeft,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            child: const Text(
-                                              'Title',
-                                              style: TextStyle(
-                                                color: Colors.blueGrey,
-                                                fontSize: 16,
-                                              ),
+                                    child: Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      margin: const EdgeInsets.only(
+                                          left: 5, right: 5, bottom: 5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(0xFFdddddd),
+                                              blurRadius: 2,
+                                              spreadRadius: 2,
                                             ),
+                                          ]),
+                                      child: Column(
+                                        children: [
+                                          Image.asset(
+                                            fit: BoxFit.cover,
+                                            'assets/images/sale.jpg',
+                                            height: 135,
                                           ),
                                           Container(
-                                            height: 25,
-                                            child: Row(
+                                            margin:
+                                                const EdgeInsets.only(left: 10),
+                                            alignment: Alignment.topLeft,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  '\$12.99',
-                                                  style: TextStyle(
-                                                    color: Colors.blueGrey,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
+                                                Container(
+                                                  child: const Text(
+                                                    'Title',
+                                                    style: TextStyle(
+                                                      color: Colors.blueGrey,
+                                                      fontSize: 16,
+                                                    ),
                                                   ),
                                                 ),
-                                                IconButton(
-                                                  padding: EdgeInsets.all(0),
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                    Icons.favorite_outline,
-                                                    color: primaryColor,
+                                                Container(
+                                                  height: 25,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        '\$12.99',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.blueGrey,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      IconButton(
+                                                        padding:
+                                                            EdgeInsets.all(0),
+                                                        onPressed: () {},
+                                                        icon: Icon(
+                                                          Icons
+                                                              .favorite_outline,
+                                                          color: primaryColor,
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
                                                 )
                                               ],
                                             ),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-          )
+                            ],
+                          )),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Center(
+                    child: CircularProgressIndicator(color: primaryColor),
+                  ),
+                )
         ],
       ),
     );
