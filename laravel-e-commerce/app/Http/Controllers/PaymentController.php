@@ -42,7 +42,7 @@ class PaymentController extends Controller
             $response = $this->gateway->purchase([
                 'amount' => $total,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('payment.success', "?total=$total"),
+                'returnUrl' => route('payment.success', "total=$total"),
                 'cancelUrl' => route('payment.cancel'),
             ])->send();
             if ($response->isRedirect()) {
