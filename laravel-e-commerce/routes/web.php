@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::group(['prefix' => 'payment'], function () {
-    Route::post('/', [PaymentController::class, 'payment']);
+    Route::get('/', [PaymentController::class, 'payment']);
     Route::get('success', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('canceled', [PaymentController::class, 'canceled'])->name('payment.cancel');
 });

@@ -15,10 +15,19 @@ class PaymentController extends Controller
     public function __construct()
     {
         $this->gateway = Omnipay::create('PayPal_Express');
-        $this->gateway->setUsername(env('PAYPAL_SANDBOX_API_USERNAME'));
-        $this->gateway->setPassword(env('PAYPAL_SANDBOX_API_PASSWORD'));
-        $this->gateway->setSignature(env('PAYPAL_SANDBOX_API_SECRET'));
-        $this->gateway->setTestMode(true); //set it to 'false' when go live
+        // $this->gateway->setTestMode(paypal_mode) set it to 'false' when go live
+
+        if (env('PAYPAL_MODE') == 'sandbox') {
+            $this->gateway->setUsername(env('PAYPAL_SANDBOX_API_USERNAME'));
+            $this->gateway->setPassword(env('PAYPAL_SANDBOX_API_PASSWORD'));
+            $this->gateway->setSignature(env('PAYPAL_SANDBOX_API_SECRET'));
+            $this->gateway->setTestMode(true);
+        } elseif (env('PAYPAL_MODE') == 'live') {
+            $this->gateway->setUsername(env('PAYPAL_LIVE_API_USERNAME'));
+            $this->gateway->setPassword(env('PAYPAL_LIVE_API_PASSWORD'));
+            $this->gateway->setSignature(env('PAYPAL_LIVE_API_SECRET'));
+            $this->gateway->setTestMode(false);
+        }
     }
 
     /**
@@ -33,7 +42,7 @@ class PaymentController extends Controller
             $response = $this->gateway->purchase([
                 'amount' => $total,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('payment.success','?total=100'),
+                'returnUrl' => route('payment.success', '?total=100'),
                 'cancelUrl' => route('payment.cancel'),
             ])->send();
             if ($response->isRedirect()) {
