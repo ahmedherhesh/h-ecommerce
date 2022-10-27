@@ -42,7 +42,7 @@ class PaymentController extends Controller
             $response = $this->gateway->purchase([
                 'amount' => $total,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('payment.success', '?total=100'),
+                'returnUrl' => route('payment.success', "?total=$total"),
                 'cancelUrl' => route('payment.cancel'),
             ])->send();
             if ($response->isRedirect()) {
@@ -60,9 +60,8 @@ class PaymentController extends Controller
     // Charge a payment and store the transaction.
     public function success(Request $request)
     {
-
         // Once the transaction has been approved, we need to complete it.
-        if ($request->input('PayerID')) {
+        if ($request->input('PayerID') && $request->input('total')) {
             $transaction = $this->gateway->completePurchase([
                 'payer_id'  => $request->PayerID,
                 'amount'    => $request->total,
@@ -72,8 +71,8 @@ class PaymentController extends Controller
             if ($response->isSuccessful()) {
                 // The customer has successfully paid.
                 $data = $response->getData();
-                return $data;
                 // Insert transaction data into the database
+                if (Payment::wherePaymentId($data['PAYMENTINFO_0_TRANSACTIONID'])->first()) return;
                 Payment::insert([
                     'payment_id'     => $data['PAYMENTINFO_0_TRANSACTIONID'],
                     'payer_id'       => $request->PayerID,
@@ -84,7 +83,7 @@ class PaymentController extends Controller
                     'payment_status' => $data['PAYMENTINFO_0_PAYMENTSTATUS'],
                 ]);
 
-                return "Payment is successful. Your transaction id is: " . $data['id'];
+                return "Payment is successful. Your transaction id is: " . $data['PAYMENTINFO_0_TRANSACTIONID'];
             } else {
                 return $response->getMessage();
             }
