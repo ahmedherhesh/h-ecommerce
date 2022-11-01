@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
+import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/main.dart';
 import 'package:flutter_e_commerce/views/components/search.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
@@ -15,10 +19,48 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Functions {
-  static checkAuth() async {
-    SharedPreferences sharedRef = await SharedPreferences.getInstance();
-    if (sharedRef.getString('token') != null)
-      return sharedRef.getString('token');
+  static auth({context, setState, data, route}) async {
+    Uri uri = Uri.parse('${initData['apiUrl']}/$route');
+    var response = await http.post(uri, body: data);
+    int statusCode = response.statusCode;
+    var body = jsonDecode(response.body);
+
+    if (statusCode == 422 || statusCode == 403) {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.SCALE,
+        title: 'Validation Error',
+        headerAnimationLoop: false,
+        titleTextStyle: TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            body.length,
+            (index) => Text(
+              '${body[index]}',
+              style: TextStyle(
+                // fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ),
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
+    } else if (statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', jsonEncode(body));
+      setState(() {
+        initData['user'] = prefs.getString('user');
+      });
+      print(initData['user']);
+    }
   }
 
   static appBar({context}) {
@@ -52,7 +94,13 @@ class Functions {
     );
   }
 
-  static textInput({val = '', hintText = '', icon = '', obscure = false}) {
+  static textInput({
+    val = '',
+    hintText = '',
+    icon = '',
+    obscure = false,
+    onChanged,
+  }) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -75,6 +123,7 @@ class Functions {
           ),
         ),
         cursorColor: Colors.blueGrey,
+        onChanged: onChanged,
       ),
     );
   }
@@ -254,5 +303,4 @@ class Functions {
       ),
     ]);
   }
-
 }

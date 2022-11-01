@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
+import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:flutter_e_commerce/views/user/auth-board.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_e_commerce/views/user/orders.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -45,20 +48,40 @@ class Main extends StatefulWidget {
   State<Main> createState() => _MainState();
 }
 
-List screens = [
-  Home(),
-  Orders(),
-  Cart(),
-  Favourites(),
-  false ? Settings() : AuthBoard()
-];
 int pageIndex = 0;
+List screens = [Home(), Orders(), Cart(), Favourites()];
 
 class _MainState extends State<Main> {
   @override
   void initState() {
-    Functions.checkAuth();
+    checkAuth();
+    initData['Authorized'] ? screens.add(Settings()) : screens.add(AuthBoard());
     super.initState();
+  }
+
+  checkAuth() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      initData['user'] = prefs.getString('user');
+    });
+
+    Uri url = Uri.parse('${initData['apiUrl']}/user');
+    var user = initData['user'] != null ? jsonDecode(initData['user']) : '';
+
+    if (user.isNotEmpty) {
+      setState(() {
+        String token = 'Bearer ${user['token']}';
+        initData['headers']['Authorization'] = token;
+      });
+      var response = await http.get(url, headers: initData['headers']);
+      setState(() {
+        response.statusCode == 200
+            ? initData['Authorized'] = true
+            : initData['Authorized'] = false;
+      });
+
+      print(response.body);
+    }
   }
 
   @override

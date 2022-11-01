@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
+import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/views/components/functions.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
-import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -24,6 +24,7 @@ class _LoginState extends State<Login> {
     });
   }
 
+  Map data = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,12 +85,22 @@ class _LoginState extends State<Login> {
                       Functions.textInput(
                         icon: Icons.person,
                         hintText: 'Email, Phone Number',
+                        onChanged: (val) {
+                          setState(() {
+                            data['email'] = val;
+                          });
+                        },
                       ),
                       SizedBox(height: 10),
                       //Password Field
                       Functions.textInput(
                         icon: Icons.lock,
                         hintText: 'Password',
+                        onChanged: (val) {
+                          setState(() {
+                            data['password'] = val;
+                          });
+                        },
                         obscure: true,
                       ),
                       Container(
@@ -111,9 +122,15 @@ class _LoginState extends State<Login> {
                             // Login Button
                             Functions.submitButton(
                               text: 'Login',
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed('main');
+                              onPressed: () async {
+                                Functions.auth(
+                                  context: context,
+                                  data: data,
+                                  route: 'login',
+                                  setState: setState,
+                                );
+                                // Navigator.of(context)
+                                //     .pushReplacementNamed('main');
                               },
                             ),
                             SizedBox(height: 30),

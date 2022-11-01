@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
 
 class AuthBoard extends StatelessWidget {
   @override

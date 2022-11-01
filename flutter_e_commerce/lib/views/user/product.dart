@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/components/widgets.dart';
 
 class Product extends StatefulWidget {
   Product({Key? key, this.title}) : super(key: key);
@@ -125,25 +126,10 @@ class _ProductState extends State<Product> {
                 ),
               ),
               //Slider Indicators
-              Container(
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(
-                    4,
-                    (index) => Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: currentSlide == index ? primaryColor : textColor,
-                      ),
-                      width: currentSlide == index ? 14 : 6,
-                      height: 6,
-                    ),
-                  ),
-                ),
-              )
+              SliderIndicators(
+                sliderImagesCount: 4,
+                currentSlide: currentSlide,
+              ),
             ],
           ),
           Container(

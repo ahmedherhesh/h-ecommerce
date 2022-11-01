@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:flutter_e_commerce/init.dart';
+import 'package:flutter_e_commerce/views/components/widgets.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -17,31 +21,37 @@ class _HomeState extends State<Home> {
   int currentSlide = 0;
   List sliderImages = [];
   List categoryWithProducts = [];
+
   slider() async {
-    Uri url = Uri.parse(apiUrl + '/slider');
+    Uri url = Uri.parse('${initData['apiUrl']}/slider');
     var response = await http.get(url);
     setState(() {
-      if (response.body.isNotEmpty)
+      if (response.body.isNotEmpty) {
         sliderImages.addAll(jsonDecode(response.body));
+      }
     });
   }
 
   products() async {
-    Uri url = Uri.parse(apiUrl + '/category-with-products');
+    Uri url = Uri.parse('${initData['apiUrl']}/category-with-products');
     var response = await http.get(url);
     setState(() {
-      if (response.body.isNotEmpty)
+      if (response.body.isNotEmpty) {
         categoryWithProducts.addAll(jsonDecode(response.body));
+      }
     });
   }
 
+
+
   @override
   void initState() {
+    super.initState();
     slider();
     products();
-    super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
@@ -58,14 +68,15 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
+                    // ignore: prefer_const_literals_to_create_immutables
                     boxShadow: [
-                      BoxShadow(
+                      const BoxShadow(
                         color: Color(0xFFdddddd),
                         blurRadius: 6,
                         spreadRadius: 2,
                       ),
                     ]),
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: sliderImages.isNotEmpty
                     ? PageView(
                         onPageChanged: (index) => setState(() {
@@ -84,26 +95,10 @@ class _HomeState extends State<Home> {
                       ),
               ),
               //Slider Indicators
-              Container(
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(
-                    sliderImages.length,
-                    (index) => AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      margin: const EdgeInsets.only(right: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: currentSlide == index ? primaryColor : textColor,
-                      ),
-                      width: currentSlide == index ? 14 : 6,
-                      height: 6,
-                    ),
-                  ),
-                ),
-              )
+              SliderIndicators(
+                sliderImagesCount: sliderImages.length,
+                currentSlide: currentSlide,
+              ),
             ],
           ),
           //Categories
@@ -116,11 +111,15 @@ class _HomeState extends State<Home> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left: 10, right: 5, top: 10),
                                 child: Text(
-                                  '${categoryWithProducts[index].keys.toList().first.toString()}',
-                                  style: TextStyle(
+                                  categoryWithProducts[index]
+                                      .keys
+                                      .toList()
+                                      .first
+                                      .toString(),
+                                  style: const TextStyle(
                                     color: Colors.blueGrey,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -129,17 +128,17 @@ class _HomeState extends State<Home> {
                               ),
                               Container(
                                 height: 200,
-                                margin: EdgeInsets.only(left: 5),
+                                margin: const EdgeInsets.only(left: 5),
                                 child: GridView.builder(
                                   scrollDirection: Axis.horizontal,
                                   gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 1,
                                           childAspectRatio: 1.3),
                                   itemCount: 20,
                                   itemBuilder: (context, index) =>
                                       MaterialButton(
-                                    padding: EdgeInsets.all(0),
+                                    padding: const EdgeInsets.all(0),
                                     onPressed: () =>
                                         Navigator.of(context).pushNamed(
                                       'product',
@@ -153,8 +152,9 @@ class _HomeState extends State<Home> {
                                           color: Colors.white,
                                           borderRadius:
                                               BorderRadius.circular(10),
+                                          // ignore: prefer_const_literals_to_create_immutables
                                           boxShadow: [
-                                            BoxShadow(
+                                            const BoxShadow(
                                               color: Color(0xFFdddddd),
                                               blurRadius: 2,
                                               spreadRadius: 2,
@@ -187,6 +187,7 @@ class _HomeState extends State<Home> {
                                                     ),
                                                   ),
                                                 ),
+                                                // ignore: sized_box_for_whitespace
                                                 Container(
                                                   height: 25,
                                                   child: Row(
@@ -194,7 +195,7 @@ class _HomeState extends State<Home> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Text(
+                                                      const Text(
                                                         '\$12.99',
                                                         style: TextStyle(
                                                           color:
@@ -206,7 +207,8 @@ class _HomeState extends State<Home> {
                                                       ),
                                                       IconButton(
                                                         padding:
-                                                            EdgeInsets.all(0),
+                                                            const EdgeInsets
+                                                                .all(0),
                                                         onPressed: () {},
                                                         icon: Icon(
                                                           Icons
