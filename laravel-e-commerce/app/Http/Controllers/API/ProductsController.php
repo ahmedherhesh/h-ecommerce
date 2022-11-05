@@ -23,7 +23,10 @@ class ProductsController extends MasterAPIController
 
     function categoryWithProducts()
     {
-        $categories = Category::whereParentId(0)->get(['id', 'name']);
+        $categories = [];
+        foreach (Category::whereParentId(0)->get(['id', 'name']) as $cat) {
+            if ($cat->products->count()) $categories[] = $cat;
+        }
         return $this->response($categories, CategoryResource::collection($categories));
     }
 
@@ -72,9 +75,9 @@ class ProductsController extends MasterAPIController
                 'images' => $request->images
             ];
             $images = Image::whereType('product')->whereModelId($product->id)->first();
-            if($images) {
+            if ($images) {
                 $images->update($image_data);
-            }else{
+            } else {
                 $images = Image::create($image_data);
             }
             $update_product = $product->update($data);

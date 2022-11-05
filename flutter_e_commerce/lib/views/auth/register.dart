@@ -186,7 +186,6 @@ class _RegisterState extends State<Register> {
                               context: context,
                               data: data,
                               route: 'register',
-                              setState: setState,
                             );
                           },
                         ),

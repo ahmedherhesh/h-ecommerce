@@ -6,6 +6,7 @@ import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
+import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:flutter_e_commerce/views/user/auth-board.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
@@ -19,6 +20,15 @@ import 'package:http/http.dart' as http;
 void main() {
   runApp(MyApp());
 }
+
+int pageIndex = 0;
+
+List screens = [
+  Home(),
+  Orders(),
+  Cart(),
+  Favourites(),
+];
 
 class MyApp extends StatelessWidget {
   @override
@@ -48,40 +58,11 @@ class Main extends StatefulWidget {
   State<Main> createState() => _MainState();
 }
 
-int pageIndex = 0;
-List screens = [Home(), Orders(), Cart(), Favourites()];
-
 class _MainState extends State<Main> {
   @override
   void initState() {
-    checkAuth();
-    initData['Authorized'] ? screens.add(Settings()) : screens.add(AuthBoard());
+    Functions.checkAuth();
     super.initState();
-  }
-
-  checkAuth() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      initData['user'] = prefs.getString('user');
-    });
-
-    Uri url = Uri.parse('${initData['apiUrl']}/user');
-    var user = initData['user'] != null ? jsonDecode(initData['user']) : '';
-
-    if (user.isNotEmpty) {
-      setState(() {
-        String token = 'Bearer ${user['token']}';
-        initData['headers']['Authorization'] = token;
-      });
-      var response = await http.get(url, headers: initData['headers']);
-      setState(() {
-        response.statusCode == 200
-            ? initData['Authorized'] = true
-            : initData['Authorized'] = false;
-      });
-
-      print(response.body);
-    }
   }
 
   @override
@@ -96,7 +77,7 @@ class _MainState extends State<Main> {
         ),
         child: CurvedNavigationBar(
           height: 50,
-          index: 0,
+          index: pageIndex,
           color: primaryColor,
           buttonBackgroundColor: Colors.blueGrey,
           backgroundColor: Colors.transparent,

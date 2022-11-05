@@ -156,7 +156,7 @@ class _ProductState extends State<Product> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Herhesh Product',
+                        '${args.title}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

@@ -127,7 +127,6 @@ class _LoginState extends State<Login> {
                                   context: context,
                                   data: data,
                                   route: 'login',
-                                  setState: setState,
                                 );
                                 // Navigator.of(context)
                                 //     .pushReplacementNamed('main');
