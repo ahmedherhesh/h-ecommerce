@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/init.dart';
-import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/views/components/functions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

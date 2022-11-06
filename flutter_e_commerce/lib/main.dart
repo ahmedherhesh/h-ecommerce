@@ -13,24 +13,23 @@ import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
 import 'package:flutter_e_commerce/views/user/orders.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
-import 'package:flutter_e_commerce/views/user/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 int pageIndex = 0;
 
 List screens = [
-  Home(),
+  const Home(),
   Orders(),
   Cart(),
   Favourites(),
 ];
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,9 +41,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Main(),
       routes: {
-        'login': (context) => Login(),
-        'register': (context) => Register(),
-        'main': (context) => Main(),
+        'login': (context) => const Login(),
+        'register': (context) => const Register(),
+        'main': (context) => const Main(),
         'product': (context) => Product(),
       },
     );
@@ -71,7 +70,7 @@ class _MainState extends State<Main> {
       extendBody: pageIndex == 4,
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white,
           ),
         ),
@@ -81,7 +80,7 @@ class _MainState extends State<Main> {
           color: primaryColor,
           buttonBackgroundColor: Colors.blueGrey,
           backgroundColor: Colors.transparent,
-          items: [
+          items: const [
             Icon(Icons.home, size: 27),
             Icon(Icons.shopping_bag, size: 27),
             Icon(Icons.local_grocery_store, size: 27),

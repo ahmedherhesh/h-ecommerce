@@ -1,21 +1,13 @@
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/main.dart';
 import 'package:flutter_e_commerce/views/components/search.dart';
 import 'package:flutter_e_commerce/views/user/auth-board.dart';
-import 'package:flutter_e_commerce/views/user/cart.dart';
-import 'package:flutter_e_commerce/views/user/favourites.dart';
-import 'package:flutter_e_commerce/views/user/home.dart';
-import 'package:flutter_e_commerce/views/user/orders.dart';
-import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/settings.dart';
-import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
