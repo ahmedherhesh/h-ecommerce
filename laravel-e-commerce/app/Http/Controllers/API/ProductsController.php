@@ -35,6 +35,7 @@ class ProductsController extends MasterAPIController
         $data = $request->all();
         $data['user_id'] = $this->user->id;
         $data['status']  = $this->user->hasAnyRole(['super-admin', 'admin']) ? 1 : 0;
+        $data['keyword'] = str_replace(' ','-',$data['title']);
 
         $product = Product::create($data);
         if ($product) {
@@ -55,16 +56,16 @@ class ProductsController extends MasterAPIController
         return $this->response($products, ProductResource::collection($products));
     }
 
-    function product($title)
+    function product($keyword)
     {
-        $product = Product::whereTitle($title)->whereStatus(1)->first();
+        $product = Product::whereKeyword($keyword)->whereStatus(1)->first();
         return $this->response($product, new ProductResource($product));
     }
 
     function update(Request $request)
     {
         $data = $request->except('images');
-        $product = Product::whereTitle($request->title);
+        $product = Product::whereKeyword($request->keyword);
         if (!$this->user->hasAnyRole(['super-admin', 'admin']))
             $product = $product->whereUserId($this->user->id);
         $product = $product->first();
@@ -85,9 +86,9 @@ class ProductsController extends MasterAPIController
         return $this->response($update_product, "product was updated");
     }
 
-    function delete($title)
+    function delete($keyword)
     {
-        $product = Product::whereTitle($title);
+        $product = Product::whereKeyword($keyword);
         if (!$this->user->hasAnyRole(['super-admin', 'admin']))
             $product = $product->whereUserId($this->user->id);
         $product = $product->first();

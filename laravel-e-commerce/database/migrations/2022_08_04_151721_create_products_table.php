@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
             $table->string('title')->unique();
+            $table->string('keyword')->unique();
             $table->string('description');
             $table->integer('price');
             $table->string('currency')->default('LE');

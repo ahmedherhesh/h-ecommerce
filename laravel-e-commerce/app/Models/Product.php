@@ -12,6 +12,7 @@ class Product extends Model
         'user_id',
         'category_id',
         'title',
+        'keyword',
         'description',
         'price',
         'currency',
