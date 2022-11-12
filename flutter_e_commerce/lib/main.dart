@@ -6,7 +6,7 @@ import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/user/auth-board.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';

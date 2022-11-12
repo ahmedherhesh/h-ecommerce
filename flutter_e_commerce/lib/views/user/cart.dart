@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/helpers/functions.dart';
 
 class Cart extends StatelessWidget {
   Widget build(BuildContext context) {

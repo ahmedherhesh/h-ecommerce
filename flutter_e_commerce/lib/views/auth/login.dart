@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/helpers/functions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {

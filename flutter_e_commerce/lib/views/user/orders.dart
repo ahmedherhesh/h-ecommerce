@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/views/helpers/functions.dart';
 
 class Orders extends StatelessWidget {
   Widget build(BuildContext context) {

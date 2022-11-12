@@ -317,4 +317,10 @@ class Functions {
       ],
     );
   }
+
+  static get(String uri) async {
+    Uri url = Uri.parse(uri);
+    var response = await http.get(url);
+    return jsonDecode(response.body);
+  }
 }

@@ -1,19 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/components/functions.dart';
+import 'package:flutter_e_commerce/init.dart';
+import 'package:flutter_e_commerce/views/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/components/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class Product extends StatefulWidget {
-  Product({Key? key, this.title}) : super(key: key);
-  String? title;
+  Product({Key? key, this.keyword}) : super(key: key);
+  String? keyword;
   @override
   State<Product> createState() => _ProductState();
 }
 
 class _ProductState extends State<Product> {
   int currentSlide = 0;
+  Map productData = {};
+  String? keyword;
+
+  product() async {
+    Uri url = Uri.parse('${initData['apiUrl']}/products/item-13');
+    var response = await http.get(url);
+    setState(() {
+      if (response.body.isNotEmpty && response.statusCode == 200) {
+        productData = jsonDecode(response.body);
+      }
+      print(response.statusCode);
+    });
+  }
+
+  @override
+  void initState() {
+    product();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Product;
@@ -40,7 +64,7 @@ class _ProductState extends State<Product> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '\$19.99',
+              '${productData['currency'] == 'USD' ? '\$' : productData['currency']} ${productData['price']}',
               style: TextStyle(
                 color: primaryColor,
                 fontSize: 20,
@@ -156,7 +180,7 @@ class _ProductState extends State<Product> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${args.title}',
+                        '${productData['title'].toString()}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -202,47 +226,57 @@ class _ProductState extends State<Product> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
                 boxShadow: [
                   BoxShadow(blurRadius: 6, color: shadowColor),
                 ],
               ),
               padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
+              margin: const EdgeInsets.only(top: 8, right: 10, left: 10),
               child: Column(
                 children: [
-                  Container(
-                    child: TabBar(
-                        padding: EdgeInsets.only(bottom: 15),
-                        labelColor: primaryColor,
-                        unselectedLabelColor: textColor,
-                        indicatorColor: primaryColor,
-                        tabs: [
-                          Text(
-                            'Details',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  TabBar(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      labelColor: primaryColor,
+                      unselectedLabelColor: textColor,
+                      indicatorColor: primaryColor,
+                      tabs: const [
+                        Text(
+                          'Details',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            'Reviews(135)',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        Text(
+                          'Reviews(135)',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ]),
-                  ),
+                        ),
+                      ]),
                   Container(
                     height: 200,
                     child: TabBarView(children: [
-                      Text(
-                        '* Details Details Details Details Details \n* Details Details Details\n* Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details\n* Details Details Details',
-                        style: TextStyle(fontSize: 16, color: textColor),
+                      ListView(
+                        children: [
+                          Text(
+                            '* Details Details Details Details Details \n* Details Details Details\n* Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details\n* Details Details Details',
+                            style: TextStyle(fontSize: 16, color: textColor),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'hello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello',
-                        style: TextStyle(fontSize: 16, color: textColor),
+                      ListView(
+                        children: [
+                          Text(
+                            'hello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello',
+                            style: TextStyle(fontSize: 16, color: textColor),
+                          ),
+                        ],
                       ),
                     ]),
                   ),
