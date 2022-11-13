@@ -10,8 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
   State<Home> createState() => _HomeState();
 }
@@ -45,10 +43,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
-    Functions.checkAuth();
     slider();
     products();
+    super.initState();
   }
 
   @override

@@ -6,7 +6,7 @@ class Orders extends StatelessWidget {
     return Scaffold(
       appBar: Functions.appBar(context: context),
       body: Center(
-        child: Text('Orders'),
+        child: Text('You Don\'t Have Any Orders Yet'),
       ),
     );
   }

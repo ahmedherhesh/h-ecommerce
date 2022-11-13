@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
+import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/views/helpers/functions.dart';
@@ -11,8 +12,8 @@ import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
 import 'package:flutter_e_commerce/views/user/orders.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
+import 'package:flutter_e_commerce/views/user/settings.dart';
 import 'package:get/get.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -20,12 +21,8 @@ void main() {
 
 int pageIndex = 0;
 
-List screens = [
-  const Home(),
-  Orders(),
-  Cart(),
-  Favourites(),
-];
+List screens = [Home(), Orders(), Cart(), Favourites(), Settings()],
+    screensNeedAuth = [1, 3, 4];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -59,15 +56,9 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   @override
-  void initState() {
-    Functions.checkAuth();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: pageIndex == 4,
+      extendBody: true,
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           iconTheme: const IconThemeData(
@@ -87,6 +78,18 @@ class _MainState extends State<Main> {
             Icon(Icons.favorite, size: 27),
             Icon(Icons.person, size: 27),
           ],
+          letIndexChange: (index) {
+            if (screensNeedAuth.contains(index)) {
+              Functions.checkAuth();
+            }
+            if (initData['Authorized']) {
+              setState(() {
+                pageIndex = index;
+              });
+              return true;
+            }
+            return !screensNeedAuth.contains(index);
+          },
           onTap: (index) {
             setState(() {
               pageIndex = index;

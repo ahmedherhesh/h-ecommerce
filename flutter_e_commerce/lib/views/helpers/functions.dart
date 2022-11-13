@@ -4,10 +4,8 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
-import 'package:flutter_e_commerce/main.dart';
 import 'package:flutter_e_commerce/views/components/search.dart';
-import 'package:flutter_e_commerce/views/user/auth-board.dart';
-import 'package:flutter_e_commerce/views/user/settings.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,10 +23,9 @@ class Functions {
     var response = await http.get(url, headers: initData['headers']);
     if (response.statusCode == 200) {
       initData['Authorized'] = true;
-      screens.insert(4, Settings());
     } else {
       initData['Authorized'] = false;
-      screens.insert(4, AuthBoard());
+      Get.toNamed('login');
     }
   }
 
@@ -70,7 +67,7 @@ class Functions {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('user', jsonEncode(body));
       initData['user'] = prefs.getString('user');
-      Navigator.of(context).pushReplacementNamed('main');
+      Get.offAllNamed('main');
     }
   }
 
