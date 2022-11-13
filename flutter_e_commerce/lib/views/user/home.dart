@@ -4,10 +4,9 @@ import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/helpers/functions.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/components/widgets.dart';
-import 'package:flutter_e_commerce/views/user/product.dart';
+import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -33,12 +32,18 @@ class _HomeState extends State<Home> {
 
   products() async {
     Uri url = Uri.parse('${initData['apiUrl']}/category-with-products');
-    var response = await http.get(url);
+    var response = await http.get(url, headers: initData['headers']);
     setState(() {
       if (response.body.isNotEmpty && response.statusCode == 200) {
         categoryWithProducts.addAll(jsonDecode(response.body));
       }
     });
+  }
+
+  addToFavourites(productId) async {
+    Uri url = Uri.parse('${initData['apiUrl']}/favourites/create');
+    await http.post(url,
+        body: {'product_id': '$productId'}, headers: initData['headers']);
   }
 
   @override
@@ -143,10 +148,6 @@ class _HomeState extends State<Home> {
                                       'keyword': '${item['keyword']}',
                                     },
                                   ),
-                                  // Navigator.of(context).pushNamed('product',
-                                  //     arguments: Product(
-                                  //       keyword: '${item['keyword']}',
-                                  //     )),
                                   child: Container(
                                     clipBehavior: Clip.hardEdge,
                                     margin: const EdgeInsets.only(
@@ -210,9 +211,16 @@ class _HomeState extends State<Home> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               0),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        addToFavourites(
+                                                            item['id']);
+                                                      },
                                                       icon: Icon(
-                                                        Icons.favorite_outline,
+                                                        item['in_favourite'] ==
+                                                                true
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_outline,
                                                         color: primaryColor,
                                                       ),
                                                     )

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\Sanctum;
 
 class Product extends Model
 {
@@ -25,5 +26,8 @@ class Product extends Model
     }
     function category(){
         return $this->belongsTo(Category::class);
+    }
+    function inFavourites(){
+        return $this->hasMany(Favourite::class);
     }
 }

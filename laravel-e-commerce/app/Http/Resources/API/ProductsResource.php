@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API;
 
+use App\Models\Favourite;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductsResource extends JsonResource
@@ -14,12 +15,15 @@ class ProductsResource extends JsonResource
      */
     public function toArray($request)
     {
+        $user_id = auth('sanctum')->user()->id ?? null;
         return [
+            "id"            => $this->id,
             "title"         => $this->title,
             "keyword"       => $this->keyword ?? null,
             "price"         => $this->price,
             "currency"      => $this->currency,
             'images'        => $this->myImages ? json_decode($this->myImages->images)[0] : null,
+            'in_favourite'  => Favourite::where(['user_id' => $user_id, 'product_id' => $this->id])->first() ? true : false
         ];
     }
 }
