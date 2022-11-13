@@ -5,6 +5,7 @@ import 'package:flutter_e_commerce/views/helpers/functions.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/components/widgets.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -139,11 +140,16 @@ class _HomeState extends State<Home> {
                                 var item = el['products'].toList()[childIndex];
                                 return MaterialButton(
                                   padding: const EdgeInsets.all(0),
-                                  onPressed: () =>
-                                      Navigator.of(context).pushNamed('product',
-                                          arguments: Product(
-                                            keyword: '${item['keyword']}',
-                                          )),
+                                  onPressed: () => Get.toNamed(
+                                    'product',
+                                    arguments: {
+                                      'keyword': '${item['keyword']}',
+                                    },
+                                  ),
+                                  // Navigator.of(context).pushNamed('product',
+                                  //     arguments: Product(
+                                  //       keyword: '${item['keyword']}',
+                                  //     )),
                                   child: Container(
                                     clipBehavior: Clip.hardEdge,
                                     margin: const EdgeInsets.only(
