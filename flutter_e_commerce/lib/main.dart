@@ -14,6 +14,7 @@ import 'package:flutter_e_commerce/views/user/orders.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/settings.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
-      home: Main(),
+      home: const Main(),
       routes: {
         'login': (context) => const Login(),
         'register': (context) => const Register(),
@@ -47,6 +48,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
+addOrDelFavourite(productId) async {
+  Uri url = Uri.parse('${initData['apiUrl']}/favourites/create-or-delete');
+  await http.post(url,
+      body: {'product_id': '$productId'}, headers: initData['headers']);
+}
+
 class Main extends StatefulWidget {
   const Main({Key? key}) : super(key: key);
 
@@ -55,6 +62,12 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
+  @override
+  void initState() {
+    Functions.checkAuth();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +93,7 @@ class _MainState extends State<Main> {
           ],
           letIndexChange: (index) {
             if (screensNeedAuth.contains(index)) {
-              Functions.checkAuth();
+              Functions.checkAuth(redirect: true);
             }
             if (initData['Authorized']) {
               setState(() {

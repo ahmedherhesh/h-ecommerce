@@ -15,24 +15,17 @@ class FavouritesController extends MasterAPIController
     {
         $favourites = Favourite::whereUserId($this->user->id)->get(['product_id']);
         $products   = Product::whereIn('id', $favourites)->get();
-        return $this->response($products,ProductsResource::collection($products));
+        return $this->response($products, ProductsResource::collection($products));
     }
-    function create(Request $request)
+
+    function createOrDelete(Request $request)
     {
         $data               = $request->all();
         $data['user_id']    = $this->user->id;
         $favourite          = Favourite::whereProductId($data['product_id'])->first();
-        if ($favourite) return $favourite->delete();
+        if ($favourite)
+            return $this->response($favourite->delete(), 'Succefully deleted from favourite');
         $add_favourite      = Favourite::create($data);
-        return $this->response($add_favourite, 'success');
-    }
-    function delete($id)
-    {
-        $favourite = Favourite::find($id);
-        $del_fav   = false;
-        if ($favourite) {
-            $del_fav = $favourite->delete();
-        }
-        return $this->response($del_fav, 'Favourite has been deleted');
+        return $this->response($add_favourite, 'Succefully added to favourite');
     }
 }

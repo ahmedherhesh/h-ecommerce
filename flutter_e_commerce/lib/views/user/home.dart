@@ -15,11 +15,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> key = new GlobalKey();
+
   int currentIndex = 0;
   int currentSlide = 0;
   List sliderImages = [];
   List categoryWithProducts = [];
-
+  List favBtns = [];
   slider() async {
     Uri url = Uri.parse('${initData['apiUrl']}/slider');
     var response = await http.get(url);
@@ -38,12 +39,6 @@ class _HomeState extends State<Home> {
         categoryWithProducts.addAll(jsonDecode(response.body));
       }
     });
-  }
-
-  addToFavourites(productId) async {
-    Uri url = Uri.parse('${initData['apiUrl']}/favourites/create');
-    await http.post(url,
-        body: {'product_id': '$productId'}, headers: initData['headers']);
   }
 
   @override
@@ -212,17 +207,36 @@ class _HomeState extends State<Home> {
                                                           const EdgeInsets.all(
                                                               0),
                                                       onPressed: () {
-                                                        addToFavourites(
-                                                            item['id']);
+                                                        addOrDelFavourite(
+                                                            productId:
+                                                                item['id'],
+                                                            productTitle:
+                                                                item['title']);
+                                                        setState(() {
+                                                          if (favBtns.contains(
+                                                              childIndex)) {
+                                                            favBtns.remove(
+                                                                childIndex);
+                                                          } else {
+                                                            favBtns.add(
+                                                                childIndex);
+                                                          }
+                                                        });
                                                       },
-                                                      icon: Icon(
-                                                        item['in_favourite'] ==
-                                                                true
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_outline,
-                                                        color: primaryColor,
-                                                      ),
+                                                      icon: favBtns.contains(
+                                                              childIndex)
+                                                          ? Icon(
+                                                              item['in_favourite'] ==
+                                                                      true
+                                                                  ? Icons
+                                                                      .favorite
+                                                                  : Icons
+                                                                      .favorite_outline,
+                                                              color: Colors
+                                                                  .blueGrey,
+                                                            )
+                                                          : Icon(Icons
+                                                              .favorite_outline),
                                                     )
                                                   ],
                                                 ),

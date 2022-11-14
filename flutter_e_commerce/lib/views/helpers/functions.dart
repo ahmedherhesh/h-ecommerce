@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Functions {
-  static checkAuth() async {
+  static checkAuth({redirect = false}) async {
     final prefs = await SharedPreferences.getInstance();
     initData['user'] = prefs.getString('user');
     Uri url = Uri.parse('${initData['apiUrl']}/user');
@@ -25,7 +25,7 @@ class Functions {
       initData['Authorized'] = true;
     } else {
       initData['Authorized'] = false;
-      Get.toNamed('login');
+      if (redirect) Get.toNamed('login');
     }
   }
 
@@ -320,4 +320,16 @@ class Functions {
     var response = await http.get(url);
     return jsonDecode(response.body);
   }
+}
+
+addOrDelFavourite({productId, productTitle}) async {
+  Uri url = Uri.parse('${initData['apiUrl']}/favourites/create-or-delete');
+  var response = await http.post(url,
+      body: {'product_id': '$productId'}, headers: initData['headers']);
+  Get.snackbar(productTitle, response.body,
+      colorText: Colors.white,
+      icon: Icon(
+        Icons.favorite_outline,
+        color: Colors.blueGrey,
+      ));
 }

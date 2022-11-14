@@ -39,93 +39,103 @@ class _FavouritesState extends State<Favourites> {
       body: Container(
         margin: const EdgeInsets.only(top: 10),
         //inside loop
-        child: GridView.builder(
-            scrollDirection: Axis.vertical,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, childAspectRatio: .66),
-            itemCount: favourites.length,
-            itemBuilder: (context, childIndex) {
-              var item = favourites[childIndex];
-              return MaterialButton(
-                padding: const EdgeInsets.all(0),
-                onPressed: () => Get.toNamed(
-                  'product',
-                  arguments: {
-                    'keyword': '${item['keyword']}',
-                  },
-                ),
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      // ignore: prefer_const_literals_to_create_immutables
-                      boxShadow: [
-                        const BoxShadow(
-                          color: Color(0xFFdddddd),
-                          blurRadius: 2,
-                          spreadRadius: 2,
-                        ),
-                      ]),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        fit: BoxFit.cover,
-                        'assets/images/sale.jpg',
-                        height: 135,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        alignment: Alignment.topLeft,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Text(
-                                '${item['title']}',
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontSize: 16,
-                                ),
-                              ),
+        child: favourites.isNotEmpty
+            ? GridView.builder(
+                scrollDirection: Axis.vertical,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3, childAspectRatio: .66),
+                itemCount: favourites.length,
+                itemBuilder: (context, i) {
+                  var item = favourites[i];
+                  return MaterialButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () => Get.toNamed(
+                      'product',
+                      arguments: {
+                        'keyword': '${item['keyword']}',
+                      },
+                    ),
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      margin:
+                          const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          // ignore: prefer_const_literals_to_create_immutables
+                          boxShadow: [
+                            const BoxShadow(
+                              color: Color(0xFFdddddd),
+                              blurRadius: 2,
+                              spreadRadius: 2,
                             ),
-                            // ignore: sized_box_for_whitespace
-                            Container(
-                              height: 25,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '\$${item['price']}',
+                          ]),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            fit: BoxFit.cover,
+                            'assets/images/sale.jpg',
+                            height: 135,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    '${item['title']}',
                                     style: TextStyle(
                                       color: Colors.blueGrey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
                                     ),
                                   ),
-                                  IconButton(
-                                    padding: const EdgeInsets.all(0),
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.favorite,
-                                      color: primaryColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                ),
+                                // ignore: sized_box_for_whitespace
+                                Container(
+                                  height: 25,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '\$${item['price']}',
+                                        style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        padding: const EdgeInsets.all(0),
+                                        onPressed: () {
+                                          setState(() {
+                                            addOrDelFavourite(
+                                                productId: item['id'],
+                                                productTitle: item['title']);
+                                            favourites.removeAt(i);
+                                          });
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.blueGrey,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              );
-            }),
+                    ),
+                  );
+                })
+            : Center(child: CircularProgressIndicator(color: primaryColor)),
       ),
     );
   }
