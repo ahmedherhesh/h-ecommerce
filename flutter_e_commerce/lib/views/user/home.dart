@@ -214,24 +214,19 @@ class _HomeState extends State<Home> {
                                                                 item['title']);
                                                         setState(() {
                                                           if (favBtns.contains(
-                                                              childIndex)) {
+                                                              item['id'])) {
                                                             favBtns.remove(
-                                                                childIndex);
+                                                                item['id']);
                                                           } else {
                                                             favBtns.add(
-                                                                childIndex);
+                                                                item['id']);
                                                           }
                                                         });
                                                       },
                                                       icon: favBtns.contains(
-                                                              childIndex)
+                                                              item['id'])
                                                           ? Icon(
-                                                              item['in_favourite'] ==
-                                                                      true
-                                                                  ? Icons
-                                                                      .favorite
-                                                                  : Icons
-                                                                      .favorite_outline,
+                                                              Icons.favorite,
                                                               color: Colors
                                                                   .blueGrey,
                                                             )
