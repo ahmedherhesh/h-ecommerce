@@ -19,9 +19,13 @@ class _FavouritesState extends State<Favourites> {
   productsInFavourites() async {
     Uri url = Uri.parse('${initData['apiUrl']}/favourites');
     var response = await http.get(url, headers: initData['headers']);
+    List data = jsonDecode(response.body);
     setState(() {
-      if (response.body.isNotEmpty && response.statusCode == 200) {
-        favourites.addAll(jsonDecode(response.body));
+      if (data.isNotEmpty && response.statusCode == 200) {
+        favourites.addAll(data);
+        favourites.remove('empty');
+      } else {
+        favourites.add('empty');
       }
     });
   }
@@ -39,7 +43,7 @@ class _FavouritesState extends State<Favourites> {
       body: Container(
         margin: const EdgeInsets.only(top: 10),
         //inside loop
-        child: favourites.isNotEmpty
+        child: favourites.isNotEmpty && !favourites.contains('empty')
             ? GridView.builder(
                 scrollDirection: Axis.vertical,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -117,6 +121,8 @@ class _FavouritesState extends State<Favourites> {
                                                 productId: item['id'],
                                                 productTitle: item['title']);
                                             favourites.removeAt(i);
+                                            if (favourites.isEmpty)
+                                              favourites.add('empty');
                                           });
                                         },
                                         icon: Icon(
@@ -135,7 +141,10 @@ class _FavouritesState extends State<Favourites> {
                     ),
                   );
                 })
-            : Center(child: CircularProgressIndicator(color: primaryColor)),
+            : Center(
+                child: !favourites.contains('empty')
+                    ? CircularProgressIndicator(color: primaryColor)
+                    : const Text('You Dont Have Any Favourites Yet!')),
       ),
     );
   }

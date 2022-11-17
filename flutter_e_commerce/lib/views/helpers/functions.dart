@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Functions {
-  static checkAuth({redirect = false}) async {
+  static Future checkAuth({redirect = false}) async {
     final prefs = await SharedPreferences.getInstance();
     initData['user'] = prefs.getString('user');
     Uri url = Uri.parse('${initData['apiUrl']}/user');
@@ -27,6 +27,7 @@ class Functions {
       initData['Authorized'] = false;
       if (redirect) Get.toNamed('login');
     }
+    return 200;
   }
 
   static auth({context, data, route}) async {

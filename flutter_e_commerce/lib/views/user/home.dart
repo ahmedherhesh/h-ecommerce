@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     slider();
-    products();
+    Functions.checkAuth().then((data) => products());
     super.initState();
   }
 
@@ -135,6 +135,9 @@ class _HomeState extends State<Home> {
                               itemCount: el['products'].toList().length,
                               itemBuilder: (context, childIndex) {
                                 var item = el['products'].toList()[childIndex];
+                                item['in_favourite']
+                                    ? favBtns.add(item['id'])
+                                    : '';
                                 return MaterialButton(
                                   padding: const EdgeInsets.all(0),
                                   onPressed: () => Get.toNamed(
@@ -230,7 +233,7 @@ class _HomeState extends State<Home> {
                                                               color: Colors
                                                                   .blueGrey,
                                                             )
-                                                          : Icon(Icons
+                                                          : const Icon(Icons
                                                               .favorite_outline),
                                                     )
                                                   ],
