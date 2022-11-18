@@ -129,16 +129,13 @@ class _ProductState extends State<Product> {
                     Container(
                       clipBehavior: Clip.hardEdge,
                       height: 200,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 6,
-                              spreadRadius: 2,
-                            ),
-                          ]),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 6,
+                          spreadRadius: 2,
+                        ),
+                      ]),
                       margin: EdgeInsets.all(10),
                       child: PageView(
                         onPageChanged: (index) => setState(() {
@@ -162,8 +159,7 @@ class _ProductState extends State<Product> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
-                  padding: const EdgeInsets.only(
-                      top: 5, bottom: 5, left: 10, right: 10),
+                  padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -242,27 +238,22 @@ class _ProductState extends State<Product> {
                     margin: const EdgeInsets.only(top: 8, right: 10, left: 10),
                     child: Column(
                       children: [
-                        TabBar(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            labelColor: primaryColor,
-                            unselectedLabelColor: textColor,
-                            indicatorColor: primaryColor,
-                            tabs: const [
-                              Text(
-                                'Details',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Reviews(135)',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ]),
+                        TabBar(padding: const EdgeInsets.only(bottom: 15), labelColor: primaryColor, unselectedLabelColor: textColor, indicatorColor: primaryColor, tabs: const [
+                          Text(
+                            'Details',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Reviews(135)',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ]),
                         Container(
                           height: 200,
                           child: TabBarView(children: [
@@ -270,8 +261,7 @@ class _ProductState extends State<Product> {
                               children: [
                                 Text(
                                   '* Details Details Details Details Details \n* Details Details Details\n* Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details\n* Details Details Details',
-                                  style:
-                                      TextStyle(fontSize: 16, color: textColor),
+                                  style: TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ],
                             ),
@@ -279,8 +269,7 @@ class _ProductState extends State<Product> {
                               children: [
                                 Text(
                                   'hello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello',
-                                  style:
-                                      TextStyle(fontSize: 16, color: textColor),
+                                  style: TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ],
                             ),

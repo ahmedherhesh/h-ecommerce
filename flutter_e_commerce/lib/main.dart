@@ -22,8 +22,7 @@ void main() {
 
 int pageIndex = 0;
 
-List screens = [Home(), Orders(), Cart(), Favourites(), Settings()],
-    screensNeedAuth = [1, 3, 4];
+List screens = [Home(), Orders(), Cart(), Favourites(), Settings()], screensNeedAuth = [1, 3, 4];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -50,8 +49,7 @@ class MyApp extends StatelessWidget {
 
 addOrDelFavourite(productId) async {
   Uri url = Uri.parse('${initData['apiUrl']}/favourites/create-or-delete');
-  await http.post(url,
-      body: {'product_id': '$productId'}, headers: initData['headers']);
+  await http.post(url, body: {'product_id': '$productId'}, headers: initData['headers']);
 }
 
 class Main extends StatefulWidget {
@@ -62,12 +60,6 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  @override
-  void initState() {
-    Functions.checkAuth();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

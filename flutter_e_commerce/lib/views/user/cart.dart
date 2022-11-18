@@ -22,14 +22,12 @@ class Cart extends StatelessWidget {
                     //Cart Image
                     Container(
                       clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: shadowColor,
-                            )
-                          ]),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: shadowColor,
+                        )
+                      ]),
                       child: Image.asset(
                         'assets/images/sale.jpg',
                         width: 80,
@@ -132,9 +130,7 @@ class Cart extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   hintText: 'Promo Code',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide.none),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(25.0), borderSide: BorderSide.none),
                 ),
               ),
               Positioned(
@@ -265,8 +261,7 @@ class Cart extends StatelessWidget {
             padding: EdgeInsets.all(10),
             onPressed: () {},
             textColor: Colors.white,
-            child: Text('Checkout',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            child: Text('Checkout', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             color: primaryColor,
           ),
         ),

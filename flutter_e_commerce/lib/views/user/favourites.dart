@@ -19,9 +19,9 @@ class _FavouritesState extends State<Favourites> {
   productsInFavourites() async {
     Uri url = Uri.parse('${initData['apiUrl']}/favourites');
     var response = await http.get(url, headers: initData['headers']);
-    List data = jsonDecode(response.body);
+    List data = response.statusCode == 200 ? jsonDecode(response.body) : [];
     setState(() {
-      if (data.isNotEmpty && response.statusCode == 200) {
+      if (data.isNotEmpty) {
         favourites.addAll(data);
         favourites.remove('empty');
       } else {
@@ -46,8 +46,7 @@ class _FavouritesState extends State<Favourites> {
         child: favourites.isNotEmpty && !favourites.contains('empty')
             ? GridView.builder(
                 scrollDirection: Axis.vertical,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, childAspectRatio: .66),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: .66),
                 itemCount: favourites.length,
                 itemBuilder: (context, i) {
                   var item = favourites[i];
@@ -61,11 +60,8 @@ class _FavouritesState extends State<Favourites> {
                     ),
                     child: Container(
                       clipBehavior: Clip.hardEdge,
-                      margin:
-                          const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                      margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10),
                           // ignore: prefer_const_literals_to_create_immutables
                           boxShadow: [
                             const BoxShadow(
@@ -102,8 +98,7 @@ class _FavouritesState extends State<Favourites> {
                                 Container(
                                   height: 25,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         '\$${item['price']}',
@@ -117,12 +112,9 @@ class _FavouritesState extends State<Favourites> {
                                         padding: const EdgeInsets.all(0),
                                         onPressed: () {
                                           setState(() {
-                                            addOrDelFavourite(
-                                                productId: item['id'],
-                                                productTitle: item['title']);
+                                            addOrDelFavourite(productId: item['id'], productTitle: item['title']);
                                             favourites.removeAt(i);
-                                            if (favourites.isEmpty)
-                                              favourites.add('empty');
+                                            if (favourites.isEmpty) favourites.add('empty');
                                           });
                                         },
                                         icon: Icon(
@@ -141,10 +133,7 @@ class _FavouritesState extends State<Favourites> {
                     ),
                   );
                 })
-            : Center(
-                child: !favourites.contains('empty')
-                    ? CircularProgressIndicator(color: primaryColor)
-                    : const Text('You Dont Have Any Favourites Yet!')),
+            : Center(child: !favourites.contains('empty') ? CircularProgressIndicator(color: primaryColor) : const Text('You Dont Have Any Favourites Yet!')),
       ),
     );
   }

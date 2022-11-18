@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/views/helpers/functions.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/components/widgets.dart';
-import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,13 +14,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  GlobalKey<ScaffoldState> key = new GlobalKey();
-
-  int currentIndex = 0;
-  int currentSlide = 0;
-  List sliderImages = [];
-  List categoryWithProducts = [];
-  List favBtns = [];
+  GlobalKey<ScaffoldState> key = GlobalKey();
+  bool buildStatus = false;
+  int currentIndex = 0, currentSlide = 0;
+  List sliderImages = [], categoryWithProducts = [], favBtns = [];
   slider() async {
     Uri url = Uri.parse('${initData['apiUrl']}/slider');
     var response = await http.get(url);
@@ -62,9 +59,7 @@ class _HomeState extends State<Home> {
               Container(
                 clipBehavior: Clip.hardEdge,
                 height: 160,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10),
                     // ignore: prefer_const_literals_to_create_immutables
                     boxShadow: [
                       const BoxShadow(
@@ -111,8 +106,7 @@ class _HomeState extends State<Home> {
                       children: [
                         // category
                         Container(
-                          margin: const EdgeInsets.only(
-                              left: 10, right: 5, top: 10),
+                          margin: const EdgeInsets.only(left: 10, right: 5, top: 10),
                           child: Text(
                             '${category[0].toUpperCase()}${category.substring(1)}',
                             style: const TextStyle(
@@ -129,15 +123,12 @@ class _HomeState extends State<Home> {
                           //inside loop
                           child: GridView.builder(
                               scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 1, childAspectRatio: 1.3),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.3),
                               itemCount: el['products'].toList().length,
                               itemBuilder: (context, childIndex) {
                                 var item = el['products'].toList()[childIndex];
-                                item['in_favourite']
-                                    ? favBtns.add(item['id'])
-                                    : '';
+                                !buildStatus && item['in_favourite'] ? favBtns.add(item['id']) : '';
+                                // SchedulerBinding.instance.addPostFrameCallback((_) {});
                                 return MaterialButton(
                                   padding: const EdgeInsets.all(0),
                                   onPressed: () => Get.toNamed(
@@ -148,11 +139,8 @@ class _HomeState extends State<Home> {
                                   ),
                                   child: Container(
                                     clipBehavior: Clip.hardEdge,
-                                    margin: const EdgeInsets.only(
-                                        left: 5, right: 5, bottom: 5),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
+                                    margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10),
                                         // ignore: prefer_const_literals_to_create_immutables
                                         boxShadow: [
                                           const BoxShadow(
@@ -169,15 +157,12 @@ class _HomeState extends State<Home> {
                                           height: 135,
                                         ),
                                         Container(
-                                          margin:
-                                              const EdgeInsets.only(left: 10),
+                                          margin: const EdgeInsets.only(left: 10),
                                           alignment: Alignment.topLeft,
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Container(
                                                 child: Text(
@@ -192,49 +177,33 @@ class _HomeState extends State<Home> {
                                               Container(
                                                 height: 25,
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
                                                       '\$${item['price']}',
                                                       style: TextStyle(
                                                         color: Colors.blueGrey,
                                                         fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight: FontWeight.bold,
                                                       ),
                                                     ),
                                                     IconButton(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              0),
+                                                      padding: const EdgeInsets.all(0),
                                                       onPressed: () {
-                                                        addOrDelFavourite(
-                                                            productId:
-                                                                item['id'],
-                                                            productTitle:
-                                                                item['title']);
+                                                        addOrDelFavourite(productId: item['id'], productTitle: item['title']);
                                                         setState(() {
-                                                          if (favBtns.contains(
-                                                              item['id'])) {
-                                                            favBtns.remove(
-                                                                item['id']);
+                                                          buildStatus = true;
+                                                          if (favBtns.contains(item['id'])) {
+                                                            favBtns.remove(item['id']);
                                                           } else {
-                                                            favBtns.add(
-                                                                item['id']);
+                                                            favBtns.add(item['id']);
                                                           }
                                                         });
                                                       },
-                                                      icon: favBtns.contains(
-                                                              item['id'])
-                                                          ? Icon(
-                                                              Icons.favorite,
-                                                              color: Colors
-                                                                  .blueGrey,
-                                                            )
-                                                          : const Icon(Icons
-                                                              .favorite_outline),
+                                                      icon: Icon(
+                                                        favBtns.contains(item['id']) ? Icons.favorite : Icons.favorite_outline,
+                                                        color: Colors.blueGrey,
+                                                      ),
                                                     )
                                                   ],
                                                 ),
