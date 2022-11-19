@@ -153,8 +153,7 @@ class Functions {
       child: ListTile(
         onTap: onTap,
         leading: CircleAvatar(
-          backgroundImage:
-              AssetImage('assets/images/${oAuth.toLowerCase()}.png'),
+          backgroundImage: AssetImage('assets/images/${oAuth.toLowerCase()}.png'),
         ),
         title: Text('Continue With $oAuth'),
         trailing: Icon(Icons.arrow_right),
@@ -316,17 +315,17 @@ class Functions {
     );
   }
 
-  static get(String uri) async {
-    Uri url = Uri.parse(uri);
-    var response = await http.get(url);
-    return jsonDecode(response.body);
+  static get(String route) async {
+    Uri url = Uri.parse('${initData['apiUrl']}/$route');
+    var response = await http.get(url, headers: initData['headers']);
+    var data = response.statusCode == 200 ? jsonDecode(response.body) : '';
+    return data;
   }
 }
 
 addOrDelFavourite({productId, productTitle}) async {
   Uri url = Uri.parse('${initData['apiUrl']}/favourites/create-or-delete');
-  var response = await http.post(url,
-      body: {'product_id': '$productId'}, headers: initData['headers']);
+  var response = await http.post(url, body: {'product_id': '$productId'}, headers: initData['headers']);
   Get.snackbar(productTitle, response.body,
       colorText: Colors.white,
       icon: Icon(

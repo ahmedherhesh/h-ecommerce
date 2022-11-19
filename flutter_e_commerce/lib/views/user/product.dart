@@ -23,15 +23,8 @@ class _ProductState extends State<Product> {
   String? keyword;
 
   product() async {
-    Uri url = Uri.parse(
-      '${initData['apiUrl']}/products/${Get.arguments['keyword']}',
-    );
-    var response = await http.get(url);
-    setState(() {
-      if (response.body.isNotEmpty && response.statusCode == 200) {
-        productData = jsonDecode(response.body);
-      }
-    });
+    Map data = await Functions.get('products/${Get.arguments['keyword']}');
+    setState(() => data.isNotEmpty ? productData = data : '');
   }
 
   @override

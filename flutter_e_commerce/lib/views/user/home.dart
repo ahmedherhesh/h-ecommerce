@@ -19,21 +19,19 @@ class _HomeState extends State<Home> {
   int currentIndex = 0, currentSlide = 0;
   List sliderImages = [], categoryWithProducts = [], favBtns = [];
   slider() async {
-    Uri url = Uri.parse('${initData['apiUrl']}/slider');
-    var response = await http.get(url);
+    List data = await Functions.get('slider');
     setState(() {
-      if (response.body.isNotEmpty && response.statusCode == 200) {
-        sliderImages.addAll(jsonDecode(response.body));
+      if (data.isNotEmpty) {
+        sliderImages.addAll(data);
       }
     });
   }
 
   products() async {
-    Uri url = Uri.parse('${initData['apiUrl']}/category-with-products');
-    var response = await http.get(url, headers: initData['headers']);
+    List data = await Functions.get('category-with-products');
     setState(() {
-      if (response.body.isNotEmpty && response.statusCode == 200) {
-        categoryWithProducts.addAll(jsonDecode(response.body));
+      if (data.isNotEmpty) {
+        categoryWithProducts.addAll(data);
       }
     });
   }
