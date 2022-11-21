@@ -109,7 +109,7 @@ class _CartState extends State<Cart> {
                             Row(
                               children: [
                                 IconButton(
-                                  onPressed: () => mounted ? setState(() => cartData[i]['qty'] != 1 ? cartData[i]['qty'] -= 1 : '') : '',
+                                  onPressed: () => mounted && cartData[i]['qty'] != 1 ? setState(() => cartData[i]['qty'] -= 1) : '',
                                   icon: Icon(
                                     color: primaryColor,
                                     Icons.remove_circle,
@@ -118,7 +118,7 @@ class _CartState extends State<Cart> {
                                 ),
                                 Text('${cartData[i]['qty']}'),
                                 IconButton(
-                                  onPressed: () => mounted ? setState(() => cartData[i]['qty'] += 1) : '',
+                                  onPressed: () => mounted && cartData[i]['qty'] < productData['stock'] ? setState(() => cartData[i]['qty'] += 1) : '',
                                   icon: Icon(
                                     Icons.add_circle,
                                     color: primaryColor,
