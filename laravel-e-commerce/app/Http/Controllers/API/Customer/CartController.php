@@ -19,18 +19,16 @@ class CartController extends MasterAPIController
     {
         $data = $request->all();
         $data['user_id'] = $this->user->id;
-        
+
         $product = Product::find($request->product_id);
         $cart = Cart::whereProductId($product->id)->whereUserId($this->user->id)->first();
         $success_msg = 'This product has been add to your cart';
+        if ($request->qty > $product->stock)
+            return response()->json(ucwords('this quantity is not avaliable for this product'));
         if ($cart) {
-            if ($request->qty + $cart->qty > $product->stock)
-                return response()->json(ucwords('this quantity is not avaliable for this product'));
             $updateCart = $cart->update($data);
             return $this->response($updateCart, $success_msg);
         } else {
-            if ($request->qty > $product->stock)
-                return response()->json(ucwords('this quantity is not avaliable for this product'));
             $addToCart = Cart::create($data);
             return $this->response($addToCart, $success_msg);
         }
