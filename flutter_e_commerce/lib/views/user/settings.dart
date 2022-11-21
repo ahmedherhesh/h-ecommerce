@@ -7,7 +7,7 @@ import 'package:flutter_e_commerce/views/user/auth-board.dart';
 class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Functions.appBar(context: context),
+      appBar: appBar(context: context),
       body: const Center(child: Text('Settings')),
     );
   }

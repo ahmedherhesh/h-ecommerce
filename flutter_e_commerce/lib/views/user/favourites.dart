@@ -39,7 +39,7 @@ class _FavouritesState extends State<Favourites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Functions.appBar(context: context),
+      appBar: appBar(context: context),
       body: Container(
         margin: const EdgeInsets.only(top: 10),
         //inside loop

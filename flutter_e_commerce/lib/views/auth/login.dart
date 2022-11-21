@@ -58,7 +58,7 @@ class _LoginState extends State<Login> {
         elevation: 0,
       ),
       body: Stack(alignment: Alignment.topLeft, children: [
-        Functions.authPageHeader(
+        authPageHeader(
           title: 'Login',
           subtitle: 'Welcome Back',
         ),
@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       //Email Field
-                      Functions.textInput(
+                      textInput(
                         icon: Icons.person,
                         hintText: 'Email, Phone Number',
                         onChanged: (val) {
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 10),
                       //Password Field
-                      Functions.textInput(
+                      textInput(
                         icon: Icons.lock,
                         hintText: 'Password',
                         onChanged: (val) {
@@ -117,10 +117,10 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                             // Login Button
-                            Functions.submitButton(
+                            submitButton(
                               text: 'Login',
                               onPressed: () async {
-                                Functions.auth(
+                                auth(
                                   context: context,
                                   data: data,
                                   route: 'login',
@@ -131,13 +131,13 @@ class _LoginState extends State<Login> {
                             ),
                             SizedBox(height: 30),
                             //Continue with google button
-                            Functions.oAuth(
+                            oAuth(
                               oAuth: 'Google',
                               oAuthClass: googleSignIn,
                               onTap: googleLogin,
                             ),
                             //Continue with facebook button
-                            Functions.oAuth(oAuth: 'Facebook'),
+                            oAuth(oAuth: 'Facebook'),
                           ],
                         ),
                       ),

@@ -108,7 +108,7 @@ class _RegisterState extends State<Register> {
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
-          Functions.authPageHeader(
+          authPageHeader(
             title: 'Register',
             subtitle: 'Welcome To Ecommerce',
           ),
@@ -124,28 +124,28 @@ class _RegisterState extends State<Register> {
               child: ListView(
                 children: [
                   //Email Field
-                  Functions.textInput(
+                  textInput(
                     icon: Icons.person,
                     hintText: 'Full Name',
                     onChanged: (val) {
                       data['name'] = val;
                     },
                   ),
-                  Functions.textInput(
+                  textInput(
                     icon: Icons.person,
                     hintText: 'Username',
                     onChanged: (val) {
                       data['username'] = val;
                     },
                   ),
-                  Functions.textInput(
+                  textInput(
                     icon: Icons.email,
                     hintText: 'Email',
                     onChanged: (val) {
                       data['email'] = val;
                     },
                   ),
-                  Functions.textInput(
+                  textInput(
                     icon: Icons.phone,
                     hintText: 'Phone',
                     onChanged: (val) {
@@ -154,7 +154,7 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 10),
                   //Password Field
-                  Functions.textInput(
+                  textInput(
                     icon: Icons.lock,
                     hintText: 'Password',
                     onChanged: (val) {
@@ -162,7 +162,7 @@ class _RegisterState extends State<Register> {
                     },
                     obscure: true,
                   ),
-                  Functions.textInput(
+                  textInput(
                     icon: Icons.lock,
                     hintText: 'Repeat Password',
                     obscure: true,
@@ -175,10 +175,10 @@ class _RegisterState extends State<Register> {
                       children: [
                         SizedBox(height: 10),
                         // Login Button
-                        Functions.submitButton(
+                        submitButton(
                           text: 'Register',
                           onPressed: () {
-                            Functions.auth(
+                            auth(
                               context: context,
                               data: data,
                               route: 'register',
@@ -187,13 +187,13 @@ class _RegisterState extends State<Register> {
                         ),
                         SizedBox(height: 30),
                         //Continue with google button
-                        Functions.oAuth(
+                        oAuth(
                           oAuth: 'Google',
                           oAuthClass: googleSignIn,
                           onTap: googleLogin,
                         ),
                         //Continue with facebook button
-                        Functions.oAuth(oAuth: 'Facebook'),
+                        oAuth(oAuth: 'Facebook'),
                       ],
                     ),
                   ),

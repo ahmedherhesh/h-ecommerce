@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
   int currentIndex = 0, currentSlide = 0;
   List sliderImages = [], categoryWithProducts = [], favBtns = [];
   slider() async {
-    List data = await Functions.get('slider');
+    List data = await get('slider');
     setState(() {
       if (data.isNotEmpty) {
         sliderImages.addAll(data);
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   }
 
   products() async {
-    List data = await Functions.get('category-with-products');
+    List data = await get('category-with-products');
     setState(() {
       if (data.isNotEmpty) {
         categoryWithProducts.addAll(data);
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     slider();
-    Functions.checkAuth().then((data) => products());
+    checkAuth().then((data) => products());
     super.initState();
   }
 
@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar: Functions.appBar(context: context),
+      appBar: appBar(context: context),
       body: ListView(
         children: [
           //Home Page Slider
@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
             ],
           ),
           //Categories
-          Functions.categories(),
+          categories(),
           categoryWithProducts.isNotEmpty
               ? Column(
                   //outside loop

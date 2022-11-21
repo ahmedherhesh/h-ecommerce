@@ -79,13 +79,13 @@ class _MainState extends State<Main> {
           items: const [
             Icon(Icons.home, size: 27),
             Icon(Icons.shopping_bag, size: 27),
-            Icon(Icons.local_grocery_store, size: 27),
+            Icon(Icons.shopping_cart, size: 27),
             Icon(Icons.favorite, size: 27),
             Icon(Icons.person, size: 27),
           ],
           letIndexChange: (index) {
             if (screensNeedAuth.contains(index)) {
-              Functions.checkAuth(redirect: true);
+              checkAuth(redirect: true);
             }
             if (initData['Authorized']) {
               setState(() {

@@ -23,8 +23,13 @@ class _ProductState extends State<Product> {
   String? keyword;
 
   product() async {
-    Map data = await Functions.get('products/${Get.arguments['keyword']}');
+    Map data = await get('products/${Get.arguments['keyword']}');
     setState(() => data.isNotEmpty ? productData = data : '');
+  }
+
+  addToCart(Map body) async {
+    var data = await post(route: 'cart/create-or-update', body: body);
+    return data.statusCode;
   }
 
   @override
@@ -37,10 +42,10 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      appBar: Functions.appBar(),
+      appBar: appBar(),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.only(top: 8, right: 15, bottom: 5, left: 15),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.only(top: 8, right: 15, bottom: 5, left: 15),
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
@@ -70,7 +75,7 @@ class _ProductState extends State<Product> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     blurRadius: 10,
                     color: Color.fromARGB(255, 199, 208, 212),
@@ -80,7 +85,7 @@ class _ProductState extends State<Product> {
                   begin: Alignment.centerRight,
                   end: Alignment.centerLeft,
                   colors: [
-                    Color.fromARGB(255, 14, 163, 156),
+                    const Color.fromARGB(255, 14, 163, 156),
                     primaryColor,
                   ],
                 ),
@@ -88,11 +93,14 @@ class _ProductState extends State<Product> {
               clipBehavior: Clip.hardEdge,
               child: MaterialButton(
                 minWidth: 100,
-                padding: EdgeInsets.all(8),
-                onPressed: () {},
+                padding: const EdgeInsets.all(8),
+                onPressed: () async {
+                  var status = await addToCart({'product_id': productData['id'].toString(), 'qty': '1'});
+                  if (status == 200) Get.toNamed('main');
+                },
                 child: Row(
                   children: [
-                    Text(
+                    const Text(
                       'Cart',
                       style: TextStyle(
                         color: Colors.white,
@@ -100,7 +108,7 @@ class _ProductState extends State<Product> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Icon(
                       Icons.shopping_cart,
                       color: Colors.white.withOpacity(.7),
@@ -122,14 +130,18 @@ class _ProductState extends State<Product> {
                     Container(
                       clipBehavior: Clip.hardEdge,
                       height: 200,
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 6,
-                          spreadRadius: 2,
-                        ),
-                      ]),
-                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 6,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      margin: const EdgeInsets.all(10),
                       child: PageView(
                         onPageChanged: (index) => setState(() {
                           currentSlide = index;
@@ -155,7 +167,7 @@ class _ProductState extends State<Product> {
                   padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                     ),
@@ -173,7 +185,7 @@ class _ProductState extends State<Product> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${productData['title'].toString()}',
+                              '${productData['title']}',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
