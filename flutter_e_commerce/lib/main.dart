@@ -1,20 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
-import 'package:flutter_e_commerce/views/helpers/functions.dart';
+import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
 import 'package:flutter_e_commerce/views/user/orders.dart';
+import 'package:flutter_e_commerce/views/user/payments/paypal.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/settings.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -42,14 +40,10 @@ class MyApp extends StatelessWidget {
         'register': (context) => const Register(),
         'main': (context) => const Main(),
         'product': (context) => Product(),
+        'checkout': (context) => PayPal(),
       },
     );
   }
-}
-
-addOrDelFavourite(productId) async {
-  Uri url = Uri.parse('${initData['apiUrl']}/favourites/create-or-delete');
-  await http.post(url, body: {'product_id': '$productId'}, headers: initData['headers']);
 }
 
 class Main extends StatefulWidget {

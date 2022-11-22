@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/helpers/functions.dart';
+import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:get/get.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -288,7 +289,7 @@ class _CartState extends State<Cart> {
                   margin: const EdgeInsets.only(top: 15, right: 15, bottom: 30, left: 15),
                   child: MaterialButton(
                     padding: const EdgeInsets.all(10),
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed('checkout'),
                     textColor: Colors.white,
                     color: primaryColor,
                     child: const Text('Checkout', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),

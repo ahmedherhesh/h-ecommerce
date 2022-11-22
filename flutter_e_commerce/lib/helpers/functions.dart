@@ -4,7 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
-import 'package:flutter_e_commerce/views/components/search.dart';
+import 'package:flutter_e_commerce/components/search.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -71,20 +71,22 @@ auth({context, data, route}) async {
   }
 }
 
-appBar({context}) {
+appBar({context, title = ''}) {
   return AppBar(
     backgroundColor: Colors.transparent,
-    title: Text(
-      'E-Commerce',
-      style: TextStyle(fontWeight: FontWeight.bold),
+    title: Container(
+      // padding: const EdgeInsets.symmetric(horizontal: 9),
+      // decoration: BoxDecoration(
+      //   border: Border.all(color: Colors.white, width: 2),
+      //   borderRadius: const BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+      // ),
+      child: Text(title == '' ? 'SHOP' : title, style: const TextStyle(fontWeight: FontWeight.bold)),
     ),
     actions: [
       IconButton(
-        onPressed: () {
-          showSearch(context: context, delegate: Search());
-        },
-        icon: Icon(Icons.search),
-      ),
+        onPressed: () => showSearch(context: context, delegate: Search()),
+        icon: const Icon(Icons.search),
+      )
     ],
     excludeHeaderSemantics: true,
     flexibleSpace: Container(
@@ -94,7 +96,7 @@ appBar({context}) {
           end: Alignment.centerLeft,
           colors: [
             primaryColor,
-            Color.fromARGB(255, 24, 160, 153),
+            const Color.fromARGB(255, 24, 160, 153),
           ],
         ),
       ),
@@ -102,15 +104,9 @@ appBar({context}) {
   );
 }
 
-textInput({
-  val = '',
-  hintText = '',
-  icon = '',
-  obscure = false,
-  onChanged,
-}) {
+textInput({val = '', hintText = '', icon = '', obscure = false, onChanged}) {
   return Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
       border: Border(
         bottom: BorderSide(
           width: 1,
@@ -322,19 +318,35 @@ get(String route) async {
   return data;
 }
 
+//http post
 post({String? route, Map? body}) async {
   Uri url = Uri.parse('${initData['apiUrl']}/$route');
   var response = await http.post(url, body: body, headers: initData['headers']);
   return response;
 }
 
-addOrDelFavourite({productId, productTitle}) async {
-  Uri url = Uri.parse('${initData['apiUrl']}/favourites/create-or-delete');
-  var response = await http.post(url, body: {'product_id': '$productId'}, headers: initData['headers']);
-  Get.snackbar(productTitle, response.body,
-      colorText: Colors.white,
-      icon: Icon(
-        Icons.favorite_outline,
-        color: Colors.blueGrey,
-      ));
+void addOrDelFavourite({productId, productTitle}) async {
+  var response = await post(route: 'favourites/create-or-delete', body: {'product_id': '$productId'});
+  snackBar(title: productTitle, message: response.body);
+}
+
+void snackBar({title, message}) {
+  Get.snackbar(
+    title,
+    message,
+    colorText: Colors.white,
+    backgroundGradient: LinearGradient(
+      begin: Alignment.centerRight,
+      end: Alignment.centerLeft,
+      colors: [
+        primaryColor,
+        const Color.fromARGB(255, 24, 160, 153),
+      ],
+    ),
+    duration: const Duration(seconds: 1),
+    icon: const Icon(
+      Icons.favorite_outline,
+      color: Colors.white,
+    ),
+  );
 }

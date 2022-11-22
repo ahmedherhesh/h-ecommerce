@@ -2,14 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/helpers/functions.dart';
+import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:get/get.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:http/http.dart' as http;
 
 class Favourites extends StatefulWidget {
-  const Favourites({Key? key}) : super(key: key);
-
   @override
   State<Favourites> createState() => _FavouritesState();
 }

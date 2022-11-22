@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/views/helpers/functions.dart';
+import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/init.dart';
-import 'package:flutter_e_commerce/views/components/widgets.dart';
+import 'package:flutter_e_commerce/components/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
