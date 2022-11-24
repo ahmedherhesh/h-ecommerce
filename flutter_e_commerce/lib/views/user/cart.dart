@@ -14,17 +14,7 @@ class _CartState extends State<Cart> {
   num shipping = 5;
   String? currency;
   int loopCount = 0;
-  // cart() async {
-  //   var cart = await get('cart');
-  //   if (mounted) setState(() => cartData = cart);
-  // }
-
-  @override
-  void initState() {
-    // cart();
-    super.initState();
-  }
-
+// Stream getS() => Stream.periodic(Duration(milliseconds: 200)).asyncMap((event) => get('cart'));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
