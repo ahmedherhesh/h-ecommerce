@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/empty_page.dart';
 import 'package:get/get.dart';
-import 'package:flutter_e_commerce/init.dart';
-import 'package:http/http.dart' as http;
 
 class Favourites extends StatefulWidget {
   @override
@@ -14,26 +11,7 @@ class Favourites extends StatefulWidget {
 
 class _FavouritesState extends State<Favourites> {
   List favourites = [];
-  productsInFavourites() async {
-    Uri url = Uri.parse('${initData['apiUrl']}/favourites');
-    var response = await http.get(url, headers: initData['headers']);
-    List data = response.statusCode == 200 ? jsonDecode(response.body) : [];
-    setState(() {
-      if (data.isNotEmpty) {
-        favourites.addAll(data);
-        favourites.remove('empty');
-      } else {
-        favourites.add('empty');
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    productsInFavourites();
-    super.initState();
-  }
-
+  bool widgetBuild = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +19,15 @@ class _FavouritesState extends State<Favourites> {
       body: Container(
         margin: const EdgeInsets.only(top: 10),
         //inside loop
-        child: favourites.isNotEmpty && !favourites.contains('empty')
-            ? GridView.builder(
+        child: FutureBuilder(
+          future: get('favourites'),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (widgetBuild == false && snapshot.connectionState == ConnectionState.done) {
+              favourites = snapshot.data;
+              widgetBuild = true;
+            }
+            if (favourites.isNotEmpty) {
+              return GridView.builder(
                 scrollDirection: Axis.vertical,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: .66),
                 itemCount: favourites.length,
@@ -112,7 +97,6 @@ class _FavouritesState extends State<Favourites> {
                                           setState(() {
                                             addOrDelFavourite(productId: item['id'], productTitle: item['title']);
                                             favourites.removeAt(i);
-                                            if (favourites.isEmpty) favourites.add('empty');
                                           });
                                         },
                                         icon: Icon(
@@ -130,8 +114,14 @@ class _FavouritesState extends State<Favourites> {
                       ),
                     ),
                   );
-                })
-            : Center(child: !favourites.contains('empty') ? CircularProgressIndicator(color: primaryColor) : const Text('You Dont Have Any Favourites Yet!')),
+                },
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator(color: primaryColor));
+            }
+            return EmptyPage(page: 'favourites');
+          },
+        ),
       ),
     );
   }

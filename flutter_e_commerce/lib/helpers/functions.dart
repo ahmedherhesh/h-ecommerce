@@ -314,15 +314,13 @@ categories() {
 get(String route) async {
   Uri url = Uri.parse('${initData['apiUrl']}/$route');
   var response = await http.get(url, headers: initData['headers']);
-  var data = response.statusCode == 200 ? jsonDecode(response.body) : '';
-  return data;
+  return response.statusCode == 200 ? jsonDecode(response.body) : [];
 }
 
 //http post
 post({String? route, Map? body}) async {
   Uri url = Uri.parse('${initData['apiUrl']}/$route');
-  var response = await http.post(url, body: body, headers: initData['headers']);
-  return response;
+  return await http.post(url, body: body, headers: initData['headers']);
 }
 
 void addOrDelFavourite({productId, productTitle}) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/empty_page.dart';
 import 'package:get/get.dart';
 
 class Cart extends StatefulWidget {
@@ -9,19 +10,18 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  List cartData = [];
   num price = 0;
   num shipping = 5;
   String? currency;
   int loopCount = 0;
-  cart() async {
-    var cart = await get('cart');
-    if (mounted) setState(() => cartData = cart);
-  }
+  // cart() async {
+  //   var cart = await get('cart');
+  //   if (mounted) setState(() => cartData = cart);
+  // }
 
   @override
   void initState() {
-    cart();
+    // cart();
     super.initState();
   }
 
@@ -29,8 +29,12 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context: context),
-      body: cartData.isNotEmpty
-          ? ListView(
+      body: FutureBuilder(
+        future: get('cart'),
+        builder: (context, AsyncSnapshot snapshot) {
+          List cartData = snapshot.data ?? [];
+          if (cartData.isNotEmpty) {
+            return ListView(
               children: [
                 const SizedBox(height: 10),
                 //cart products
@@ -54,12 +58,10 @@ class _CartState extends State<Cart> {
                               //Cart Image
                               Container(
                                 clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4,
-                                    color: shadowColor,
-                                  )
-                                ]),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [BoxShadow(blurRadius: 4, color: shadowColor)],
+                                ),
                                 child: Image.network(
                                   productData['image'],
                                   width: 80,
@@ -145,8 +147,13 @@ class _CartState extends State<Cart> {
                 CartPrice(currency: currency, price: price, shipping: shipping),
                 const CheckoutButton(),
               ],
-            )
-          : const EmptyPage(),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator(color: primaryColor));
+          }
+          return EmptyPage(page: 'cart');
+        },
+      ),
     );
   }
 }
@@ -267,9 +274,7 @@ class CartPrice extends StatelessWidget {
 }
 
 class PromoCode extends StatelessWidget {
-  const PromoCode({
-    Key? key,
-  }) : super(key: key);
+  const PromoCode({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -340,31 +345,6 @@ class PromoCode extends StatelessWidget {
           ),
         ],
       )),
-    );
-  }
-}
-
-class EmptyPage extends StatelessWidget {
-  const EmptyPage({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.shopping_cart_outlined,
-            color: primaryColor,
-            size: 120,
-          ),
-          const Text(
-            'Empty',
-            style: TextStyle(color: Colors.blueGrey, fontSize: 28, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
     );
   }
 }
