@@ -9,18 +9,28 @@ class PayPal extends StatefulWidget {
 
 class _PayPalState extends State<PayPal> {
   bool loading = true;
+  String initialUrl = 'https://malik2.com/payment?plan_id=2&app_token=app_token';
+  Color paypalColor = const Color(0XFF005ea6);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context: context, title: 'Checkout'),
+      appBar: AppBar(
+        title: const Text('Checkout', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: paypalColor,
+      ),
       body: Stack(
         children: [
           WebView(
-            initialUrl: 'https://malik2.com/payment?plan_id=2&app_token=app_token',
             javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: (url) => setState(() => loading = false),
+            onPageFinished: (url) {
+              setState(() => loading = false);
+            },
+            onWebViewCreated: (WebViewController wvController) {
+              Map<String, String> headers = {'Authorization': 'Bearer token'};
+              wvController.loadUrl(initialUrl, headers: headers);
+            },
           ),
-          loading ? Center(child: CircularProgressIndicator(color: primaryColor)) : const SizedBox()
+          loading ? Center(child: CircularProgressIndicator(color: paypalColor)) : const SizedBox()
         ],
       ),
     );
