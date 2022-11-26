@@ -7,6 +7,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Customer\CartController;
 use App\Http\Controllers\API\Customer\FavouritesController;
 use App\Http\Controllers\API\OrdersController;
+use App\Http\Controllers\API\PlacesController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Resources\API\UserResource;
 use Illuminate\Support\Facades\Route;
@@ -69,4 +70,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('category-with-products', [ProductsController::class, 'categoryWithProducts']);
     Route::get('categories', [CategoriesController::class, 'index']);
     Route::get('categories/{name}', [CategoriesController::class, 'show']);
+    Route::controller(PlacesController::class)->group(function(){
+        Route::get('countries','countries');
+        Route::get('regions/{country_name}','regions');
+        Route::get('cities/{region_name}','cities');
+    });
 });

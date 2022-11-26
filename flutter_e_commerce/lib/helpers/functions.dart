@@ -74,14 +74,7 @@ auth({context, data, route}) async {
 appBar({context, title = ''}) {
   return AppBar(
     backgroundColor: Colors.transparent,
-    title: Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 9),
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.white, width: 2),
-      //   borderRadius: const BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
-      // ),
-      child: Text(title == '' ? 'SHOP' : title, style: const TextStyle(fontWeight: FontWeight.bold)),
-    ),
+    title: Text(title == '' ? 'SHOP' : title, style: const TextStyle(fontWeight: FontWeight.bold)),
     actions: [
       IconButton(
         onPressed: () => showSearch(context: context, delegate: Search()),
@@ -104,7 +97,7 @@ appBar({context, title = ''}) {
   );
 }
 
-textInput({val = '', hintText = '', icon = '', obscure = false, onChanged}) {
+textInput({val = '', hintText = '', IconData? icon, obscure = false, onChanged}) {
   return Container(
     decoration: const BoxDecoration(
       border: Border(

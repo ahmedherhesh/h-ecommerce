@@ -6,6 +6,7 @@ import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
+import 'package:flutter_e_commerce/views/user/checkout.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
 import 'package:flutter_e_commerce/views/user/orders.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
         'register': (context) => const Register(),
         'main': (context) => const Main(),
         'product': (context) => Product(),
-        'checkout': (context) => PayPal(),
+        'checkout': (context) => Checkout(),
+        'paypal': (context) => PayPal(),
       },
     );
   }
