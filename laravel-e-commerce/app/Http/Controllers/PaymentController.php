@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\MasterAPIController;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
 use App\Models\Payment;
 use Exception;
 
-class PaymentController extends Controller
+class PaymentController extends MasterAPIController
 {
 
     private $gateway;
@@ -35,8 +36,20 @@ class PaymentController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function payment(Request $request)
+    public function payment()
     {
+        $request = apache_request_headers();
+        $validator = $this->validator($request, [
+            'country' => 'required',
+            'region' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'payment_method' => 'required',
+            'order_details'  => 'required',
+        ]);
+        if ($validator)
+            return $validator;
+        return json_decode($request['order_details']);
         $total = 100;
         try {
             $response = $this->gateway->purchase([

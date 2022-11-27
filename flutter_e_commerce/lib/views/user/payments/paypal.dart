@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce/design_settings/values.dart';
-import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/init.dart';
+import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PayPal extends StatefulWidget {
@@ -9,8 +9,10 @@ class PayPal extends StatefulWidget {
 
 class _PayPalState extends State<PayPal> {
   bool loading = true;
-  String initialUrl = 'https://malik2.com/payment?plan_id=2&app_token=app_token';
+  String initialUrl = '${initData['apiUrl']}/payment';
   Color paypalColor = const Color(0XFF005ea6);
+  var body = Get.arguments;
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,15 @@ class _PayPalState extends State<PayPal> {
               setState(() => loading = false);
             },
             onWebViewCreated: (WebViewController wvController) {
-              Map<String, String> headers = {'Authorization': 'Bearer token'};
+              Map<String, String> headers = {
+                'Authorization': initData['headers']['Authorization'] ?? '',
+                'country': body['country'] ?? '',
+                'region': body['region'] ?? '',
+                'city': body['city'] ?? '',
+                'address': body['address'] ?? '',
+                'payment_method': body['payment_method'] ?? '',
+                'order_details': body['order_details'] ?? '',
+              };
               wvController.loadUrl(initialUrl, headers: headers);
             },
           ),

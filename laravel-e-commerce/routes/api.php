@@ -10,6 +10,8 @@ use App\Http\Controllers\API\OrdersController;
 use App\Http\Controllers\API\PlacesController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Resources\API\UserResource;
+use App\Http\Controllers\PaymentController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
@@ -62,15 +64,26 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::delete('delete/{id}', [OrdersController::class, 'delete']);
             });
         });
+        //Payment
+        Route::group(['prefix' => 'payment','controller' => PaymentController::class], function () {
+            Route::get('/', 'payment')->name('payment');
+            Route::get('success', 'success')->name('payment.success');
+            Route::get('canceled', 'canceled')->name('payment.cancel');
+        });
     });
     Route::get('slider', [ExtensionsController::class, 'slider']);
-    Route::get('products', [ProductsController::class, 'products']);
-    Route::get('products/{title}', [ProductsController::class, 'product']);
-    Route::get('products/categories/{name}', [ProductsController::class, 'productsByCategory']);
-    Route::get('category-with-products', [ProductsController::class, 'categoryWithProducts']);
+    //Products
+    Route::group(['controller' => ProductsController::class],function(){
+        Route::get('products', [ProductsController::class, 'products']);
+        Route::get('products/{title}', [ProductsController::class, 'product']);
+        Route::get('products/categories/{name}', [ProductsController::class, 'productsByCategory']);
+        Route::get('category-with-products', [ProductsController::class, 'categoryWithProducts']);
+    });
+    //Categories
     Route::get('categories', [CategoriesController::class, 'index']);
     Route::get('categories/{name}', [CategoriesController::class, 'show']);
-    Route::controller(PlacesController::class)->group(function(){
+    //Places
+    Route::group(['controller' => PlacesController::class],function(){
         Route::get('countries','countries');
         Route::get('regions/{country_name}','regions');
         Route::get('cities/{region_name}','cities');

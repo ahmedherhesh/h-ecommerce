@@ -2,9 +2,8 @@
 
 namespace {{ namespace }};
 
-use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ rootNamespace }}Http\Controllers\API\MasterAPIController;
 use Illuminate\Http\Request;
-
 class {{ class }} extends MasterAPIController
 {
     //

@@ -97,7 +97,7 @@ appBar({context, title = ''}) {
   );
 }
 
-textInput({val = '', hintText = '', IconData? icon, obscure = false, onChanged}) {
+textInput({val = '', hintText = '', labelText = '', IconData? icon, obscure = false, onChanged, BorderSide? customBorder}) {
   return Container(
     decoration: const BoxDecoration(
       border: Border(
@@ -111,12 +111,11 @@ textInput({val = '', hintText = '', IconData? icon, obscure = false, onChanged})
       obscureText: obscure,
       decoration: InputDecoration(
         hintText: hintText,
-        prefixIcon: Icon(
-          icon,
-          color: Colors.blueGrey,
-        ),
+        labelText: labelText,
+        labelStyle: TextStyle(color: textColor, fontSize: 18),
+        prefixIcon: icon != null ? Icon(icon, color: Colors.blueGrey) : null,
         border: OutlineInputBorder(
-          borderSide: BorderSide.none,
+          borderSide: customBorder ?? BorderSide.none,
         ),
       ),
       cursorColor: Colors.blueGrey,
@@ -127,11 +126,11 @@ textInput({val = '', hintText = '', IconData? icon, obscure = false, onChanged})
 
 oAuth({oAuth, oAuthClass, onTap}) {
   return Container(
-    margin: EdgeInsets.only(bottom: 10),
+    margin: const EdgeInsets.only(bottom: 10),
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(10),
-      boxShadow: [
+      boxShadow: const [
         BoxShadow(
           blurRadius: 4,
           color: Color(0xffdddddd),
@@ -144,7 +143,7 @@ oAuth({oAuth, oAuthClass, onTap}) {
         backgroundImage: AssetImage('assets/images/${oAuth.toLowerCase()}.png'),
       ),
       title: Text('Continue With $oAuth'),
-      trailing: Icon(Icons.arrow_right),
+      trailing: const Icon(Icons.arrow_right),
     ),
   );
 }

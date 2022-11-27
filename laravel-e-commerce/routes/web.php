@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix' => 'payment'], function () {
-    Route::get('/', [PaymentController::class, 'payment']);
-    Route::get('success', [PaymentController::class, 'success'])->name('payment.success');
-    Route::get('canceled', [PaymentController::class, 'canceled'])->name('payment.cancel');
-});
+
