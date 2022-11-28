@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\MasterAPIController;
+use App\Http\Requests\API\PaymentRequest;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
 use App\Models\Payment;
@@ -36,26 +37,15 @@ class PaymentController extends MasterAPIController
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function payment()
+    public function payment(PaymentRequest $request)
     {
-        $request = apache_request_headers();
-        $validator = $this->validator($request, [
-            'country' => 'required',
-            'region' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'payment_method' => 'required',
-            'order_details'  => 'required',
-        ]);
-        if ($validator)
-            return $validator;
         return json_decode($request['order_details']);
         $total = 100;
         try {
             $response = $this->gateway->purchase([
                 'amount' => $total,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('payment.success', "total=$total"),
+                'returnUrl' => route('payment.success', "total=$total?{$request['order_details']}"),
                 'cancelUrl' => route('payment.cancel'),
             ])->send();
             if ($response->isRedirect()) {

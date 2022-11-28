@@ -11,8 +11,17 @@ class _PayPalState extends State<PayPal> {
   bool loading = true;
   String initialUrl = '${initData['apiUrl']}/payment';
   Color paypalColor = const Color(0XFF005ea6);
-  var body = Get.arguments;
+  Map body = Get.arguments;
+  String params = '';
   @override
+  void initState() {
+    body.forEach((key, value) => params = '$params$key=$value&');
+    setState(() {
+      initialUrl = '$initialUrl?$params';
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +37,7 @@ class _PayPalState extends State<PayPal> {
               setState(() => loading = false);
             },
             onWebViewCreated: (WebViewController wvController) {
-              Map<String, String> headers = {
-                'Authorization': initData['headers']['Authorization'] ?? '',
-                'country': body['country'] ?? '',
-                'region': body['region'] ?? '',
-                'city': body['city'] ?? '',
-                'address': body['address'] ?? '',
-                'payment_method': body['payment_method'] ?? '',
-                'order_details': body['order_details'] ?? '',
-              };
+              Map<String, String> headers = {'Authorization': initData['headers']['Authorization']};
               wvController.loadUrl(initialUrl, headers: headers);
             },
           ),
