@@ -7,6 +7,7 @@ use App\Http\Requests\API\PaymentRequest;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
 use App\Models\Payment;
+use App\Models\Product;
 use Exception;
 
 class PaymentController extends MasterAPIController
@@ -39,13 +40,20 @@ class PaymentController extends MasterAPIController
      */
     public function payment(PaymentRequest $request)
     {
-        return json_decode($request['order_details']);
-        $total = 100;
+        $shipping = 5;
+        $total = $shipping;
+        $order_details = json_decode($request['order_details']);
+        foreach ($order_details as $order_detail) {
+            $product = Product::find($order_detail->product_id);
+            if ($product)
+                $total += $product->price * $order_detail->qty;
+        }
+        session()->put('order_details',$order_details);
         try {
             $response = $this->gateway->purchase([
-                'amount' => $total,
-                'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => route('payment.success', "total=$total?{$request['order_details']}"),
+                'amount'    => $total,
+                'currency'  => env('PAYPAL_CURRENCY'),
+                'returnUrl' => route('payment.success', "total=$total"),
                 'cancelUrl' => route('payment.cancel'),
             ])->send();
             if ($response->isRedirect()) {
@@ -76,6 +84,7 @@ class PaymentController extends MasterAPIController
                 $data = $response->getData();
                 // Insert transaction data into the database
                 if (Payment::wherePaymentId($data['PAYMENTINFO_0_TRANSACTIONID'])->first()) return;
+                // return session()->get('order_details');
                 Payment::insert([
                     'payment_id'     => $data['PAYMENTINFO_0_TRANSACTIONID'],
                     'payer_id'       => $request->PayerID,

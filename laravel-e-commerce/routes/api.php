@@ -64,12 +64,6 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::delete('delete/{id}', [OrdersController::class, 'delete']);
             });
         });
-        //Payment
-        Route::group(['prefix' => 'payment','controller' => PaymentController::class], function () {
-            Route::get('/', 'payment')->name('payment');
-            Route::get('success', 'success')->name('payment.success');
-            Route::get('canceled', 'canceled')->name('payment.cancel');
-        });
     });
     Route::get('slider', [ExtensionsController::class, 'slider']);
     //Products
@@ -87,5 +81,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('countries','countries');
         Route::get('regions/{country_name}','regions');
         Route::get('cities/{region_name}','cities');
+    });
+    //Payment
+    Route::group(['prefix' => 'payment','controller' => PaymentController::class], function () {
+        Route::get('/', 'payment')->name('payment')->middleware('auth:sanctum');
+        Route::get('success', 'success')->name('payment.success');
+        Route::get('canceled', 'canceled')->name('payment.cancel');
     });
 });

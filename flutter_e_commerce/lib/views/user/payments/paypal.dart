@@ -35,6 +35,7 @@ class _PayPalState extends State<PayPal> {
             javascriptMode: JavascriptMode.unrestricted,
             onPageFinished: (url) {
               setState(() => loading = false);
+              if (url.contains('success')) Get.offAllNamed('main');
             },
             onWebViewCreated: (WebViewController wvController) {
               Map<String, String> headers = {'Authorization': initData['headers']['Authorization']};
