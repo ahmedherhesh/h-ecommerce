@@ -18,12 +18,14 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('payment_id')->nullable();
             $table->integer('qty');
-            $table->integer('price');
-            $table->integer('shipping')->nullable();
-            $table->integer('shipping_currency')->nullable();
-            $table->integer('total_price');
-            $table->enum('status',['waiting','cancelled','refused','processing','delivered']);
+            $table->float('price');
+            $table->float('shipping')->nullable();
+            $table->float('total_price');
+            $table->string('currency')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->enum('status',['waiting','cancelled','refused','processing','delivered'])->default('waiting');
             $table->timestamps();
         });
     }

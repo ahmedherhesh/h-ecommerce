@@ -12,11 +12,13 @@ class Order extends Model
         'seller_id',
         'customer_id',
         'product_id',
+        'payment_id',
         'qty',
         'price',
         'shipping',
-        'shipping_currency',
+        'currency',
         'total_price',
+        'payment_method',
         'status'
     ];
 }
