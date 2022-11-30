@@ -111,7 +111,6 @@ textInput({val = '', hintText = '', labelText = '', IconData? icon, obscure = fa
       obscureText: obscure,
       decoration: InputDecoration(
         hintText: hintText,
-        labelText: labelText,
         labelStyle: TextStyle(color: textColor, fontSize: 18),
         prefixIcon: icon != null ? Icon(icon, color: Colors.blueGrey) : null,
         border: OutlineInputBorder(

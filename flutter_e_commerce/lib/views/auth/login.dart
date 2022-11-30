@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
@@ -41,11 +42,11 @@ class _LoginState extends State<Login> {
         title: Container(
           alignment: Alignment.topRight,
           child: MaterialButton(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             onPressed: () {
-              Navigator.of(context).pushNamed('register');
+              Get.toNamed('register');
             },
-            child: Text(
+            child: const Text(
               'Register',
               style: TextStyle(
                 color: Color(0xffefefef),
@@ -67,8 +68,7 @@ class _LoginState extends State<Login> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 130),
-                padding:
-                    EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+                padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   color: Colors.white,
