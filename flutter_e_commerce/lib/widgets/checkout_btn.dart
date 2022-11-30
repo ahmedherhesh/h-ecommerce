@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../design_settings/values.dart';
 
 class CheckoutButton extends StatelessWidget {
-  CheckoutButton({this.onPressed});
+  CheckoutButton({this.title, this.onPressed});
   final onPressed;
+  final title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +14,7 @@ class CheckoutButton extends StatelessWidget {
         onPressed: onPressed,
         textColor: Colors.white,
         color: primaryColor,
-        child: const Text('Checkout', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        child: Text(title ?? 'Checkout', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
@@ -18,6 +20,7 @@ class _CartState extends State<Cart> {
   int loopCount = 0;
   bool buildStatus = false;
   List cartData = [];
+  List orderDetails = [];
 // Stream getS() => Stream.periodic(Duration(milliseconds: 200)).asyncMap((event) => get('cart'));
   @override
   Widget build(BuildContext context) {
@@ -161,7 +164,16 @@ class _CartState extends State<Cart> {
                   ),
                   const PromoCode(),
                   CartPrice(currency: currency, price: price, shipping: shipping),
-                  CheckoutButton(onPressed: () => Get.toNamed('checkout')),
+                  CheckoutButton(onPressed: () {
+                    orderDetails = [];
+                    cartData.forEach((item) {
+                      orderDetails.add({'qty': item['qty'], 'product_id': item['product']['id']});
+                    });
+                    Get.toNamed(
+                      'checkout',
+                      arguments: {'order_details': jsonEncode(orderDetails)},
+                    );
+                  }),
                 ],
               ),
             );

@@ -124,18 +124,19 @@ class _CheckoutState extends State<Checkout> {
             ),
 
             CheckoutButton(
+                title: 'Let\'s Do It ',
                 onPressed: () => payment.isNotEmpty
-                    ? Get.toNamed('$payment', arguments: {
-                        'country': countrySelected ?? '',
-                        'region': regionSelected ?? '',
-                        'city': citySelected ?? '',
-                        'address': address,
-                        'payment_method': payment,
-                        'order_details': jsonEncode([
-                          {'product_id': 10, 'qty': 2},
-                          {'product_id': 11, 'qty': 1}
-                        ])
-                      })
+                    ? Get.toNamed(
+                        payment,
+                        arguments: {
+                          'country': countrySelected ?? '',
+                          'region': regionSelected ?? '',
+                          'city': citySelected ?? '',
+                          'address': address,
+                          'payment_method': payment,
+                          'order_details': Get.arguments['order_details'],
+                        },
+                      )
                     : null)
           ],
         ),
