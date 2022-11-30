@@ -119,7 +119,7 @@ class _RegisterState extends State<Register> {
               borderRadius: BorderRadius.circular(40),
               color: Colors.white,
             ),
-            //Login Form
+            //Register Form
             child: Form(
               child: ListView(
                 children: [
