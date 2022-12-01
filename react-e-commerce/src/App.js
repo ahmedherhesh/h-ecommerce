@@ -8,18 +8,24 @@ import Product from './components/Product';
 import Login from './views/auth/login';
 import Register from './views/auth/register';
 import Favorite from './views/user/favorite';
+import AddProduct from './views/admin-seller/productController/addProduct';
 
 function App() {
+  let sellerPrefix = 'seller';
   return (
     <BrowserRouter>
       <NavBar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/:title' element={<Product />} />
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/favorite' element={<Favorite />} />
+      <Routes >
+        {/* all users */}
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/:title' element={<Product />} />
+        {/* customer */}
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/favorite' element={<Favorite />} />
+        {/* admin or seller */}
+        <Route path={sellerPrefix + '/add-product'} element={<AddProduct/>}/>
       </Routes>
     </BrowserRouter>
   );
