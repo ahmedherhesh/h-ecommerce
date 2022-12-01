@@ -9,10 +9,11 @@ import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/checkout.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
-import 'package:flutter_e_commerce/views/user/orders.dart';
 import 'package:flutter_e_commerce/views/user/payments/paypal.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
-import 'package:flutter_e_commerce/views/user/settings.dart';
+import 'package:flutter_e_commerce/views/user/profile.dart';
+import 'package:flutter_e_commerce/views/user/search.dart';
+
 import 'package:get/get.dart';
 
 void main() {
@@ -20,8 +21,7 @@ void main() {
 }
 
 int pageIndex = 0;
-
-List screens = [Home(), Orders(), Cart(), Favourites(), Settings()], screensNeedAuth = [1, 3, 4];
+List screens = [Home(), Search(), Cart(), Favourites(), Profile()], screensNeedAuth = [3, 4];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -74,7 +74,7 @@ class _MainState extends State<Main> {
           backgroundColor: Colors.transparent,
           items: const [
             Icon(Icons.home, size: 27),
-            Icon(Icons.shopping_bag, size: 27),
+            Icon(Icons.search_outlined, size: 27),
             Icon(Icons.shopping_cart, size: 27),
             Icon(Icons.favorite, size: 27),
             Icon(Icons.person, size: 27),
@@ -84,17 +84,13 @@ class _MainState extends State<Main> {
               checkAuth(redirect: true);
             }
             if (initData['Authorized']) {
-              setState(() {
-                pageIndex = index;
-              });
+              setState(() => pageIndex = index);
               return true;
             }
             return !screensNeedAuth.contains(index);
           },
           onTap: (index) {
-            setState(() {
-              pageIndex = index;
-            });
+            setState(() => pageIndex = index);
           },
         ),
       ),

@@ -8,6 +8,7 @@ class EmptyPage extends StatelessWidget {
     'favourites': Icons.favorite_outline,
     'cart': Icons.shopping_cart_outlined,
     'orders': Icons.shopping_bag_outlined,
+    'search': Icons.search_outlined,
   };
   @override
   Widget build(BuildContext context) {
