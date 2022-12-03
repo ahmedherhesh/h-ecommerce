@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import http from '../../axios';
+import axios from '../../axios';
 import validator from '../../validator';
 import { Link } from 'react-router-dom';
 class Register extends Component {
@@ -20,7 +20,7 @@ class Register extends Component {
             data[v] = this[v].current.value;
             validator_fields[v] = this[v].current
         });
-        http.post('register', data).then(r => r.status === 200 ? window.location.href = '/' : 0).catch(r => {
+        axios.post('register', data).then(r => r.status === 200 ? window.location.href = '/' : 0).catch(r => {
             let res = r.response;
             if (res.status === 422 ){
                 validator(res.data,validator_fields);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import http from '../../axios';
+import axios from '../../axios';
 import validator from '../../validator';
 import { Link } from 'react-router-dom';
 class Login extends Component {
@@ -13,7 +13,7 @@ class Login extends Component {
             email: this.email.current.value,
             password: this.password.current.value,
         };
-        http.post('login', data).then(r => { 
+        axios.post('login', data).then(r => { 
             localStorage.setItem('token', r.data.token); 
             window.location.href = '/';
         }).catch(r => {

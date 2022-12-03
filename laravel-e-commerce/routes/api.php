@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Admin\CategoriesController;
+use App\Http\Controllers\API\Admin\BrandsController;
 use App\Http\Controllers\API\Admin\ExtensionsController;
 use App\Http\Controllers\API\Admin\RolesController;
 use App\Http\Controllers\API\AuthController;
@@ -32,33 +33,35 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('give-to-role', [RolesController::class, 'givePermissionsToRole']);
             //Categories Controller
             Route::post('create-category', [CategoriesController::class, 'create']);
-            Route::delete('delete-category/{name}', [CategoriesController::class, 'delete']);
+            Route::delete('delete-category/{id}', [CategoriesController::class, 'delete']);
             //Extensions
             //Slider Extension
-            Route::post('add-to-slider',[ExtensionsController::class,'addToSlider']);
+            Route::post('add-to-slider', [ExtensionsController::class, 'addToSlider']);
         });
         //super-admin, admin, seller
         Route::group(['middleware' => ['role:super-admin|admin|seller']], function () {
             //Products Controller
-            Route::post('create-product', [ProductsController::class, 'create']);
-            Route::post('update-product', [ProductsController::class, 'update']);
-            Route::delete('delete-product/{title}', [ProductsController::class, 'delete']);
+            Route::group(['prefix' => 'product', 'controller' => ProductsController::class], function () {
+                Route::post('create', 'create');
+                Route::post('update', 'update');
+                Route::delete('delete/{title}', 'delete');
+            });
         });
         //Customer
         Route::group(['middleware' => ['role:customer']], function () {
             //Cart Controller
-            Route::group(['prefix' => 'cart'],function(){
+            Route::group(['prefix' => 'cart'], function () {
                 Route::get('/', [CartController::class, 'index']);
                 Route::post('create-or-update', [CartController::class, 'createOrUpdate']);
                 Route::delete('delete/{id}', [CartController::class, 'delete']);
             });
             //Favourites Controller
-            Route::group(['prefix' => 'favourites'],function(){
+            Route::group(['prefix' => 'favourites'], function () {
                 Route::get('/', [FavouritesController::class, 'index']);
                 Route::post('create-or-delete', [FavouritesController::class, 'createOrDelete']);
             });
             //Orders Controller
-            Route::group(['prefix' => 'orders'],function(){
+            Route::group(['prefix' => 'orders'], function () {
                 Route::get('/', [OrdersController::class, 'index']);
                 Route::post('create', [OrdersController::class, 'create']);
                 Route::delete('delete/{id}', [OrdersController::class, 'delete']);
@@ -67,7 +70,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
     Route::get('slider', [ExtensionsController::class, 'slider']);
     //Products
-    Route::group(['controller' => ProductsController::class],function(){
+    Route::group(['controller' => ProductsController::class], function () {
         Route::get('products', [ProductsController::class, 'products']);
         Route::get('products/{title}', [ProductsController::class, 'product']);
         Route::get('products/categories/{name}', [ProductsController::class, 'productsByCategory']);
@@ -76,14 +79,17 @@ Route::group(['prefix' => 'v1'], function () {
     //Categories
     Route::get('categories', [CategoriesController::class, 'index']);
     Route::get('categories/{name}', [CategoriesController::class, 'show']);
+    //Brands
+    Route::get('brands', [BrandsController::class, 'index']);
+    Route::get('brands/{name}', [BrandsController::class, 'show']);
     //Places
-    Route::group(['controller' => PlacesController::class],function(){
-        Route::get('countries','countries');
-        Route::get('regions/{country_name}','regions');
-        Route::get('cities/{region_name}','cities');
+    Route::group(['controller' => PlacesController::class], function () {
+        Route::get('countries', 'countries');
+        Route::get('regions/{country_name}', 'regions');
+        Route::get('cities/{region_name}', 'cities');
     });
     //Payment
-    Route::group(['prefix' => 'payment','controller' => PaymentController::class], function () {
+    Route::group(['prefix' => 'payment', 'controller' => PaymentController::class], function () {
         Route::get('/', 'payment')->name('payment')->middleware('auth:sanctum');
         Route::get('success', 'success')->name('payment.success');
         Route::get('canceled', 'canceled')->name('payment.cancel');

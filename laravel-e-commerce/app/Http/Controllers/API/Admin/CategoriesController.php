@@ -19,12 +19,17 @@ class CategoriesController extends MasterAPIController
     }
     function index()
     {
-        $categories = Category::all(['name','image','parent_id']);
+        $categories = Category::all();
         return $this->response($categories, $categories);
     }
-    function delete($name)
+    function show($name)
     {
         $category = Category::whereName($name)->first();
+        return $this->response($category, $category);
+    }
+    function delete($id)
+    {
+        $category = Category::find($id);
         $category_del = $category ? $category->delete() : '';
         return $this->response($category_del, 'Success', 'Category is not found');
     }

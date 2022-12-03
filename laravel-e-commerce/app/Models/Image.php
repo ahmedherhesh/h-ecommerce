@@ -16,7 +16,8 @@ class Image extends Model
         $images = json_decode($images);
         if ($images)
             foreach ($images as $image) {
-                $imgs[] = asset("uploads/{$this->type}/{$this->model_id}/$image");
+                if ($image)
+                    $imgs[] = asset("uploads/{$this->type}/{$this->model_id}/$image");
             }
         return $this->attributes['images'] = json_encode($imgs);
     }
