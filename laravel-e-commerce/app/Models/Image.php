@@ -16,8 +16,7 @@ class Image extends Model
         $images = json_decode($images);
         if ($images)
             foreach ($images as $image) {
-                if ($image)
-                    $imgs[] = asset("uploads/{$this->type}/{$this->model_id}/$image");
+                $imgs[] = asset("uploads/{$this->type}/{$this->model_id}/$image");
             }
         return $this->attributes['images'] = json_encode($imgs);
     }
@@ -26,9 +25,11 @@ class Image extends Model
     {
         $imgs = [];
         foreach ($images as $image) {
-            $image_name =  rand(1000, 9999) . time() . '.' . $image->extension();
-            $image->move(public_path("uploads/{$this->type}/{$this->model_id}"), $image_name);
-            $imgs[] = $image_name;
+            if (gettype($image) != 'string') {
+                $image_name =  rand(1000, 9999) . time() . '.' . $image->extension();
+                $image->move(public_path("uploads/{$this->type}/{$this->model_id}"), $image_name);
+                $imgs[] = $image_name;
+            }
         }
         $this->attributes['images'] = json_encode($imgs);
     }

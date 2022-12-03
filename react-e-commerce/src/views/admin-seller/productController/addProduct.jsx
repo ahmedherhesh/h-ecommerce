@@ -36,17 +36,15 @@ class AddProduct extends Component {
     }
     async handleSubmit(e) {
         e.preventDefault();
-        let data = {};
         let fields = [
             ...document.querySelectorAll('#addProduct input'),
             ...document.querySelectorAll('#addProduct select'),
             ...document.querySelectorAll('#addProduct textarea')
         ];
-        let images = [];
-        let formData = new FormData();
-        fields.forEach(field => field.id ? data[field.id] = field.value : formData.append('images[]',field.files[0]));
-        data.images = formData;
-        // return console.log(data);
+
+        let data = new FormData();
+        fields.forEach(field => field.id ? data.append(field.id, field.value) : data.append('images[]', field.files[0]));
+
         let res = await axios.post('product/create', data);
         console.log(res);
     }
