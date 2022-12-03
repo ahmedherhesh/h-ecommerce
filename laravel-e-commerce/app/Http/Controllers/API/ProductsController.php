@@ -35,7 +35,7 @@ class ProductsController extends MasterAPIController
         $data = $request->all();
         $data['user_id'] = $this->user->id;
         $data['status']  = $this->user->hasAnyRole(['super-admin', 'admin']) ? 1 : 0;
-        $data['keyword'] = str_replace(' ','-',$data['title']);
+        $data['keyword'] = strtolower(str_replace(' ','-',$data['title']));
 
         $product = Product::create($data);
         if ($product) {

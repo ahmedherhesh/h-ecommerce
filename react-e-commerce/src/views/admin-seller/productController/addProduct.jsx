@@ -44,13 +44,9 @@ class AddProduct extends Component {
         ];
         let images = [];
         let formData = new FormData();
-        fields.forEach(field => field.id ? data[field.id] = field.value  : images.push(field.value));
-
-        images.forEach(image => formData.append(`images[]`, image))
-        data.images = formData.getAll('images[]');
-        // console.log(formData.getAll('images[]'));
-        // return;
-        //send data
+        fields.forEach(field => field.id ? data[field.id] = field.value : formData.append('images[]',field.files[0]));
+        data.images = formData;
+        // return console.log(data);
         let res = await axios.post('product/create', data);
         console.log(res);
     }
