@@ -70,7 +70,7 @@ class AddProduct extends Component {
                             <div className="product-details col-6">
                                 <div className="form-group">
                                     <label style={this.style.label} htmlFor="title">Product title</label>
-                                    <input type='text' className="product-title form-control" id="title" />
+                                    <input type='text' maxLength={16} className="product-title form-control" id="title" />
                                 </div>
                                 <div>
                                     <label style={this.style.label} htmlFor="category_id">Category</label>
