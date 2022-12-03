@@ -15,7 +15,7 @@ class MasterRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(
-            response()->json($validator->errors()->all(),422)
+            response()->json($validator->errors(),422)
         );
     }
 }

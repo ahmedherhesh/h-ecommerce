@@ -41,7 +41,7 @@ auth({context, data, route}) async {
       animType: AnimType.SCALE,
       title: 'Validation Error',
       headerAnimationLoop: false,
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: Colors.red,
         fontWeight: FontWeight.bold,
         fontSize: 25,
@@ -49,10 +49,10 @@ auth({context, data, route}) async {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
-          body.length,
+          body.values.length,
           (index) => Text(
-            '${body[index]}',
-            style: TextStyle(
+            '${body.values.toList()[index][0]}',
+            style: const TextStyle(
               // fontWeight: FontWeight.bold,
               fontSize: 18,
             ),

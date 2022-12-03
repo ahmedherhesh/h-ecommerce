@@ -3,12 +3,9 @@ import http from '../../axios';
 import validator from '../../validator';
 import { Link } from 'react-router-dom';
 class Login extends Component {
-
     state = {};
-    errors = {};
     email = React.createRef();
     password = React.createRef();
-
 
     handelSubmit = e => {
         e.preventDefault();
@@ -16,7 +13,10 @@ class Login extends Component {
             email: this.email.current.value,
             password: this.password.current.value,
         };
-        http.post('login', data).then(r => console.log(r)).catch(r => {
+        http.post('login', data).then(r => { 
+            localStorage.setItem('token', r.data.token); 
+            window.location.href = '/';
+        }).catch(r => {
             let res = r.response;
             if (res.status === 422) {
                 validator(res.data, {
@@ -37,8 +37,6 @@ class Login extends Component {
                     <Link to='/register' className='d-block' style={{ color: 'var(--main-color)' }}>New around here? Sign up</Link>
                     <Link to='#' style={{ color: 'var(--main-color)' }}>Forgot password?</Link>
                 </div>
-
-
             </form>
         );
     }
