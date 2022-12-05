@@ -43,7 +43,5 @@ class RolesSeeder extends Seeder
                 $permission->assignRole($role);
             }
         }
-        $user = User::find(1);
-        $user->assignRole('super-admin');
     }
 }
