@@ -60,10 +60,9 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::get('/', [FavouritesController::class, 'index']);
                 Route::post('create-or-delete', [FavouritesController::class, 'createOrDelete']);
             });
-            //Orders Controller
-            Route::group(['prefix' => 'orders'], function () {
-                Route::get('/', [OrdersController::class, 'index']);
-                Route::post('create', [OrdersController::class, 'create']);
+            //Customer Orders Controller
+            Route::group(['prefix' => 'customer-orders'], function () {
+                Route::get('/', [OrdersController::class, 'customerOrders']);
                 Route::delete('delete/{id}', [OrdersController::class, 'delete']);
             });
         });

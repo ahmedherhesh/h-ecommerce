@@ -23,7 +23,7 @@ class Product extends Model
     ];
 
     function myImages(){
-        return $this->hasOne(Image::class,'model_id');
+        return $this->hasOne(Image::class,'model_id')->whereType('product');
     }
     function category(){
         return $this->belongsTo(Category::class);

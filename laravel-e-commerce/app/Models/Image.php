@@ -18,7 +18,7 @@ class Image extends Model
             foreach ($images as $image) {
                 $imgs[] = asset("uploads/{$this->type}/{$this->model_id}/$image");
             }
-        return $this->attributes['images'] = json_encode($imgs);
+        return $this->attributes['images'] = $imgs;
     }
 
     function setImagesAttribute($images)

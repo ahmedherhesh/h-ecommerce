@@ -145,9 +145,9 @@ class _HomeState extends State<Home> {
                                         ]),
                                     child: Column(
                                       children: [
-                                        Image.asset(
+                                        Image.network(
                                           fit: BoxFit.cover,
-                                          'assets/images/sale.jpg',
+                                          '${item['image']}',
                                           height: 135,
                                         ),
                                         Container(

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\PaymentRequest;
+use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
@@ -44,8 +45,6 @@ class PaymentController extends Controller
         session_start();
         $_SESSION['user']    = auth('sanctum')->user();
         $_SESSION['request'] = $request->all();
-        // $_SESSION['test'] = 'test';
-        // return $_SESSION['user'];
 
         $shipping = 5;
         $total = $shipping;
@@ -124,6 +123,7 @@ class PaymentController extends Controller
                                     'total_price'    => $product->price * $order->qty,
                                     'payment_method' => $session_data['payment_method'],
                                 ]);
+                                Cart::whereUserId($user->id)->delete();
                             }
                         }
                     return "Payment is successful. Your transaction id is: " . $data['PAYMENTINFO_0_TRANSACTIONID'];

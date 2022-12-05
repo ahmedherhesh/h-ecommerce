@@ -24,6 +24,6 @@ class ExtensionsController extends MasterAPIController
     {
         $slider = Image::whereType('slider')->first();
         if ($slider)
-            return json_decode($slider->images);
+            return $slider->images;
     }
 }

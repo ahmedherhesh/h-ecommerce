@@ -8,24 +8,25 @@ use Illuminate\Http\Request;
 
 class OrdersController extends MasterAPIController
 {
-    function create(){        
-        $data['customer_id'] = $this->user->id;
-        return $data['order_details'];
-        $order = Order::create($data);
-        if($order) return 200;
+    function getOrders(array $conditions)
+    {
+        $orders = Order::where($conditions)->get();
+        return $orders;
     }
-    function customerOrders(){
-        $orders = Order::whereUserId($this->user->id)->get();
-        return $this->response($orders,$orders);
+    function customerOrders()
+    {
+        $orders = $this->getOrders(['customer_id' => $this->user->id]);
+        return $this->response($orders, $orders);
     }
-    function sellerOrders(){
-        $orders = Order::whereSellerId($this->user->id)->get();
-        return $this->response($orders,$orders);
+    function sellerOrders()
+    {
+        $orders = $this->getOrders(['seller_id' => $this->user->id]);
+        return $this->response($orders, $orders);
     }
-    function update(){
-
+    function update()
+    {
     }
-    function delete(){
-
+    function delete()
+    {
     }
 }
