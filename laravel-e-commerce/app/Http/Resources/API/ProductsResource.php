@@ -22,7 +22,7 @@ class ProductsResource extends JsonResource
             "keyword"       => $this->keyword ?? null,
             "price"         => $this->price,
             "currency"      => $this->currency,
-            'image'         => $this->myImages ? $this->myImages->images : null,
+            'image'         => $this->myImages ? $this->myImages->images[0] : null,
             'in_favourite'  => Favourite::where(['user_id' => $user_id, 'product_id' => $this->id])->first() ? true : false
         ];
     }
