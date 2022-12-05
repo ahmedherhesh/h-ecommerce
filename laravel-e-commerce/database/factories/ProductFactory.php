@@ -26,11 +26,12 @@ class ProductFactory extends Factory
             'category_id' => $categories_id[rand(0, count($categories_id) - 1)],
             'brand_id' => $brands_id[rand(0, count($brands_id) - 1)],
             'title' => $this->faker->unique()->text(17),
-            'keyword' => str_replace(' ', '-', $this->faker->unique()->text(17)),
+            'keyword' => strtolower(str_replace(' ', '-', $this->faker->unique()->text(17))),
             'description' => $this->faker->text(100),
             'price' => rand(100, 900),
             'currency' => 'USD',
             'stock' => rand(1, 30),
+            'status' => 1
         ];
     }
 }

@@ -10,7 +10,7 @@ class Category extends Model
     use HasFactory;
     protected $fillable = ['user_id','parent_id','name','image'];
     function products(){
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class)->whereStatus(1);
     }
     function setImageAttribute($image){
         $image_name =  rand(1000, 9999) . time() . '.' . $image->extension();

@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
     public function run()
     {
         Product::truncate();
-        Product::factory()->times(10)->create()->each(function ($product) {
+        Product::factory()->times(60)->create()->each(function ($product) {
             $product_imgs_dir = public_path("/uploads/product");
             $product_imgs_dir_id = public_path("/uploads/product/$product->id");
 
