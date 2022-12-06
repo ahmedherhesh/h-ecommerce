@@ -114,7 +114,7 @@ class _LoginState extends State<Login> {
                       ),
                       // Login Button
                       submitButton(
-                        text: 'Login',
+                        title: 'Login',
                         onPressed: () async {
                           auth(
                             context: context,

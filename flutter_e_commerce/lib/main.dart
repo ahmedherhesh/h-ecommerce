@@ -6,6 +6,7 @@ import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
+import 'package:flutter_e_commerce/views/user/category.dart';
 import 'package:flutter_e_commerce/views/user/checkout.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
@@ -15,9 +16,12 @@ import 'package:flutter_e_commerce/views/user/profile.dart';
 import 'package:flutter_e_commerce/views/user/search.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+SharedPreferences? prefs;
+void main() async {
   runApp(const MyApp());
+  prefs = await SharedPreferences.getInstance();
 }
 
 int pageIndex = 0;
@@ -41,6 +45,7 @@ class MyApp extends StatelessWidget {
         'register': (context) => const Register(),
         'main': (context) => const Main(),
         'product': (context) => Product(),
+        'category': (context) => Category(),
         'checkout': (context) => Checkout(),
         'paypal': (context) => PayPal(),
       },
@@ -56,6 +61,12 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
+  @override
+  void initState() {
+    pageIndex = Get.arguments != null ? Get.arguments['pageIndex'] : 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

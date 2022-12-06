@@ -22,7 +22,7 @@ class CartResource extends JsonResource
                 'price'     => $this->product->price,
                 'currency'  => $this->product->currency,
                 'stock'     => $this->product->stock,
-                'image'     => json_decode($this->product->myImages->images)[0]
+                'image'     => $this->product->myImages->images[0]
             ]
         ];
     }

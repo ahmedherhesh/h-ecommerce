@@ -66,6 +66,7 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::delete('delete/{id}', [OrdersController::class, 'delete']);
             });
         });
+        Route::get('logout', [AuthController::class, 'logout']);
     });
     Route::get('slider', [ExtensionsController::class, 'slider']);
     //Products

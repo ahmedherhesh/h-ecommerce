@@ -17,7 +17,7 @@ class AuthController extends MasterAPIController
         $user = auth()->user();
         if ($user)
             $user->token = true;
-        return $this->response($user, new UserResource($user),['Your email and password is not matched']);
+        return $this->response($user, new UserResource($user), ['Your email and password is not matched']);
     }
 
     function register(UserRegisterRequest $request)
@@ -26,5 +26,10 @@ class AuthController extends MasterAPIController
         $user->assignRole('customer');
         $user->token = true;
         return $this->response($user, new UserResource($user));
+    }
+    function logout(Request $request)
+    {
+        $logout = $request->user('sanctum')->currentAccessToken()->delete();
+        return $logout;
     }
 }

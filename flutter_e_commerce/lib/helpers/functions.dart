@@ -101,6 +101,7 @@ textInput({val = '', hintText = '', labelText = '', IconData? icon, obscure = fa
       ),
     ),
     child: TextFormField(
+      initialValue: val,
       obscureText: obscure,
       decoration: InputDecoration(
         hintText: hintText,
@@ -140,7 +141,7 @@ oAuth({oAuth, oAuthClass, onTap}) {
   );
 }
 
-submitButton({text, onPressed}) {
+submitButton({String? title, onPressed}) {
   return Container(
     margin: EdgeInsets.only(top: 15),
     decoration: BoxDecoration(
@@ -161,7 +162,7 @@ submitButton({text, onPressed}) {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '$text',
+            '$title',
             style: TextStyle(
               color: Color(0xffefefef),
               fontSize: 25,
@@ -237,60 +238,6 @@ authPageHeader({title, subtitle}) {
         ),
       ],
     ),
-  );
-}
-
-categories() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          'Categories',
-          style: TextStyle(
-            color: Colors.blueGrey,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Container(
-        height: 70,
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: GridView(
-          scrollDirection: Axis.horizontal,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            mainAxisSpacing: 5,
-          ),
-          children: List.generate(
-            20,
-            (index) => Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
-                  colors: [
-                    primaryColor,
-                    Color.fromARGB(255, 24, 160, 153),
-                  ],
-                ),
-                color: Colors.blueGrey,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.laptop_chromebook,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ],
   );
 }
 

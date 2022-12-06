@@ -176,7 +176,7 @@ class _RegisterState extends State<Register> {
                         SizedBox(height: 10),
                         // Login Button
                         submitButton(
-                          text: 'Register',
+                          title: 'Register',
                           onPressed: () {
                             auth(
                               context: context,
