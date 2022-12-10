@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Resources\API\CategoryResource;
 use App\Http\Resources\API\ProductResource;
+use App\Http\Resources\API\ProductsResource;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
@@ -16,7 +17,7 @@ class ProductsController extends MasterAPIController
         $category = Category::whereName($category)->first();
         if ($category) {
             $products = Product::whereStatus(1)->whereCategoryId($category->id)->paginate(5);
-            return $this->response($products, ProductResource::collection($products));
+            return $this->response($products, ProductsResource::collection($products));
         }
         return response()->json('Not Found', 404);
     }
@@ -53,7 +54,7 @@ class ProductsController extends MasterAPIController
     function products()
     {
         $products = Product::whereStatus(1)->paginate(15);
-        return $this->response($products, ProductResource::collection($products));
+        return $this->response($products, ProductsResource::collection($products));
     }
 
     function product($keyword)

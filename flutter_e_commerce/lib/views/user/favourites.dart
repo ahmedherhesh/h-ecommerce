@@ -18,8 +18,6 @@ class _FavouritesState extends State<Favourites> {
     return Scaffold(
       appBar: appBar(context: context),
       body: Container(
-        margin: const EdgeInsets.only(top: 10),
-        //inside loop
         child: FutureBuilder(
           future: get('favourites'),
           builder: (context, AsyncSnapshot snapshot) {
@@ -32,26 +30,29 @@ class _FavouritesState extends State<Favourites> {
                 padding: const EdgeInsets.all(12),
                 child: ListView(
                   children: [
-                    MasonryGrid(column: 2, children: [
-                      Text(
-                        'Favourites',
-                        style: TextStyle(color: textColor, fontSize: 20,fontWeight: FontWeight.bold),
-                      ),
-                      ...List.generate(
-                        favourites.length,
-                        (i) {
-                          var item = favourites[i];
-                          return SizedBox(
-                            height: 210,
-                            child: OneProduct(
-                              item: item,
-                              onPressed: () => setState(() => favourites.removeAt(i)),
-                              icon: Icons.delete,
-                            ),
-                          );
-                        },
-                      ),
-                    ]),
+                    MasonryGrid(
+                      column: 2,
+                      children: [
+                        Text(
+                          'Favourites',
+                          style: TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        ...List.generate(
+                          favourites.length,
+                          (i) {
+                            var item = favourites[i];
+                            return SizedBox(
+                              height: 210,
+                              child: OneProduct(
+                                item: item,
+                                onPressed: () => setState(() => favourites.removeAt(i)),
+                                icon: Icons.delete,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               );
