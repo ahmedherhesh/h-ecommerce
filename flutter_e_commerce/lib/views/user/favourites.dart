@@ -32,14 +32,17 @@ class _FavouritesState extends State<Favourites> {
                 padding: const EdgeInsets.all(12),
                 child: ListView(
                   children: [
-                    MasonryGrid(
-                      column: 2,
-                      children: List.generate(
+                    MasonryGrid(column: 2, children: [
+                      Text(
+                        'Favourites',
+                        style: TextStyle(color: textColor, fontSize: 20,fontWeight: FontWeight.bold),
+                      ),
+                      ...List.generate(
                         favourites.length,
                         (i) {
                           var item = favourites[i];
                           return SizedBox(
-                            height: 220,
+                            height: 210,
                             child: OneProduct(
                               item: item,
                               onPressed: () => setState(() => favourites.removeAt(i)),
@@ -48,7 +51,7 @@ class _FavouritesState extends State<Favourites> {
                           );
                         },
                       ),
-                    ),
+                    ]),
                   ],
                 ),
               );
