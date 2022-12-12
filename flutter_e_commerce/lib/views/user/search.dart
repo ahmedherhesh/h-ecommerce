@@ -27,7 +27,10 @@ class _SearchState extends State<Search> {
         elevation: .8,
         actions: [
           IconButton(
-            onPressed: () => controller.clear(),
+            onPressed: () {
+              controller.clear();
+              setState(() => terms = '');
+            },
             icon: Icon(
               Icons.close,
               color: textColor,
@@ -35,56 +38,58 @@ class _SearchState extends State<Search> {
           )
         ],
       ),
-      body: FutureBuilder(
-        future: get('products?terms=$terms'),
-        builder: (context, AsyncSnapshot snapshot) {
-          snapshot.connectionState == ConnectionState.done ? products = snapshot.data : '';
-          if (products.isNotEmpty ) {
-            return Padding(
-              padding: const EdgeInsets.all(12),
-              child: ListView(
-                children: [
-                  MasonryGrid(
-                    column: 2,
-                    children: [
-                      Text(
-                        ucfirst(terms),
-                        style: TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      ...List.generate(
-                        products.length,
-                        (i) {
-                          var item = products[i];
-                          item['in_favourite'] ? widget.favBtns.add(item['id']) : '';
-                          return SizedBox(
-                            height: 210,
-                            child: OneProduct(
-                              item: item,
-                              icon: widget.favBtns.contains(item['id']) ? Icons.favorite : Icons.favorite_outline,
-                              onPressed: () {
-                                setState(() {
-                                  if (widget.favBtns.contains(item['id'])) {
-                                    widget.favBtns.remove(item['id']);
-                                  } else {
-                                    widget.favBtns.add(item['id']);
-                                  }
-                                });
+      body: terms.length > 2
+          ? FutureBuilder(
+              future: get('products?terms=$terms'),
+              builder: (context, AsyncSnapshot snapshot) {
+                snapshot.connectionState == ConnectionState.done ? products = snapshot.data : '';
+                if (products.isNotEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: ListView(
+                      children: [
+                        MasonryGrid(
+                          column: 2,
+                          children: [
+                            Text(
+                              ucfirst(terms),
+                              style: TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            ...List.generate(
+                              products.length,
+                              (i) {
+                                var item = products[i];
+                                item['in_favourite'] ? widget.favBtns.add(item['id']) : '';
+                                return SizedBox(
+                                  height: 210,
+                                  child: OneProduct(
+                                    item: item,
+                                    icon: widget.favBtns.contains(item['id']) ? Icons.favorite : Icons.favorite_outline,
+                                    onPressed: () {
+                                      setState(() {
+                                        if (widget.favBtns.contains(item['id'])) {
+                                          widget.favBtns.remove(item['id']);
+                                        } else {
+                                          widget.favBtns.add(item['id']);
+                                        }
+                                      });
+                                    },
+                                  ),
+                                );
                               },
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomLoading();
-          }
-          return EmptyPage(page: 'search');
-        },
-      ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CustomLoading();
+                }
+                return EmptyPage(page: 'search');
+              },
+            )
+          : const SizedBox(),
     );
   }
 }
