@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/custom_loading.dart';
 import 'package:flutter_e_commerce/widgets/empty_page.dart';
 import 'package:flutter_e_commerce/widgets/one_product.dart';
 import 'package:get/get.dart';
@@ -65,7 +66,7 @@ class _CategoryState extends State<Category> {
                   ),
                 );
               } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator(color: primaryColor));
+                return CustomLoading();
               }
               return EmptyPage(page: 'products');
             },

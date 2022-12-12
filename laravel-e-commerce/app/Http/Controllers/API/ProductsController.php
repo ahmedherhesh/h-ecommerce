@@ -16,7 +16,7 @@ class ProductsController extends MasterAPIController
     {
         $category = Category::whereName($category)->first();
         if ($category) {
-            $products = Product::whereStatus(1)->whereCategoryId($category->id)->paginate(5);
+            $products = Product::allowed()->whereCategoryId($category->id)->paginate(5);
             return $this->response($products, ProductsResource::collection($products));
         }
         return response()->json('Not Found', 404);
@@ -51,15 +51,18 @@ class ProductsController extends MasterAPIController
         return $this->response($product, $product);
     }
 
-    function products()
+    function products(Request $request)
     {
-        $products = Product::whereStatus(1)->paginate(15);
+        $products = Product::allowed();
+        if ($request->terms)
+            $products->where('title', 'LIKE', "%$request->terms%");
+        $products = $products->paginate(15);
         return $this->response($products, ProductsResource::collection($products));
     }
 
     function product($keyword)
     {
-        $product = Product::whereKeyword($keyword)->whereStatus(1)->first();
+        $product = Product::whereKeyword($keyword)->allowed()->first();
         return $this->response($product, new ProductResource($product));
     }
 

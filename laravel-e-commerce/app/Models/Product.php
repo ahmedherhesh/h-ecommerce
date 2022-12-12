@@ -21,7 +21,9 @@ class Product extends Model
         'stock',
         'status'
     ];
-
+    function scopeAllowed($query){
+        return $query->whereStatus(1);
+    }
     function myImages(){
         return $this->hasOne(Image::class,'model_id')->whereType('product');
     }

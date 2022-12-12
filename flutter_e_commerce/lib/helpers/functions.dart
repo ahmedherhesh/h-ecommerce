@@ -90,7 +90,7 @@ appBar({context, title = ''}) {
   );
 }
 
-textInput({val = '', hintText = '', labelText = '', IconData? icon, obscure = false, onChanged, BorderSide? customBorder}) {
+textInput({val = '', TextEditingController? controller, hintText = '', labelText = '', IconData? icon, obscure = false, onChanged, BorderSide? customBorder}) {
   return Container(
     decoration: const BoxDecoration(
       border: Border(
@@ -100,8 +100,8 @@ textInput({val = '', hintText = '', labelText = '', IconData? icon, obscure = fa
         ),
       ),
     ),
-    child: TextFormField(
-      initialValue: val,
+    child: TextField(
+      controller: controller,
       obscureText: obscure,
       decoration: InputDecoration(
         hintText: hintText,
@@ -280,6 +280,6 @@ void snackBar({title, message}) {
   );
 }
 
-ucfirst(String word){
+ucfirst(String word) {
   return word[0].toUpperCase() + word.substring(1);
 }
