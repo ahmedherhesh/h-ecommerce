@@ -39,7 +39,7 @@ class _SearchState extends State<Search> {
         future: get('products?terms=$terms'),
         builder: (context, AsyncSnapshot snapshot) {
           snapshot.connectionState == ConnectionState.done ? products = snapshot.data : '';
-          if (products.isNotEmpty && terms.length > 2) {
+          if (products.isNotEmpty ) {
             return Padding(
               padding: const EdgeInsets.all(12),
               child: ListView(

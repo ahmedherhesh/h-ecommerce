@@ -280,6 +280,6 @@ void snackBar({title, message}) {
   );
 }
 
-ucfirst(String word) {
-  return word[0].toUpperCase() + word.substring(1);
+String ucfirst(String word) {
+  return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1) : '';
 }
