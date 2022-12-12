@@ -230,10 +230,10 @@ class _ProductState extends State<Product> {
                             indicatorColor: Colors.transparent,
                             tabs: [
                               Container(
-                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  boxShadow: [BoxShadow(color: shadowColor, blurRadius: 5)],
+                                  boxShadow: [BoxShadow(color: shadowColor, blurRadius: 1)],
                                 ),
                                 child: const Text(
                                   'Details',
@@ -247,7 +247,7 @@ class _ProductState extends State<Product> {
                                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  boxShadow: [BoxShadow(color: shadowColor, blurRadius: 5)],
+                                  boxShadow: [BoxShadow(color: shadowColor, blurRadius: 1)],
                                 ),
                                 child: const Text(
                                   'Reviews',
