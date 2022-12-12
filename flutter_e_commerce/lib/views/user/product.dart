@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/custom_loading.dart';
 import 'package:flutter_e_commerce/widgets/widgets.dart';
 import 'package:get/get.dart';
 
@@ -123,17 +124,10 @@ class _ProductState extends State<Product> {
                   children: [
                     Container(
                       clipBehavior: Clip.hardEdge,
-                      height: 200,
+                      height: 450,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 6,
-                            spreadRadius: 2,
-                          ),
-                        ],
                       ),
                       margin: const EdgeInsets.all(10),
                       child: PageView(
@@ -141,17 +135,17 @@ class _ProductState extends State<Product> {
                           currentSlide = index;
                         }),
                         children: List.generate(
-                          4,
-                          (index) => Image.asset(
-                            fit: BoxFit.cover,
-                            'assets/images/sale.jpg',
+                          productData['images'].length,
+                          (index) => Image.network(
+                            // fit: BoxFit.cover,
+                            '${productData['images'][index]}',
                           ),
                         ),
                       ),
                     ),
                     //Slider Indicators
                     SliderIndicators(
-                      sliderImagesCount: 4,
+                      sliderImagesCount: productData['images'].length,
                       currentSlide: currentSlide,
                     ),
                   ],
@@ -159,39 +153,34 @@ class _ProductState extends State<Product> {
                 Container(
                   margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
                   padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                     ),
-                    boxShadow: [
-                      BoxShadow(blurRadius: 6, color: shadowColor),
-                    ],
                   ),
                   //title, rating
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${productData['title']}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: textColor,
-                              ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${productData['title']}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
                             ),
-                            Text(
-                              'Ahmed Herhesh',
-                              style: TextStyle(fontSize: 14, color: textColor),
-                            ),
-                          ],
-                        ),
+                          ),
+                          Text(
+                            'Ahmed Herhesh',
+                            style: TextStyle(fontSize: 14, color: textColor),
+                          ),
+                        ],
                       ),
                       //rating
                       Column(
@@ -223,43 +212,59 @@ class _ProductState extends State<Product> {
                 DefaultTabController(
                   length: 2,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       ),
-                      boxShadow: [
-                        BoxShadow(blurRadius: 6, color: shadowColor),
-                      ],
                     ),
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.only(top: 8, right: 10, left: 10),
                     child: Column(
                       children: [
-                        TabBar(padding: const EdgeInsets.only(bottom: 15), labelColor: primaryColor, unselectedLabelColor: textColor, indicatorColor: primaryColor, tabs: const [
-                          Text(
-                            'Details',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Reviews(135)',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ]),
+                        TabBar(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            labelColor: primaryColor,
+                            unselectedLabelColor: textColor,
+                            indicatorColor: Colors.transparent,
+                            tabs: [
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [BoxShadow(color: shadowColor, blurRadius: 5)],
+                                ),
+                                child: const Text(
+                                  'Details',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [BoxShadow(color: shadowColor, blurRadius: 5)],
+                                ),
+                                child: const Text(
+                                  'Reviews',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ]),
                         Container(
                           height: 200,
                           child: TabBarView(children: [
                             ListView(
                               children: [
                                 Text(
-                                  '* Details Details Details Details Details \n* Details Details Details\n* Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details Details Details Details\n* Details Details Details\n* Details Details Details',
+                                  '${productData['description']}',
                                   style: TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ],
@@ -267,7 +272,7 @@ class _ProductState extends State<Product> {
                             ListView(
                               children: [
                                 Text(
-                                  'hello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello\nhello hello hello hello',
+                                  'Reviews',
                                   style: TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ],
@@ -280,9 +285,7 @@ class _ProductState extends State<Product> {
                 ),
               ],
             )
-          : Center(
-              child: CircularProgressIndicator(color: primaryColor),
-            ),
+          : const CustomLoading(),
     );
   }
 }
