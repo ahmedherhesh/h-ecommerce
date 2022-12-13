@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/custom_loading.dart';
 import 'package:flutter_e_commerce/widgets/one_product.dart';
 import 'package:flutter_e_commerce/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -172,7 +173,7 @@ class _HomeState extends State<Home> {
                         Container(
                           margin: const EdgeInsets.only(left: 10, right: 5, top: 10),
                           child: Text(
-                            '${category[0].toUpperCase()}${category.substring(1)}',
+                            ucfirst(category),
                             style: const TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 18,
@@ -211,11 +212,9 @@ class _HomeState extends State<Home> {
                     );
                   }),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(top: 100),
-                  child: Center(
-                    child: CircularProgressIndicator(color: primaryColor),
-                  ),
+              : const Padding(
+                  padding: EdgeInsets.only(top: 100),
+                  child: CustomLoading(),
                 )
         ],
       ),

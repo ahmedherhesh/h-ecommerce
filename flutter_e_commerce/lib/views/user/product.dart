@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
@@ -136,9 +137,13 @@ class _ProductState extends State<Product> {
                         }),
                         children: List.generate(
                           productData['images'].length,
-                          (index) => Image.network(
-                            // fit: BoxFit.cover,
-                            '${productData['images'][index]}',
+                          (index) => CachedNetworkImage(
+                            imageUrl: productData['images'][index],
+                            placeholder: (context, url) => const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CustomLoading(),
+                            ),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -230,7 +235,7 @@ class _ProductState extends State<Product> {
                             indicatorColor: Colors.transparent,
                             tabs: [
                               Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   boxShadow: [BoxShadow(color: shadowColor, blurRadius: 1)],
@@ -238,13 +243,13 @@ class _ProductState extends State<Product> {
                                 child: const Text(
                                   'Details',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   boxShadow: [BoxShadow(color: shadowColor, blurRadius: 1)],
@@ -252,7 +257,7 @@ class _ProductState extends State<Product> {
                                 child: const Text(
                                   'Reviews',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

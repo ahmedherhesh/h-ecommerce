@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/custom_loading.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class OneProduct extends StatefulWidget {
   OneProduct({this.item, this.favBtns, this.onPressed, this.icon});
@@ -36,10 +38,19 @@ class _OneProductState extends State<OneProduct> {
             ]),
         child: Column(
           children: [
-            Image.network(
-              fit: BoxFit.cover,
-              '${widget.item['image']}',
-              height: 135,
+            CachedNetworkImage(
+              imageUrl: widget.item['image'],
+              imageBuilder: (context, imageProvider) => Container(
+                height: 135,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                ),
+              ),
+              placeholder: (context, url) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const CustomLoading(),
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10),
@@ -76,10 +87,10 @@ class _OneProductState extends State<OneProduct> {
                           padding: const EdgeInsets.all(0),
                           onPressed: () {
                             addOrDelFavourite(productId: widget.item['id'], productTitle: widget.item['title']);
-                              widget.onPressed();
+                            widget.onPressed();
                           },
                           icon: Icon(
-                            widget.icon ,
+                            widget.icon,
                             color: Colors.blueGrey,
                           ),
                         )
