@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\API\ChangePasswordRequest;
 use App\Http\Requests\API\UserLoginRequest;
 use App\Http\Requests\API\UserRegisterRequest;
 use App\Http\Resources\API\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends MasterAPIController
 {
@@ -26,6 +28,16 @@ class AuthController extends MasterAPIController
         $user->assignRole('customer');
         $user->token = true;
         return $this->response($user, new UserResource($user));
+    }
+    function changePassword(ChangePasswordRequest $request)
+    {
+        $user = User::find($this->user->id);
+        if ($user)
+            if (Hash::check($request->old_password, $user->password)) {
+                $user = $user->update(['password' => $request->password]);
+                return $this->response($user, 'Your Password has been changed successfully');
+            }
+        return response()->json('The old password is not matched');
     }
     function logout(Request $request)
     {

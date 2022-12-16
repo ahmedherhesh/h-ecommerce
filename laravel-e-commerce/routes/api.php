@@ -22,6 +22,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('user', function () {
             return new UserResource(auth('sanctum')->user());
         });
+        Route::post('change-password', [AuthController::class, 'changePassword']);
         //super-admin
         Route::group(['middleware' => ['role:super-admin']], function () {
             //Roles Controller

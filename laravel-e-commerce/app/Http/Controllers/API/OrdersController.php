@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\MasterAPIController;
+use App\Http\Resources\API\CustomerOrderResource;
 use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class OrdersController extends MasterAPIController
@@ -15,8 +17,8 @@ class OrdersController extends MasterAPIController
     }
     function customerOrders()
     {
-        $orders = $this->getOrders(['customer_id' => $this->user->id]);
-        return $this->response($orders, $orders);
+        $payments = Payment::where('user_id', $this->user->id)->get();
+        return $this->response($payments, CustomerOrderResource::collection($payments));
     }
     function sellerOrders()
     {
