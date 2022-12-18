@@ -37,7 +37,7 @@ class AuthController extends MasterAPIController
                 $user = $user->update(['password' => $request->password]);
                 return $this->response($user, 'Your Password has been changed successfully');
             }
-        return response()->json('The old password is not matched');
+        return response()->json(['old_password' => ['The old password is not matched']], 422);
     }
     function logout(Request $request)
     {

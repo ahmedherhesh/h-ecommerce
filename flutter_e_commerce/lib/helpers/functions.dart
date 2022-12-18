@@ -35,39 +35,43 @@ auth({context, data, route}) async {
   var body = jsonDecode(response.body);
 
   if (statusCode == 422 || statusCode == 403) {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.ERROR,
-      animType: AnimType.SCALE,
-      title: 'Validation Error',
-      headerAnimationLoop: false,
-      titleTextStyle: const TextStyle(
-        color: Colors.red,
-        fontWeight: FontWeight.bold,
-        fontSize: 25,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          body.values.length,
-          (index) => Text(
-            '${body.values.toList()[index][0]}',
-            style: const TextStyle(
-              // fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ),
-      ),
-      btnCancelOnPress: () {},
-      btnOkOnPress: () {},
-    ).show();
+    awesomeDialog(context, body).show();
   } else if (statusCode == 200) {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('user', jsonEncode(body));
     initData['user'] = prefs.getString('user');
     Get.offAllNamed('main');
   }
+}
+
+AwesomeDialog awesomeDialog(context, body) {
+  return AwesomeDialog(
+    context: context,
+    dialogType: DialogType.ERROR,
+    animType: AnimType.SCALE,
+    title: 'Validation Error',
+    headerAnimationLoop: false,
+    titleTextStyle: const TextStyle(
+      color: Colors.red,
+      fontWeight: FontWeight.bold,
+      fontSize: 25,
+    ),
+    body: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(
+        body.values.length,
+        (index) => Text(
+          '${body.values.toList()[index][0]}',
+          style: const TextStyle(
+            // fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    ),
+    btnCancelOnPress: () {},
+    btnOkOnPress: () {},
+  );
 }
 
 appBar({context, title = ''}) {
@@ -141,9 +145,9 @@ oAuth({oAuth, oAuthClass, onTap}) {
   );
 }
 
-submitButton({String? title, onPressed}) {
+submitButton({String? title, onPressed, iconShow = true}) {
   return Container(
-    margin: EdgeInsets.only(top: 15),
+    margin: const EdgeInsets.only(top: 15),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(5),
       gradient: LinearGradient(
@@ -151,7 +155,7 @@ submitButton({String? title, onPressed}) {
         end: Alignment.centerLeft,
         colors: [
           primaryColor,
-          Color.fromARGB(255, 19, 184, 175),
+          const Color.fromARGB(255, 19, 184, 175),
         ],
       ),
     ),
@@ -163,18 +167,20 @@ submitButton({String? title, onPressed}) {
         children: [
           Text(
             '$title',
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xffefefef),
               fontSize: 25,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          Icon(
-            Icons.login,
-            color: Colors.white,
-          )
+          iconShow
+              ? const Icon(
+                  Icons.login,
+                  color: Colors.white,
+                )
+              : const SizedBox()
         ],
       ),
     ),

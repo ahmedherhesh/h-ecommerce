@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
+import 'package:flutter_e_commerce/views/auth/change-password.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (context) => const Login(),
         'register': (context) => const Register(),
+        'change-password': (context) => const ChangePassword(),
         'main': (context) => const Main(),
         'product': (context) => Product(),
         'category': (context) => Category(),

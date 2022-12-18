@@ -64,17 +64,22 @@ class Profile extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 CustomListTile(title: 'My Orders'),
                 CustomListTile(title: 'My Reviews'),
-                CustomListTile(title: 'Change Password'),
+                CustomListTile(
+                  title: 'Change Password',
+                  onTap: () => Get.toNamed('change-password'),
+                ),
                 CustomListTile(title: 'Shipping Addresses'),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 submitButton(
-                    title: 'Logout',
-                    onPressed: () {
-                      logout();
-                    })
+                  title: 'Logout',
+                  onPressed: () {
+                    logout();
+                  },
+                  iconShow: false,
+                )
               ],
             ),
           ),
