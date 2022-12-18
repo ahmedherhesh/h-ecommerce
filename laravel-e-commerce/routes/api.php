@@ -54,7 +54,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'cart'], function () {
                 Route::get('/', [CartController::class, 'index']);
                 Route::post('create-or-update', [CartController::class, 'createOrUpdate']);
-                Route::delete('delete/{id}', [CartController::class, 'delete']);
+                Route::get('delete/{id}', [CartController::class, 'delete']);
             });
             //Favourites Controller
             Route::group(['prefix' => 'favourites'], function () {

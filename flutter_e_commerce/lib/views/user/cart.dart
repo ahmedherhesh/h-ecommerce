@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import '../../widgets/checkout_btn.dart';
 
 class Cart extends StatefulWidget {
+  List cartData = [];
+  List orderDetails = [];
   @override
   State<Cart> createState() => _CartState();
 }
@@ -19,8 +21,6 @@ class _CartState extends State<Cart> {
   String? currency;
   int loopCount = 0;
   bool buildStatus = false;
-  List cartData = [];
-  List orderDetails = [];
 // Stream getS() => Stream.periodic(Duration(milliseconds: 200)).asyncMap((event) => get('cart'));
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,8 @@ class _CartState extends State<Cart> {
       body: FutureBuilder(
         future: get('cart'),
         builder: (context, AsyncSnapshot snapshot) {
-          if (!buildStatus) {
-            cartData = snapshot.data ?? [];
-          }
-          if (cartData.isNotEmpty) {
+          widget.cartData = snapshot.data ?? [];
+          if (widget.cartData.isNotEmpty) {
             buildStatus = true;
             return Container(
               margin: const EdgeInsets.all(10),
@@ -48,11 +46,11 @@ class _CartState extends State<Cart> {
                   const SizedBox(height: 10),
                   //cart products
                   ...List.generate(
-                    cartData.length,
+                    widget.cartData.length,
                     (i) {
-                      Map productData = cartData[i]['product'];
+                      Map productData = widget.cartData[i]['product'];
                       currency = productData['currency'] == 'USD' ? '\$' : productData['currency'] + ' ';
-                      if (loopCount < cartData.length) {
+                      if (loopCount < widget.cartData.length) {
                         price += productData['price'];
                         loopCount++;
                       }
@@ -65,18 +63,11 @@ class _CartState extends State<Cart> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //Cart Image
-                                Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [BoxShadow(blurRadius: 4, color: shadowColor)],
-                                  ),
-                                  child: Image.network(
-                                    productData['image'],
-                                    width: 80,
-                                    height: 80,
-                                    fit: BoxFit.cover,
-                                  ),
+                                Image.network(
+                                  productData['image'],
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
                                 ),
                                 //Cart Title, Price
                                 Container(
@@ -113,7 +104,11 @@ class _CartState extends State<Cart> {
                                 SizedBox(
                                   height: 30,
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      var data = await get('cart/delete/${widget.cartData[i]['id']}');
+                                      setState(() => widget.cartData.removeAt(i));
+                                      snackBar(title: data, message: '');
+                                    },
                                     icon: Icon(
                                       Icons.close_rounded,
                                       size: 18,
@@ -125,9 +120,9 @@ class _CartState extends State<Cart> {
                                   children: [
                                     //decrement btn
                                     IconButton(
-                                      onPressed: () => mounted && cartData[i]['qty'] != 1
+                                      onPressed: () => mounted && widget.cartData[i]['qty'] != 1
                                           ? setState(() {
-                                              cartData[i]['qty'] -= 1;
+                                              widget.cartData[i]['qty'] -= 1;
                                               price -= productData['price'];
                                             })
                                           : '',
@@ -138,12 +133,12 @@ class _CartState extends State<Cart> {
                                       ),
                                     ),
                                     //qty
-                                    Text('${cartData[i]['qty']}'),
+                                    Text('${widget.cartData[i]['qty']}'),
                                     //increment btn
                                     IconButton(
-                                      onPressed: () => mounted && cartData[i]['qty'] < productData['stock']
+                                      onPressed: () => mounted && widget.cartData[i]['qty'] < productData['stock']
                                           ? setState(() {
-                                              cartData[i]['qty'] += 1;
+                                              widget.cartData[i]['qty'] += 1;
                                               price += productData['price'];
                                             })
                                           : '',
@@ -165,13 +160,13 @@ class _CartState extends State<Cart> {
                   const PromoCode(),
                   CartPrice(currency: currency, price: price, shipping: shipping),
                   CheckoutButton(onPressed: () {
-                    orderDetails = [];
-                    cartData.forEach((item) {
-                      orderDetails.add({'qty': item['qty'], 'product_id': item['product']['id']});
-                    });
+                    widget.orderDetails = [];
+                    for (var item in widget.cartData) {
+                      widget.orderDetails.add({'qty': item['qty'], 'product_id': item['product']['id']});
+                    }
                     Get.toNamed(
                       'checkout',
-                      arguments: {'order_details': jsonEncode(orderDetails)},
+                      arguments: {'order_details': jsonEncode(widget.orderDetails)},
                     );
                   }),
                 ],

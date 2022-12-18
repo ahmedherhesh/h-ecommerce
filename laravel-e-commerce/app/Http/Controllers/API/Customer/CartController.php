@@ -38,7 +38,7 @@ class CartController extends MasterAPIController
         $cart = Cart::find($id);
         if ($cart) {
             $cart = $cart->delete();
-            return response($cart, 'This Cart Was Deleted');
+            return $this->response($cart, 'This item is Deleted');
         }
     }
 }

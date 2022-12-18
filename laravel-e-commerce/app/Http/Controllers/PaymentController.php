@@ -140,7 +140,7 @@ class PaymentController extends Controller
     /**
      * Error Handling.
      */
-    public function error()
+    public function canceled()
     {
         return 'User cancelled the payment.';
     }
