@@ -65,7 +65,10 @@ class Profile extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 50),
-                CustomListTile(title: 'My Orders'),
+                CustomListTile(
+                  title: 'My Orders',
+                  onTap: () => Get.toNamed('my-orders'),
+                ),
                 CustomListTile(title: 'My Reviews'),
                 CustomListTile(
                   title: 'Change Password',

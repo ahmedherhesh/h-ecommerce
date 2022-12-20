@@ -10,11 +10,14 @@ import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/category.dart';
 import 'package:flutter_e_commerce/views/user/checkout.dart';
 import 'package:flutter_e_commerce/views/user/favourites.dart';
+import 'package:flutter_e_commerce/views/user/my-orders.dart';
 import 'package:flutter_e_commerce/views/user/home.dart';
+import 'package:flutter_e_commerce/views/user/order-details.dart';
 import 'package:flutter_e_commerce/views/user/payments/paypal.dart';
 import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/profile.dart';
 import 'package:flutter_e_commerce/views/user/search.dart';
+import 'package:flutter_e_commerce/views/user/shipping-addresses.dart';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,6 +48,9 @@ class MyApp extends StatelessWidget {
         'login': (context) => const Login(),
         'register': (context) => const Register(),
         'change-password': (context) => const ChangePassword(),
+        'my-orders': (context) => const MyOrders(),
+        'order-details': (context) => OrderDetails(),
+        'shipping-addresses': (context) => const ShipingAddresses(),
         'main': (context) => const Main(),
         'product': (context) => Product(),
         'category': (context) => Category(),

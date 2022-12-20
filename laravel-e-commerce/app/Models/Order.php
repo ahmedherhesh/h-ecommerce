@@ -21,4 +21,8 @@ class Order extends Model
         'payment_method',
         'status'
     ];
+    function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
