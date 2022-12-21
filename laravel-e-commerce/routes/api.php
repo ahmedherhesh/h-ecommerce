@@ -4,7 +4,7 @@ use App\Http\Controllers\API\Admin\CategoriesController;
 use App\Http\Controllers\API\Admin\BrandsController;
 use App\Http\Controllers\API\Admin\ExtensionsController;
 use App\Http\Controllers\API\Admin\RolesController;
-use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\Customer\CartController;
 use App\Http\Controllers\API\Customer\FavouritesController;
 use App\Http\Controllers\API\OrdersController;
@@ -16,13 +16,13 @@ use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('register', [UserController::class, 'register']);
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('user', function () {
             return new UserResource(auth('sanctum')->user());
         });
-        Route::post('change-password', [AuthController::class, 'changePassword']);
+        Route::post('change-password', [UserController::class, 'changePassword']);
         //super-admin
         Route::group(['middleware' => ['role:super-admin']], function () {
             //Roles Controller
@@ -66,8 +66,13 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::get('/', [OrdersController::class, 'customerOrders']);
                 Route::delete('delete/{id}', [OrdersController::class, 'delete']);
             });
+            //Shipping Addresses Controller
+            Route::group(['prefix' => 'shipping-addresses'], function () {
+                Route::get('/', [UserController::class, 'ShippingAddresses']);
+                Route::post('create', [UserController::class, 'AddShippingAddress']);
+            });
         });
-        Route::get('logout', [AuthController::class, 'logout']);
+        Route::get('logout', [UserController::class, 'logout']);
     });
     Route::get('slider', [ExtensionsController::class, 'slider']);
     //Products

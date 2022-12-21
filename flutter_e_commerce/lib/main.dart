@@ -81,9 +81,7 @@ class _MainState extends State<Main> {
       extendBody: true,
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
+          iconTheme: const IconThemeData(color: Colors.white, size: 27),
         ),
         child: CurvedNavigationBar(
           height: 50,
@@ -92,11 +90,11 @@ class _MainState extends State<Main> {
           buttonBackgroundColor: Colors.blueGrey,
           backgroundColor: Colors.transparent,
           items: const [
-            Icon(Icons.home, size: 27),
-            Icon(Icons.search_outlined, size: 27),
-            Icon(Icons.shopping_cart, size: 27),
-            Icon(Icons.favorite, size: 27),
-            Icon(Icons.person, size: 27),
+            Icon(Icons.home),
+            Icon(Icons.search_outlined),
+            Icon(Icons.shopping_cart),
+            Icon(Icons.favorite),
+            Icon(Icons.person),
           ],
           letIndexChange: (index) {
             if (screensNeedAuth.contains(index)) {

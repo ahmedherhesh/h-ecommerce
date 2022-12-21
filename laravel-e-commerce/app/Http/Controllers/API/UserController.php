@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\ChangePasswordRequest;
+use App\Http\Requests\API\ShippingAddressRequest;
 use App\Http\Requests\API\UserLoginRequest;
 use App\Http\Requests\API\UserRegisterRequest;
 use App\Http\Resources\API\UserResource;
+use App\Models\ShippingAddress;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends MasterAPIController
+class UserController extends MasterAPIController
 {
 
     function login(UserLoginRequest $request)
@@ -38,6 +40,18 @@ class AuthController extends MasterAPIController
                 return $this->response($user, 'Your Password has been changed successfully');
             }
         return response()->json(['old_password' => ['The old password is not matched']], 422);
+    }
+    function shippingAddresses()
+    {
+        $addresses = ShippingAddress::all();
+        return $this->response($addresses, $addresses);
+    }
+    function addShippingAddress(ShippingAddressRequest $request)
+    {
+        $data = $request->all();
+        $data['user_id'] = $this->user->id;
+        $create_address = ShippingAddress::create($data);
+        return $this->response($create_address, 'Success');
     }
     function logout(Request $request)
     {
