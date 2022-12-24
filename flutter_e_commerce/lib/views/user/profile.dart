@@ -74,7 +74,10 @@ class Profile extends StatelessWidget {
                   title: 'Change Password',
                   onTap: () => Get.toNamed('change-password'),
                 ),
-                CustomListTile(title: 'Shipping Addresses'),
+                CustomListTile(
+                  title: 'Shipping Addresses',
+                  onTap: () => Get.toNamed('shipping-addresses'),
+                ),
                 const SizedBox(height: 50),
                 submitButton(
                   title: 'Logout',
