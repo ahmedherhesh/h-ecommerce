@@ -18,7 +18,7 @@ import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/profile.dart';
 import 'package:flutter_e_commerce/views/user/search.dart';
 import 'package:flutter_e_commerce/views/user/shipping-addresses.dart';
-import 'package:flutter_e_commerce/widgets/shipping_adress_form.dart';
+import 'package:flutter_e_commerce/widgets/shipping_address_form.dart';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         'change-password': (context) => const ChangePassword(),
         'my-orders': (context) => const MyOrders(),
         'order-details': (context) => OrderDetails(),
-        'shipping-addresses': (context) => const ShipingAddresses(),
+        'shipping-addresses': (context) => const ShippingAddresses(),
         'shipping-address-form': (context) => const ShippingAddressForm(),
         'main': (context) => const Main(),
         'product': (context) => Product(),

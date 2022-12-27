@@ -32,19 +32,20 @@ auth({context, data, route}) async {
   Uri uri = Uri.parse('${initData['apiUrl']}/$route');
   var response = await http.post(uri, body: data);
   int statusCode = response.statusCode;
-  var body = jsonDecode(response.body);
+  var body = response.body;
 
   if (statusCode == 422 || statusCode == 403) {
     awesomeDialog(context, body).show();
   } else if (statusCode == 200) {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', jsonEncode(body));
+    prefs.setString('user', body);
     initData['user'] = prefs.getString('user');
     Get.offAllNamed('main');
   }
 }
 
 AwesomeDialog awesomeDialog(context, body) {
+  body = jsonDecode(body);
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.ERROR,

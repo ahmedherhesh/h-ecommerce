@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/user/checkout.dart';
+import 'package:get/get.dart';
 
 class ShippingAddressForm extends StatefulWidget {
-  const ShippingAddressForm({super.key});
+  const ShippingAddressForm({super.key, this.countrySelected, this.regionSelected, this.citySelected, this.addressDescription});
+  final countrySelected;
+  final regionSelected;
+  final citySelected;
+  final addressDescription;
   @override
   State<ShippingAddressForm> createState() => _ShippingAddressFormState();
 }
@@ -13,7 +18,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
   var countrySelected = null, regionSelected = null, citySelected = null;
   List countries = [], regions = [], cities = [];
   String payment = '';
-  String address = '';
+  String addressDescription = '';
 
   getCountries() async {
     countries = await get('countries');
@@ -56,7 +61,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                   val.toString().isNotEmpty ? countrySelected = val : countrySelected = null;
                 });
               },
-              selectedItem: countrySelected,
+              selectedItem: widget.countrySelected ?? countrySelected,
             ),
             //Regions
             Visibility(
@@ -71,7 +76,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                     val.isNotEmpty ? regionSelected = val : regionSelected = null;
                   });
                 },
-                selectedItem: regionSelected,
+                selectedItem: widget.regionSelected ?? regionSelected,
               ),
             ),
             //Cities
@@ -86,7 +91,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                     val.isNotEmpty ? citySelected = val : citySelected = '';
                   });
                 },
-                selectedItem: citySelected,
+                selectedItem: widget.citySelected ?? citySelected,
               ),
             ),
             Container(
@@ -97,6 +102,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
               ),
               child: TextFormField(
                 cursorColor: primaryColor,
+                initialValue: widget.addressDescription ?? addressDescription,
                 decoration: InputDecoration(
                   labelText: 'Write your address description',
                   labelStyle: labelStyle,
@@ -104,10 +110,32 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                   border: border,
                   focusedBorder: focusedBorder,
                 ),
-                onChanged: ((value) => setState(() => address = value)),
+                onChanged: ((value) => setState(() => addressDescription = value)),
               ),
             ),
-            submitButton(title: 'Add', onPressed: () {}, iconShow: false)
+            submitButton(
+              title: 'Create',
+              onPressed: () async {
+                var createAddress = await post(
+                  route: 'shipping-addresses/create',
+                  body: {
+                    'country': countrySelected.toString(),
+                    'region': regionSelected.toString(),
+                    'city': citySelected.toString(),
+                    'description': addressDescription.toString()
+                  },
+                );
+                switch (createAddress.statusCode) {
+                  case 200:
+                    Get.back(result: true);
+                    break;
+                  case 422:
+                    awesomeDialog(context, createAddress.body).show();
+                    break;
+                }
+              },
+              iconShow: false,
+            )
           ],
         ),
       ),

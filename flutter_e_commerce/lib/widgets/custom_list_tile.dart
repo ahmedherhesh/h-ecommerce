@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomListTile extends StatelessWidget {
-  CustomListTile({this.onTap, this.leading, this.title});
+  CustomListTile({this.onTap, this.leading, this.title, this.subtitle, this.trailing});
   final onTap;
   final leading;
   final title;
+  final subtitle;
+  final trailing;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,10 +22,12 @@ class CustomListTile extends StatelessWidget {
         ],
       ),
       child: ListTile(
+        visualDensity: const VisualDensity(vertical: -4),
         onTap: onTap,
         leading: leading,
         title: Text('$title'),
-        trailing: const Icon(Icons.arrow_right),
+        subtitle: subtitle != null ? Text('$subtitle') : const SizedBox(),
+        trailing: trailing ?? const Icon(Icons.arrow_right),
       ),
     );
   }
