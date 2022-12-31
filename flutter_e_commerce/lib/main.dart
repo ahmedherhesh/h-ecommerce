@@ -18,7 +18,7 @@ import 'package:flutter_e_commerce/views/user/product.dart';
 import 'package:flutter_e_commerce/views/user/profile.dart';
 import 'package:flutter_e_commerce/views/user/search.dart';
 import 'package:flutter_e_commerce/views/user/shipping-addresses.dart';
-import 'package:flutter_e_commerce/widgets/shipping_address_form.dart';
+import 'package:flutter_e_commerce/views/user/shipping_address_form.dart';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

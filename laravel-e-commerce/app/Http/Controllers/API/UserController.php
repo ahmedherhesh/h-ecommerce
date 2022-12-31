@@ -43,7 +43,7 @@ class UserController extends MasterAPIController
     }
     function shippingAddresses()
     {
-        $addresses = ShippingAddress::all();
+        $addresses = ShippingAddress::orderByDesc('id')->get();
         return $this->response($addresses, $addresses);
     }
     function addShippingAddress(ShippingAddressRequest $request)
@@ -51,7 +51,7 @@ class UserController extends MasterAPIController
         $data = $request->all();
         $data['user_id'] = $this->user->id;
         $create_address = ShippingAddress::create($data);
-        return $this->response($create_address, 'Success');
+        return $this->response($create_address, $create_address);
     }
     function logout(Request $request)
     {

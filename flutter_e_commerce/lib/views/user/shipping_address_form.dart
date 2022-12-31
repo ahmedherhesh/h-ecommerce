@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
@@ -127,7 +129,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                 );
                 switch (createAddress.statusCode) {
                   case 200:
-                    Get.back(result: true);
+                    Get.back(result: jsonDecode(createAddress.body)['id']);
                     break;
                   case 422:
                     awesomeDialog(context, createAddress.body).show();
