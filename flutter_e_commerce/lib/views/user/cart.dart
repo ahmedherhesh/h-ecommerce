@@ -79,7 +79,7 @@ class _CartState extends State<Cart> {
                                         productData['title'],
                                         style: TextStyle(
                                           color: textColor,
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
