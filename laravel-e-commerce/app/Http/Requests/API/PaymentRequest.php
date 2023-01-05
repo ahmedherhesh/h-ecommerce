@@ -9,10 +9,7 @@ class PaymentRequest extends MasterRequest
     public function rules()
     {
         return [
-            'country' => 'required',
-            'region' => 'required',
-            'city' => 'required',
-            'address' => 'required',
+            'shipping_address_id' => 'required',
             'payment_method' => 'required',
             'order_details'  => 'required',
         ];

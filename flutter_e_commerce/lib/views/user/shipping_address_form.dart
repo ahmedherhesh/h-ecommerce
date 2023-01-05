@@ -7,16 +7,14 @@ import 'package:flutter_e_commerce/views/user/checkout.dart';
 import 'package:get/get.dart';
 
 class ShippingAddressForm extends StatefulWidget {
-  const ShippingAddressForm({super.key, this.countrySelected, this.regionSelected, this.citySelected, this.addressDescription});
-  final countrySelected;
-  final regionSelected;
-  final citySelected;
-  final addressDescription;
+  const ShippingAddressForm({super.key});
+
   @override
   State<ShippingAddressForm> createState() => _ShippingAddressFormState();
 }
 
 class _ShippingAddressFormState extends State<ShippingAddressForm> {
+  Map arguments = Get.arguments ?? {};
   var countrySelected = null, regionSelected = null, citySelected = null;
   List countries = [], regions = [], cities = [];
   String payment = '';
@@ -40,6 +38,10 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
   @override
   void initState() {
     getCountries();
+    countrySelected = arguments.containsKey('countrySelected') ? arguments['countrySelected'] : null;
+    regionSelected = arguments.containsKey('regionSelected') ? arguments['regionSelected'] : null;
+    citySelected = arguments.containsKey('citySelected') ? arguments['citySelected'] : null;
+    addressDescription = arguments.containsKey('addressDescription') ? arguments['addressDescription'] : '';
     super.initState();
   }
 
@@ -63,7 +65,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                   val.toString().isNotEmpty ? countrySelected = val : countrySelected = null;
                 });
               },
-              selectedItem: widget.countrySelected ?? countrySelected,
+              selectedItem: countrySelected,
             ),
             //Regions
             Visibility(
@@ -78,7 +80,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                     val.isNotEmpty ? regionSelected = val : regionSelected = null;
                   });
                 },
-                selectedItem: widget.regionSelected ?? regionSelected,
+                selectedItem: regionSelected,
               ),
             ),
             //Cities
@@ -93,7 +95,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                     val.isNotEmpty ? citySelected = val : citySelected = '';
                   });
                 },
-                selectedItem: widget.citySelected ?? citySelected,
+                selectedItem: citySelected,
               ),
             ),
             Container(
@@ -104,7 +106,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
               ),
               child: TextFormField(
                 cursorColor: primaryColor,
-                initialValue: widget.addressDescription ?? addressDescription,
+                initialValue: addressDescription,
                 decoration: InputDecoration(
                   labelText: 'Write your address description',
                   labelStyle: labelStyle,

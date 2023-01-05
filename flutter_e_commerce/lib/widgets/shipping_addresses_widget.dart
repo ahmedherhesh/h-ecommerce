@@ -28,6 +28,7 @@ class _ShippingAddressesWidgetState extends State<ShippingAddressesWidget> {
           return ListView(
             padding: const EdgeInsets.all(15),
             children: [
+              //header
               Container(
                 margin: const EdgeInsets.only(bottom: 15),
                 child: Row(
@@ -57,6 +58,7 @@ class _ShippingAddressesWidgetState extends State<ShippingAddressesWidget> {
                   ],
                 ),
               ),
+              //generate saved addresses as a list tile
               ...List.generate(
                 data.length,
                 (i) => CustomListTile(
@@ -67,13 +69,24 @@ class _ShippingAddressesWidgetState extends State<ShippingAddressesWidget> {
                     widget.onChanged(addressId);
                   },
                   trailing: IconButton(
+                    // if addressId != data[i]['id'] then el will not selected else it will has a selected icon with primary color
                     icon: addressId != data[i]['id']
                         ? Icon(widget.iconData, color: textColor)
                         : Icon(
                             Icons.radio_button_on,
                             color: primaryColor,
                           ),
-                    onPressed: widget.onPressed,
+                    onPressed: widget.onPressed ??
+                        () => Get.toNamed(
+                              'shipping-address-form',
+                              arguments: {
+                                'id': data[i]['id'],
+                                'countrySelected': data[i]['country'],
+                                'regionSelected': data[i]['region'],
+                                'citySelected': data[i]['city'],
+                                'addressDescription': data[i]['description'],
+                              },
+                            ),
                   ),
                 ),
               ),

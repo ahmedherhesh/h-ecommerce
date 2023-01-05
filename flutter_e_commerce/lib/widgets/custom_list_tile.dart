@@ -22,6 +22,7 @@ class CustomListTile extends StatelessWidget {
         ],
       ),
       child: ListTile(
+        //visualDensity for remove spaces
         visualDensity: const VisualDensity(vertical: -4),
         onTap: onTap,
         leading: leading,

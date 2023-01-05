@@ -119,6 +119,7 @@ class PaymentController extends Controller
                                     'qty'            => $order->qty,
                                     'price'          => $product->price,
                                     'shipping'       => 5,
+                                    'shipping_address_id' => $session_data['shipping_address_id'],
                                     'currency'       => $payment->currency,
                                     'total_price'    => $product->price * $order->qty,
                                     'payment_method' => $session_data['payment_method'],

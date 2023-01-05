@@ -16,6 +16,7 @@ class Order extends Model
         'qty',
         'price',
         'shipping',
+        'shipping_address_id',
         'currency',
         'total_price',
         'payment_method',
