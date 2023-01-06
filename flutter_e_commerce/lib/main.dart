@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
@@ -21,6 +22,7 @@ import 'package:flutter_e_commerce/views/user/search.dart';
 import 'package:flutter_e_commerce/views/user/shipping-addresses.dart';
 import 'package:flutter_e_commerce/views/user/shipping_address_form.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -70,11 +72,21 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
+  var connectivity;
   @override
   void initState() {
-    checkInternet(setState: setState);
+    connectivity = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
+      internetStatus = await InternetConnectionChecker().hasConnection;
+      setState(() => internetStatus);
+    });
     pageIndex = Get.arguments != null ? Get.arguments['pageIndex'] : 0;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    connectivity.cancel();
+    super.dispose();
   }
 
   @override

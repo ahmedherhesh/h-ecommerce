@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
@@ -252,11 +253,9 @@ authPageHeader({title, subtitle}) {
 }
 
 checkInternet({setState}) {
-  int period = 1;
-  Timer.periodic(Duration(milliseconds: period), (timer) async {
-    if (period == 1) period = 1000;
+  Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
     internetStatus = await InternetConnectionChecker().hasConnection;
-    setState(() => internetStatus);
+    setState(() => internetStatus) ?? '';
   });
 }
 
