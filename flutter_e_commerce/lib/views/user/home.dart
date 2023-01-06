@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> key = GlobalKey();
   int currentIndex = 0, currentSlide = 0;
-  List sliderImages = [], categoryWithProducts = [], cats = [], favBtns = [];
+  List sliderImages = [], categoryWithProducts = [], favBtns = [];
   slider() async {
     List data = await get('slider');
     setState(() {
@@ -33,20 +33,10 @@ class _HomeState extends State<Home> {
     });
   }
 
-  categories() async {
-    List data = await get('categories');
-    setState(() {
-      if (data.isNotEmpty) {
-        cats.addAll(data);
-      }
-    });
-  }
-
   @override
   void initState() {
     slider();
     checkAuth().then((data) => products());
-    categories();
     super.initState();
   }
 
@@ -99,51 +89,58 @@ class _HomeState extends State<Home> {
             ],
           ),
           //Categories
-          cats.isNotEmpty
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'Categories',
-                        style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+          FutureBuilder(
+              future: get('categories'),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Padding(padding: EdgeInsets.all(8), child: CustomLoading());
+                } else if (snapshot.hasData) {
+                  List cats = snapshot.data;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: const Text(
+                          'Categories',
+                          style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 50,
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: List.generate(
-                          cats.length,
-                          (i) => InkWell(
-                            onTap: () => Get.toNamed('category', arguments: {'category_name': cats[i]['name']}),
-                            child: Container(
-                              margin: const EdgeInsets.only(right: 5),
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.centerRight,
-                                  end: Alignment.centerLeft,
-                                  colors: [
-                                    primaryColor,
-                                    const Color.fromARGB(255, 24, 160, 153),
-                                  ],
+                      Container(
+                        height: 50,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: List.generate(
+                            cats.length,
+                            (i) => InkWell(
+                              onTap: () => Get.toNamed('category', arguments: {'category_name': cats[i]['name']}),
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 5),
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerRight,
+                                    end: Alignment.centerLeft,
+                                    colors: [
+                                      primaryColor,
+                                      const Color.fromARGB(255, 24, 160, 153),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  cats[i]['name'],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                child: Center(
+                                  child: Text(
+                                    cats[i]['name'],
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -151,15 +148,15 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              : Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: Center(
-                    child: CircularProgressIndicator(color: primaryColor),
-                  ),
-                ),
+                    ],
+                  );
+                }
+                return Center(
+                    child: Text(
+                  'No Categories',
+                  style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.bold),
+                ));
+              }),
           categoryWithProducts.isNotEmpty
               ? Column(
                   //outside loop
@@ -176,7 +173,7 @@ class _HomeState extends State<Home> {
                             ucfirst(category),
                             style: const TextStyle(
                               color: Colors.blueGrey,
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

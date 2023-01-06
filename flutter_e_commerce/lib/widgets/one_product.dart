@@ -46,11 +46,11 @@ class _OneProductState extends State<OneProduct> {
                   image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
                 ),
               ),
-              placeholder: (context, url) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const CustomLoading(),
+              placeholder: (context, url) => const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CustomLoading(),
               ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10),
@@ -60,13 +60,12 @@ class _OneProductState extends State<OneProduct> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Text(
-                      '${widget.item['title']}',
-                      style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 16,
-                      ),
+                  Text(
+                    '${widget.item['title']}',
+                    style: const TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   // ignore: sized_box_for_whitespace
@@ -77,10 +76,9 @@ class _OneProductState extends State<OneProduct> {
                       children: [
                         Text(
                           '\$${widget.item['price']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.blueGrey,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
                           ),
                         ),
                         IconButton(

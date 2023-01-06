@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -5,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future checkAuth({redirect = false}) async {
+  if (internetStatus == false || internetStatus == null) return;
   final prefs = await SharedPreferences.getInstance();
   initData['user'] = prefs.getString('user');
   Uri url = Uri.parse('${initData['apiUrl']}/user');
@@ -248,8 +251,18 @@ authPageHeader({title, subtitle}) {
   );
 }
 
+checkInternet({setState}) {
+  int period = 1;
+  Timer.periodic(Duration(milliseconds: period), (timer) async {
+    if (period == 1) period = 1000;
+    internetStatus = await InternetConnectionChecker().hasConnection;
+    setState(() => internetStatus);
+  });
+}
+
 //http get
 get(String route) async {
+  if (internetStatus == false) return [];
   Uri url = Uri.parse('${initData['apiUrl']}/$route');
   var response = await http.get(url, headers: initData['headers']);
   return response.statusCode == 200 ? jsonDecode(response.body) : [];

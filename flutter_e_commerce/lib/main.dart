@@ -6,6 +6,7 @@ import 'package:flutter_e_commerce/views/auth/change-password.dart';
 import 'package:flutter_e_commerce/views/auth/login.dart';
 import 'package:flutter_e_commerce/views/auth/register.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/views/errors/no_internet.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
 import 'package:flutter_e_commerce/views/user/category.dart';
 import 'package:flutter_e_commerce/views/user/checkout.dart';
@@ -19,11 +20,9 @@ import 'package:flutter_e_commerce/views/user/profile.dart';
 import 'package:flutter_e_commerce/views/user/search.dart';
 import 'package:flutter_e_commerce/views/user/shipping-addresses.dart';
 import 'package:flutter_e_commerce/views/user/shipping_address_form.dart';
-
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-SharedPreferences? prefs;
 void main() async {
   runApp(const MyApp());
   prefs = await SharedPreferences.getInstance();
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
-      home: const Main(),
+      home: Main(),
       routes: {
         'login': (context) => Login(),
         'register': (context) => Register(),
@@ -73,6 +72,7 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   @override
   void initState() {
+    checkInternet(setState: setState);
     pageIndex = Get.arguments != null ? Get.arguments['pageIndex'] : 0;
     super.initState();
   }
@@ -102,7 +102,7 @@ class _MainState extends State<Main> {
             if (screensNeedAuth.contains(index)) {
               checkAuth(redirect: true);
             }
-            if (initData['Authorized']) {
+            if (initData['Authorized'] || internetStatus == false) {
               setState(() => pageIndex = index);
               return true;
             }
@@ -113,7 +113,7 @@ class _MainState extends State<Main> {
           },
         ),
       ),
-      body: screens[pageIndex],
+      body: internetStatus == false ? NoInternet() : screens[pageIndex],
     );
   }
 }
