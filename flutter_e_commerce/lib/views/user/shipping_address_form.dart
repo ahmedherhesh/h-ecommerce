@@ -15,7 +15,7 @@ class ShippingAddressForm extends StatefulWidget {
 
 class _ShippingAddressFormState extends State<ShippingAddressForm> {
   Map arguments = Get.arguments ?? {};
-  var countrySelected = null, regionSelected = null, citySelected = null;
+  dynamic countrySelected, regionSelected, citySelected;
   List countries = [], regions = [], cities = [];
   String payment = '';
   String addressDescription = '';
@@ -38,17 +38,22 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
   @override
   void initState() {
     getCountries();
+    if (arguments['countrySelected'] != null && arguments['regionSelected'] != null) {
+      getRegions(arguments['countrySelected']);
+      getCities(arguments['regionSelected']);
+    }
     countrySelected = arguments.containsKey('countrySelected') ? arguments['countrySelected'] : null;
     regionSelected = arguments.containsKey('regionSelected') ? arguments['regionSelected'] : null;
     citySelected = arguments.containsKey('citySelected') ? arguments['citySelected'] : null;
     addressDescription = arguments.containsKey('addressDescription') ? arguments['addressDescription'] : '';
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: 'Add New Address'),
+      appBar: appBar(title: arguments['pageTitle'] ?? 'Add New Address'),
       body: Container(
         margin: const EdgeInsets.all(20),
         child: ListView(
@@ -62,7 +67,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                 String val = value.toString();
                 getRegions(val);
                 setState(() {
-                  val.toString().isNotEmpty ? countrySelected = val : countrySelected = null;
+                  countrySelected = val.isNotEmpty ? val : null;
                 });
               },
               selectedItem: countrySelected,
@@ -77,7 +82,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                   String val = value.toString();
                   getCities(val);
                   setState(() {
-                    val.isNotEmpty ? regionSelected = val : regionSelected = null;
+                    regionSelected = val.isNotEmpty ? val : null;
                   });
                 },
                 selectedItem: regionSelected,
@@ -92,7 +97,7 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
                 onChanged: (value) {
                   String val = value.toString();
                   setState(() {
-                    val.isNotEmpty ? citySelected = val : citySelected = '';
+                    citySelected = val.isNotEmpty ? val : null;
                   });
                 },
                 selectedItem: citySelected,
@@ -118,23 +123,26 @@ class _ShippingAddressFormState extends State<ShippingAddressForm> {
               ),
             ),
             submitButton(
-              title: 'Create',
+              title: arguments['btnTitle'] ?? 'Create',
               onPressed: () async {
-                var createAddress = await post(
-                  route: 'shipping-addresses/create',
-                  body: {
-                    'country': countrySelected.toString(),
-                    'region': regionSelected.toString(),
-                    'city': citySelected.toString(),
-                    'description': addressDescription.toString()
-                  },
+                Map body = {
+                  'country': countrySelected.toString(),
+                  'region': regionSelected.toString(),
+                  'city': citySelected.toString(),
+                  'description': addressDescription.toString()
+                };
+                String action = arguments['action'] ?? 'create';
+                if (action == 'update') body['id'] = arguments['id'].toString();
+                var sendAddress = await post(
+                  route: 'shipping-addresses/$action',
+                  body: body,
                 );
-                switch (createAddress.statusCode) {
+                switch (sendAddress.statusCode) {
                   case 200:
-                    Get.back(result: jsonDecode(createAddress.body)['id']);
+                    Get.back(result: jsonDecode(sendAddress.body)['id']);
                     break;
                   case 422:
-                    awesomeDialog(context, createAddress.body).show();
+                    awesomeDialog(context, sendAddress.body).show();
                     break;
                 }
               },

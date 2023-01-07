@@ -7,11 +7,11 @@ import 'package:flutter_e_commerce/widgets/empty_page.dart';
 import 'package:get/get.dart';
 
 class ShippingAddressesWidget extends StatefulWidget {
-  const ShippingAddressesWidget({super.key, this.iconData, this.onPressed, this.addBtnVisible, this.onChanged});
+  const ShippingAddressesWidget({super.key, this.iconData, this.addBtnVisible, this.onChanged, this.page});
   final iconData;
-  final onPressed;
   final addBtnVisible;
   final onChanged;
+  final page;
   @override
   State<ShippingAddressesWidget> createState() => _ShippingAddressesWidgetState();
 }
@@ -52,13 +52,12 @@ class _ShippingAddressesWidgetState extends State<ShippingAddressesWidget> {
                               size: 30,
                               color: primaryColor,
                             ),
-                            color: primaryColor,
                           )
                         : const SizedBox(),
                   ],
                 ),
               ),
-              //generate saved addresses as a list tile
+              //generate saved addresses as list tiles
               ...List.generate(
                 data.length,
                 (i) => CustomListTile(
@@ -66,28 +65,35 @@ class _ShippingAddressesWidgetState extends State<ShippingAddressesWidget> {
                   subtitle: '${data[i]['region']}, ${data[i]['city']}, ${data[i]['description']}',
                   onTap: () {
                     setState(() => addressId = data[i]['id']);
+                    //export address id to the page used onChange function in shipping address widget
                     widget.onChanged(addressId);
                   },
                   trailing: IconButton(
-                    // if addressId != data[i]['id'] then el will not selected else it will has a selected icon with primary color
-                    icon: addressId != data[i]['id']
-                        ? Icon(widget.iconData, color: textColor)
-                        : Icon(
-                            Icons.radio_button_on,
-                            color: primaryColor,
-                          ),
-                    onPressed: widget.onPressed ??
-                        () => Get.toNamed(
-                              'shipping-address-form',
-                              arguments: {
-                                'id': data[i]['id'],
-                                'countrySelected': data[i]['country'],
-                                'regionSelected': data[i]['region'],
-                                'citySelected': data[i]['city'],
-                                'addressDescription': data[i]['description'],
-                              },
+                      // if addressId != data[i]['id'] then el will not selected else it will has a selected icon with primary color
+                      icon: addressId != data[i]['id']
+                          ? Icon(widget.iconData, color: textColor)
+                          : Icon(
+                              Icons.radio_button_on,
+                              color: primaryColor,
                             ),
-                  ),
+                      onPressed: widget.page == 'checkout'
+                          ? () => setState(() => addressId = data[i]['id'])
+                          : () async {
+                              var result = await Get.toNamed(
+                                'shipping-address-form',
+                                arguments: {
+                                  'id': data[i]['id'],
+                                  'countrySelected': data[i]['country'],
+                                  'regionSelected': data[i]['region'],
+                                  'citySelected': data[i]['city'],
+                                  'addressDescription': data[i]['description'],
+                                  'btnTitle': 'Save',
+                                  'pageTitle': 'Update Address',
+                                  'action': 'update',
+                                },
+                              );
+                              if (result.runtimeType == int) setState(() {});
+                            }),
                 ),
               ),
             ],

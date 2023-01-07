@@ -34,6 +34,7 @@ class _CheckoutState extends State<Checkout> {
                 onChanged: (addressId) {
                   setState(() => shippingAddressId = addressId);
                 },
+                page: 'checkout',
               ),
             ),
             Container(

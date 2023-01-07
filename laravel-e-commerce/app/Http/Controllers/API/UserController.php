@@ -53,6 +53,17 @@ class UserController extends MasterAPIController
         $create_address = ShippingAddress::create($data);
         return $this->response($create_address, $create_address);
     }
+    function updateShippingAddress(ShippingAddressRequest $request)
+    {
+        $data = $request->all();
+        $address = ShippingAddress::find($data['id']);
+        $update_address = null;
+        if ($address->user_id == $this->user->id) {
+            $update_address = $address->update($data);
+        }
+        $address = ShippingAddress::find($data['id']);
+        return $this->response($update_address, $address);
+    }
     function logout(Request $request)
     {
         $logout = $request->user('sanctum')->currentAccessToken()->delete();

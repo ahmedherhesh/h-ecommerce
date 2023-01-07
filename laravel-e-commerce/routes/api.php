@@ -68,8 +68,9 @@ Route::group(['prefix' => 'v1'], function () {
             });
             //Shipping Addresses Controller
             Route::group(['prefix' => 'shipping-addresses'], function () {
-                Route::get('/', [UserController::class, 'ShippingAddresses']);
-                Route::post('create', [UserController::class, 'AddShippingAddress']);
+                Route::get('/', [UserController::class, 'shippingAddresses']);
+                Route::post('create', [UserController::class, 'addShippingAddress']);
+                Route::post('update', [UserController::class, 'updateShippingAddress']);
             });
         });
         Route::get('logout', [UserController::class, 'logout']);
