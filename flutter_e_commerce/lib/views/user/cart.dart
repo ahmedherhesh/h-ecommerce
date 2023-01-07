@@ -3,14 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
+import 'package:flutter_e_commerce/widgets/custom_loading.dart';
 import 'package:flutter_e_commerce/widgets/empty_page.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/checkout_btn.dart';
 
 class Cart extends StatefulWidget {
-  List cartData = [];
-  List orderDetails = [];
   @override
   State<Cart> createState() => _CartState();
 }
@@ -21,6 +20,8 @@ class _CartState extends State<Cart> {
   String? currency;
   int loopCount = 0;
   bool buildStatus = false;
+  List cartData = [];
+  List orderDetails = [];
 // Stream getS() => Stream.periodic(Duration(milliseconds: 200)).asyncMap((event) => get('cart'));
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,11 @@ class _CartState extends State<Cart> {
       body: FutureBuilder(
         future: get('cart'),
         builder: (context, AsyncSnapshot snapshot) {
-          widget.cartData = snapshot.data ?? [];
-          if (widget.cartData.isNotEmpty) {
+          if (snapshot.connectionState == ConnectionState.done && buildStatus == false) {
             buildStatus = true;
+            cartData = snapshot.data ?? [];
+          }
+          if (cartData.isNotEmpty) {
             return Container(
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(10),
@@ -46,11 +49,12 @@ class _CartState extends State<Cart> {
                   const SizedBox(height: 10),
                   //cart products
                   ...List.generate(
-                    widget.cartData.length,
+                    cartData.length,
                     (i) {
-                      Map productData = widget.cartData[i]['product'];
+                      Map productData = cartData[i]['product'];
                       currency = productData['currency'] == 'USD' ? '\$' : productData['currency'] + ' ';
-                      if (loopCount < widget.cartData.length) {
+                      //this condition because when setState price is incremented again
+                      if (loopCount < cartData.length) {
                         price += productData['price'];
                         loopCount++;
                       }
@@ -105,12 +109,15 @@ class _CartState extends State<Cart> {
                                   height: 30,
                                   child: IconButton(
                                     onPressed: () async {
-                                      var data = await get('cart/delete/${widget.cartData[i]['id']}');
-                                      setState(() => widget.cartData.removeAt(i));
+                                      var data = await get('cart/delete/${cartData[i]['id']}');
+                                      setState(() {
+                                        price -= cartData[i]['qty'] * productData['price'];
+                                        cartData.removeAt(i);
+                                      });
                                       snackBar(title: data, message: '');
                                     },
                                     icon: Icon(
-                                      Icons.close_rounded,
+                                      Icons.close,
                                       size: 18,
                                       color: textColor,
                                     ),
@@ -120,9 +127,9 @@ class _CartState extends State<Cart> {
                                   children: [
                                     //decrement btn
                                     IconButton(
-                                      onPressed: () => mounted && widget.cartData[i]['qty'] != 1
+                                      onPressed: () => mounted && cartData[i]['qty'] != 1
                                           ? setState(() {
-                                              widget.cartData[i]['qty'] -= 1;
+                                              cartData[i]['qty'] -= 1;
                                               price -= productData['price'];
                                             })
                                           : '',
@@ -133,12 +140,15 @@ class _CartState extends State<Cart> {
                                       ),
                                     ),
                                     //qty
-                                    Text('${widget.cartData[i]['qty']}'),
+                                    Text(
+                                      '${cartData[i]['qty']}',
+                                      style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+                                    ),
                                     //increment btn
                                     IconButton(
-                                      onPressed: () => mounted && widget.cartData[i]['qty'] < productData['stock']
+                                      onPressed: () => mounted && cartData[i]['qty'] < productData['stock']
                                           ? setState(() {
-                                              widget.cartData[i]['qty'] += 1;
+                                              cartData[i]['qty'] += 1;
                                               price += productData['price'];
                                             })
                                           : '',
@@ -160,20 +170,20 @@ class _CartState extends State<Cart> {
                   const PromoCode(),
                   CartPrice(currency: currency, price: price, shipping: shipping),
                   CheckoutButton(onPressed: () {
-                    widget.orderDetails = [];
-                    for (var item in widget.cartData) {
-                      widget.orderDetails.add({'qty': item['qty'], 'product_id': item['product']['id']});
+                    orderDetails = [];
+                    for (var item in cartData) {
+                      orderDetails.add({'product_id': item['product']['id'], 'qty': item['qty']});
                     }
                     Get.toNamed(
                       'checkout',
-                      arguments: {'order_details': jsonEncode(widget.orderDetails)},
+                      arguments: {'order_details': jsonEncode(orderDetails)},
                     );
                   }),
                 ],
               ),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(color: primaryColor));
+            return const CustomLoading();
           }
           return EmptyPage(page: 'cart');
         },

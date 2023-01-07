@@ -72,7 +72,7 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  var connectivity;
+  dynamic connectivity;
   @override
   void initState() {
     connectivity = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {

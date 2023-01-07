@@ -21,7 +21,7 @@ class UserController extends MasterAPIController
         $user = auth()->user();
         if ($user)
             $user->token = true;
-        return $this->response($user, new UserResource($user), ['Your email and password is not matched']);
+        return $this->response($user, new UserResource($user), ['errors' => ['Email and password are not matched']], 422);
     }
 
     function register(UserRegisterRequest $request)
