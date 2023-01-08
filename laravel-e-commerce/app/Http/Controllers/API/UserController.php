@@ -73,7 +73,6 @@ class UserController extends MasterAPIController
     }
     function logout(Request $request)
     {
-        $logout = $request->user('sanctum')->currentAccessToken()->delete();
-        return $logout;
+        return $request->user('sanctum')->currentAccessToken()->delete();
     }
 }
