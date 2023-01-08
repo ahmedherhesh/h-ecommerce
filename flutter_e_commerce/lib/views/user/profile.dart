@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/init.dart';
-import 'package:flutter_e_commerce/main.dart';
 import 'dart:convert';
 import 'package:flutter_e_commerce/widgets/custom_list_tile.dart';
 import 'package:get/get.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   logout() async {
     await get('logout');
     prefs!.remove('user');
     Get.offAllNamed('main', arguments: {'pageIndex': 0});
   }
 
+  @override
   Widget build(BuildContext context) {
     Map user = jsonDecode(initData['user']);
     return Scaffold(
@@ -43,7 +48,7 @@ class Profile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              user['name'],
+                              ucfirst(user['name']),
                               style: TextStyle(color: textColor, fontSize: 18),
                             ),
                             Text(
@@ -55,7 +60,10 @@ class Profile extends StatelessWidget {
                       ],
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        var result = await Get.toNamed('edit-profile');
+                        if (result.runtimeType == int) setState(() {});
+                      },
                       icon: Icon(
                         Icons.edit,
                         color: textColor,

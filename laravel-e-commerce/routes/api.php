@@ -18,11 +18,15 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [UserController::class, 'login']);
     Route::post('register', [UserController::class, 'register']);
+    //Routes with required auth
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('user', function () {
             return new UserResource(auth('sanctum')->user());
         });
+        //edit profile for any user
         Route::post('change-password', [UserController::class, 'changePassword']);
+        Route::post('edit-profile', [UserController::class, 'editProfile']);
+
         //super-admin
         Route::group(['middleware' => ['role:super-admin']], function () {
             //Roles Controller
@@ -51,10 +55,10 @@ Route::group(['prefix' => 'v1'], function () {
         //Customer
         Route::group(['middleware' => ['role:customer']], function () {
             //Cart Controller
-            Route::group(['prefix' => 'cart'], function () {
-                Route::get('/', [CartController::class, 'index']);
-                Route::post('create-or-update', [CartController::class, 'createOrUpdate']);
-                Route::get('delete/{id}', [CartController::class, 'delete']);
+            Route::group(['prefix' => 'cart', 'controller' => CartController::class], function () {
+                Route::get('/', 'index');
+                Route::post('create-or-update', 'createOrUpdate');
+                Route::get('delete/{id}', 'delete');
             });
             //Favourites Controller
             Route::group(['prefix' => 'favourites'], function () {
@@ -73,8 +77,11 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::post('update', [UserController::class, 'updateShippingAddress']);
             });
         });
+        //Any user
         Route::get('logout', [UserController::class, 'logout']);
     });
+
+    //Routes no need auth
     Route::get('slider', [ExtensionsController::class, 'slider']);
     //Products
     Route::group(['controller' => ProductsController::class], function () {

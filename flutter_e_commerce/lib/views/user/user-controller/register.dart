@@ -123,7 +123,6 @@ class _RegisterState extends State<Register> {
             child: Form(
               child: ListView(
                 children: [
-                  //Email Field
                   textInput(
                     icon: Icons.person,
                     hintText: 'Full Name',

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_e_commerce/design_settings/values.dart';
 import 'package:flutter_e_commerce/init.dart';
-import 'package:flutter_e_commerce/views/auth/change-password.dart';
-import 'package:flutter_e_commerce/views/auth/login.dart';
-import 'package:flutter_e_commerce/views/auth/register.dart';
+import 'package:flutter_e_commerce/views/user/user-controller/change-password.dart';
+import 'package:flutter_e_commerce/views/user/user-controller/edit-profile.dart';
+import 'package:flutter_e_commerce/views/user/user-controller/login.dart';
+import 'package:flutter_e_commerce/views/user/user-controller/register.dart';
 import 'package:flutter_e_commerce/helpers/functions.dart';
 import 'package:flutter_e_commerce/views/errors/no_internet.dart';
 import 'package:flutter_e_commerce/views/user/cart.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         'login': (context) => Login(),
         'register': (context) => Register(),
         'change-password': (context) => ChangePassword(),
+        'edit-profile': (context) => EditProfile(),
         'my-orders': (context) => MyOrders(),
         'order-details': (context) => OrderDetails(),
         'shipping-addresses': (context) => ShippingAddresses(),

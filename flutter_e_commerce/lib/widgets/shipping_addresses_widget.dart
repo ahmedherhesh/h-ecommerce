@@ -64,9 +64,11 @@ class _ShippingAddressesWidgetState extends State<ShippingAddressesWidget> {
                   title: '${data[i]['country']}',
                   subtitle: '${data[i]['region']}, ${data[i]['city']}, ${data[i]['description']}',
                   onTap: () {
-                    setState(() => addressId = data[i]['id']);
-                    //export address id to the page used onChange function in shipping address widget
-                    widget.onChanged(addressId);
+                    if (widget.page == 'checkout') {
+                      setState(() => addressId = data[i]['id']);
+                      //export address id to the page used onChange function in shipping address widget
+                      widget.onChanged(addressId);
+                    }
                   },
                   trailing: IconButton(
                       // if addressId != data[i]['id'] then el will not selected else it will has a selected icon with primary color

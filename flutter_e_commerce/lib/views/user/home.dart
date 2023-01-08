@@ -14,7 +14,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> key = GlobalKey();
   int currentIndex = 0, currentSlide = 0;
-  List sliderImages = [], categoryWithProducts = [], favBtns = [];
+  List sliderImages = [], categoryWithProducts = [], cats = [], favBtns = [];
+  bool buildStatus = false;
+  int loopCount = 0;
   slider() async {
     List data = await get('slider');
     setState(() {
@@ -33,9 +35,19 @@ class _HomeState extends State<Home> {
     });
   }
 
+  categories() async {
+    List data = await get('categories');
+    setState(() {
+      if (data.isNotEmpty) {
+        cats.addAll(data);
+      }
+    });
+  }
+
   @override
   void initState() {
     slider();
+    categories();
     checkAuth().then((data) => products());
     super.initState();
   }
@@ -66,9 +78,7 @@ class _HomeState extends State<Home> {
                 margin: const EdgeInsets.all(10),
                 child: sliderImages.isNotEmpty
                     ? PageView(
-                        onPageChanged: (index) => setState(() {
-                          currentSlide = index;
-                        }),
+                        onPageChanged: (index) => setState(() => currentSlide = index),
                         children: List.generate(
                           sliderImages.length,
                           (index) => Image.network(
@@ -77,9 +87,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       )
-                    : Center(
-                        child: CircularProgressIndicator(color: primaryColor),
-                      ),
+                    : const Padding(padding: EdgeInsets.all(15), child: CustomLoading()),
               ),
               //Slider Indicators
               SliderIndicators(
@@ -89,58 +97,51 @@ class _HomeState extends State<Home> {
             ],
           ),
           //Categories
-          FutureBuilder(
-              future: get('categories'),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Padding(padding: EdgeInsets.all(8), child: CustomLoading());
-                } else if (snapshot.hasData) {
-                  List cats = snapshot.data;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: const Text(
-                          'Categories',
-                          style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+          cats.isNotEmpty
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: const Text(
+                        'Categories',
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        height: 50,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: List.generate(
-                            cats.length,
-                            (i) => InkWell(
-                              onTap: () => Get.toNamed('category', arguments: {'category_name': cats[i]['name']}),
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 5),
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerRight,
-                                    end: Alignment.centerLeft,
-                                    colors: [
-                                      primaryColor,
-                                      const Color.fromARGB(255, 24, 160, 153),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
+                    ),
+                    Container(
+                      height: 50,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                          cats.length,
+                          (i) => InkWell(
+                            onTap: () => Get.toNamed('category', arguments: {'category_name': cats[i]['name']}),
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                  colors: [
+                                    primaryColor,
+                                    const Color.fromARGB(255, 24, 160, 153),
+                                  ],
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    cats[i]['name'],
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  cats[i]['name'],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
@@ -148,15 +149,11 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                    ],
-                  );
-                }
-                return Center(
-                    child: Text(
-                  'No Categories',
-                  style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.bold),
-                ));
-              }),
+                    ),
+                  ],
+                )
+              : const CustomLoading(),
+
           categoryWithProducts.isNotEmpty
               ? Column(
                   //outside loop
@@ -188,13 +185,14 @@ class _HomeState extends State<Home> {
                               itemCount: el['products'].toList().length,
                               itemBuilder: (context, childIndex) {
                                 var item = el['products'].toList()[childIndex];
-                                item['in_favourite'] ? favBtns.add(item['id']) : '';
+                                item['in_favourite'] && buildStatus == false ? favBtns.add(item['id']) : '';
                                 // SchedulerBinding.instance.addPostFrameCallback((_) {});
                                 return OneProduct(
                                   item: item,
                                   icon: favBtns.contains(item['id']) ? Icons.favorite : Icons.favorite_outline,
                                   onPressed: () {
                                     setState(() {
+                                      buildStatus = true;
                                       if (favBtns.contains(item['id'])) {
                                         favBtns.remove(item['id']);
                                       } else {

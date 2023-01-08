@@ -100,6 +100,8 @@ appBar({context, title = ''}) {
 }
 
 textInput({val = '', TextEditingController? controller, hintText = '', labelText = '', IconData? icon, obscure = false, onChanged, BorderSide? customBorder}) {
+  controller = controller ?? TextEditingController();
+  controller.text = val;
   return Container(
     decoration: const BoxDecoration(
       border: Border(

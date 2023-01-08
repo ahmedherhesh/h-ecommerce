@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\ChangePasswordRequest;
+use App\Http\Requests\API\EditProfileRequest;
 use App\Http\Requests\API\ShippingAddressRequest;
 use App\Http\Requests\API\UserLoginRequest;
 use App\Http\Requests\API\UserRegisterRequest;
@@ -40,6 +41,12 @@ class UserController extends MasterAPIController
                 return $this->response($user, 'Your Password has been changed successfully');
             }
         return response()->json(['old_password' => ['The old password is not matched']], 422);
+    }
+    function editProfile(EditProfileRequest $request)
+    {
+        $user = User::find($this->user->id);
+        $user->update($request->all());
+        return $this->response($user, $user);
     }
     function shippingAddresses()
     {
