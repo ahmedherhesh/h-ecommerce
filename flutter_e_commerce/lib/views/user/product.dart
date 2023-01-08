@@ -92,7 +92,10 @@ class _ProductState extends State<Product> {
                 padding: const EdgeInsets.all(8),
                 onPressed: () async {
                   var status = await addToCart({'product_id': productData['id'].toString(), 'qty': '1'});
-                  if (status == 200) Get.toNamed('main');
+                  if (status == 200) {
+                    snackBar(title: 'Congratulations', message: 'The product has been added to the cart');
+                    Get.offAllNamed('main');
+                  }
                 },
                 child: Row(
                   children: [

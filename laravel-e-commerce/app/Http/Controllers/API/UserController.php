@@ -45,7 +45,8 @@ class UserController extends MasterAPIController
     function editProfile(EditProfileRequest $request)
     {
         $user = User::find($this->user->id);
-        $user->update($request->all());
+        if ($user)
+            $user->update($request->all());
         return $this->response($user, $user);
     }
     function shippingAddresses()
@@ -68,7 +69,6 @@ class UserController extends MasterAPIController
         if ($address->user_id == $this->user->id) {
             $update_address = $address->update($data);
         }
-        $address = ShippingAddress::find($data['id']);
         return $this->response($update_address, $address);
     }
     function logout(Request $request)

@@ -285,6 +285,7 @@ void snackBar({title, message}) {
     title,
     message,
     colorText: Colors.white,
+    backgroundColor: textColor,
     backgroundGradient: LinearGradient(
       begin: Alignment.centerRight,
       end: Alignment.centerLeft,
@@ -293,7 +294,7 @@ void snackBar({title, message}) {
         const Color.fromARGB(255, 24, 160, 153),
       ],
     ),
-    duration: const Duration(seconds: 1),
+    duration: const Duration(seconds: 2),
     icon: const Icon(
       Icons.favorite_outline,
       color: Colors.white,
