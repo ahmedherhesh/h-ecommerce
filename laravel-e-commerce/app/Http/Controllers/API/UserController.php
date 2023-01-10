@@ -51,7 +51,7 @@ class UserController extends MasterAPIController
     }
     function shippingAddresses()
     {
-        $addresses = ShippingAddress::orderByDesc('id')->get();
+        $addresses = ShippingAddress::orderByDesc('id')->whereUserId($this->user->id)->get();
         return $this->response($addresses, $addresses);
     }
     function addShippingAddress(ShippingAddressRequest $request)
