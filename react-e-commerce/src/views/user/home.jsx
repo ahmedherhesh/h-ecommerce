@@ -7,7 +7,7 @@ class Home extends Component {
   state = {};
   style = {
     subSection: {
-      boxShadow: "1px 1px 2px #ddd",
+      boxShadow: "1px 1px 2px #ccc",
       borderRadius: '10px',
       overflow: 'hidden'
     },
@@ -20,13 +20,13 @@ class Home extends Component {
     return (
       <div className="container">
         <div className="row mt-3">
-          <div className="bg-dark sub-section" style={{ ...this.style.subSection, flex: 1 }}>
+          <div className="bg-white sub-section" style={{ ...this.style.subSection, flex: 1 }}>
             <img src={phone} style={this.style.subSectionImg} />
           </div>
           <div className="p-0 ms-1 me-1 " style={{ ...this.style.subSection, flex: 3 }}>
             <Carousel />
           </div>
-          <div className="bg-dark sub-section" style={{ ...this.style.subSection, flex: 1 }}>
+          <div className="bg-white sub-section" style={{ ...this.style.subSection, flex: 1 }}>
             <img src={phone} style={this.style.subSectionImg} />
           </div>
         </div>
