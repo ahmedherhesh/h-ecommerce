@@ -23,7 +23,7 @@ class Home extends Component {
           <div className="bg-white sub-section" style={{ ...this.style.subSection, flex: 1 }}>
             <img src={phone} style={this.style.subSectionImg} />
           </div>
-          <div className="p-0 ms-1 me-1 " style={{ ...this.style.subSection, flex: 3 }}>
+          <div className="p-0 ms-1 me-1 " style={{ ...this.style.subSection, flex: 4 }}>
             <Carousel />
           </div>
           <div className="bg-white sub-section" style={{ ...this.style.subSection, flex: 1 }}>
