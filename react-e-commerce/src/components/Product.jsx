@@ -3,10 +3,10 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { useParams } from 'react-router-dom';
-import moto from 'D:/Mix/backgrounds/moto.jpg';
-import white_car from 'D:/Mix/backgrounds/white-car.jpg';
-import orange_car from 'D:/Mix/backgrounds/orange-car.jpg';
-import eye from 'D:/Mix/backgrounds/eye.jpg';
+import moto from '../assets/images/moto.jpg';
+import white_car from '../assets/images/white-car.jpg';
+import orange_car from '../assets/images/orange-car.jpg';
+
 let changeMainImg = e => document.querySelector('.main-image').src = e.target.src;
 
 let Product = () => {
@@ -21,11 +21,9 @@ let Product = () => {
                             <OwlCarousel nav dots={false} items={1} loop responsive={{
                                 750:  { nav:true},
                             }}>
-                                <img src={moto} alt=''/>
                                 <img src={white_car} alt=''/>
                                 <img src={moto} alt=''/>
                                 <img src={orange_car} alt=''/>
-                                <img src={eye} alt=''/>
                             </OwlCarousel>
                         </div>
                     </div>
