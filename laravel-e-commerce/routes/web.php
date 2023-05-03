@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix' => 'admin'],function(){
-    Route::get('login',[UserController::class,'login'])->name('login');
-});
+Route::get('login', [UserController::class, 'login'])->name('login');
+Route::post('login', [UserController::class, '_login'])->name('login_post');
 
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', function (Request $request) {
+        return $request->session()->get('user');
+    });
+});
